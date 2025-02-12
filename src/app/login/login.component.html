@@ -1,0 +1,38 @@
+<div class="body-container">
+    <div class="login-container">
+      <div class="logo">
+        <div class="logo-icon">
+          <!-- Usamos faProjectDiagram como logo -->
+          <fa-icon [icon]="faProjectDiagram" size="3x" color="white"></fa-icon>
+        </div>
+        <div class="logo-text">DiagramMaker</div>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <div class="input-icon">
+            <fa-icon [icon]="faEnvelope" size="lg" color="currentColor"></fa-icon> <!-- Ícono de sobre -->
+            <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="tu@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <div class="input-icon">
+            <fa-icon [icon]="faLock" size="lg" color="currentColor"></fa-icon> <!-- Ícono de candado -->
+            <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="••••••••" required>
+          </div>
+        </div>
+        <div class="forgot-password">
+          <a href="#">
+            <fa-icon [icon]="faQuestionCircle" size="sm" color="currentColor"></fa-icon> <!-- Ícono de pregunta -->
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+        <button type="submit" class="login-button">Iniciar Sesión</button>
+        <div class="signup-link">
+          ¿No tienes una cuenta? <a href="#">Regístrate</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  

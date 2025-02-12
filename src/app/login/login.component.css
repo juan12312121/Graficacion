@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
+
+/* Estilos generales */
+body {
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn{
+  0%{
+    opacity: 0;
+    transition: scale(0.9);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Contenedor principal */
+.body-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);
+  background-size: cover;
+  overflow: hidden;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+/* Logo */
+.logo {
+  margin-bottom: 1.5rem;
+}
+
+.logo-icon {
+  width: 60px;
+  height: 60px;
+  background: #3a7ca5;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.logo-icon:hover {
+  transform: rotate(360deg);
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2d3748;
+  letter-spacing: 1px;
+}
+
+/* Campos de formulario */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  /* Espacio para el ícono */
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s ease;
+}
+
+.input-icon fa-icon {
+  position: absolute;
+  left: 1rem;
+}
+
+.input-icon input:focus {
+  outline: none;
+  border-color: #2a5298;
+  box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
+}
+
+/* Enlace de "Forgot Password?" */
+.forgot-password {
+  text-align: right;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-password a {
+  color: #2a5298;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+  color: #1e3c72;
+}
+
+/* Botón de login */
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #2a5298;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.login-button:hover {
+  background: #1e3c72;
+  transform: translateY(-2px);
+}
+
+.login-button:active {
+  background: #1e3c72;
+  transform: translateY(2px);
+}
+
+/* Enlace de signup */
+.signup-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.signup-link a {
+  color: #2a5298;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+  color: #1e3c72;
+}

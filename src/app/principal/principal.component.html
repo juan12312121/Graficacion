@@ -1,0 +1,67 @@
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <app-sidebar></app-sidebar>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="main-header">
+            <h1 class="page-title">
+                <fa-icon [icon]="faProjectDiagram"></fa-icon> Mis Diagramas
+            </h1>
+        </div>
+    
+        <!-- Search and Filters Bar -->
+        <div class="search-and-filters">
+            <div class="search-bar">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                <input type="text" placeholder="Buscar diagramas...">
+            </div>
+            <button class="filter-button">
+                <fa-icon [icon]="faFilter"></fa-icon>
+                Filtros
+            </button>
+            <button class="filter-button">
+                <fa-icon [icon]="faSort"></fa-icon>
+                Ordenar
+            </button>
+        </div>
+    
+        <!-- Diagrams Section -->
+        <div class="diagrams-grid">
+            <div class="diagram-card">
+                <div class="diagram-preview">
+                    <fa-icon [icon]="faSitemap"></fa-icon>
+                </div>
+                <div class="diagram-info">
+                    <div class="diagram-header">
+                        <div class="diagram-title">Organigrama Empresarial</div>
+                        <div class="diagram-menu" (click)="toggleMenu($event)">
+                            <fa-icon [icon]="faEllipsisV"></fa-icon>
+                            <div class="menu-dropdown" *ngIf="isMenuOpen">
+                                <div class="menu-item"><fa-icon [icon]="faTrash"></fa-icon> Eliminar</div>
+                                <div class="menu-item"><fa-icon [icon]="faEdit"></fa-icon> Editar</div>
+                                <div class="menu-item"><fa-icon [icon]="faShareAlt"></fa-icon> Compartir</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="diagram-meta">
+                        <div class="diagram-date">
+                            <fa-icon [icon]="faClock"></fa-icon>
+                            Editado hace 2 días
+                        </div>
+                        <div class="diagram-owner">
+                            <fa-icon [icon]="faUser"></fa-icon>
+                            Juan Pérez
+                        </div>
+                    </div>
+                    <div class="diagram-tags">
+                        <span class="diagram-tag"><fa-icon [icon]="faTags"></fa-icon> Organización</span>
+                        <span class="diagram-tag"><fa-icon [icon]="faTags"></fa-icon> RR.HH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
