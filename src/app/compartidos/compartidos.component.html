@@ -1,5 +1,131 @@
-<div class="cotianer">
-    <aside class="sidebar">
-        <app-sidebar></app-sidebar>
-      </aside>
+<div class="container">
+  <!-- Sidebar Component -->
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+    <!-- Header Section -->
+    <div class="main-header">
+      <h1 class="page-title">Diagramas Compartidos</h1>
+
+      <!-- Search and Filters Section -->
+      <div class="search-and-filters">
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Buscar diagramas...">
+        </div>
+
+        <!-- Filter Buttons -->
+        <button class="filter-button active">
+          <i class="fas fa-list"></i> Todos
+        </button>
+        <button class="filter-button">
+          <i class="fas fa-share-alt"></i> Compartidos conmigo
+        </button>
+        <button class="filter-button">
+          <i class="fas fa-share"></i> Que yo compartí
+        </button>
+      </div>
+    </div>
+
+    <!-- Diagrams Grid Section -->
+    <div class="diagrams-grid">
+      <!-- Individual Diagram Cards -->
+      <div class="diagram-card">
+        <div class="diagram-preview">
+          <!-- Imagen de Vista Previa -->
+          <img src="/img/dia.jpg" alt="Vista previa de Arquitectura del Sistema" />
+        </div>
+        <div class="diagram-info">
+          <div class="diagram-header">
+            <h3 class="diagram-title">Arquitectura del Sistema</h3>
+            <div class="diagram-menu">
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+          </div>
+          <div class="diagram-meta">
+            <div class="diagram-date">
+              <i class="fas fa-calendar-alt"></i>
+              Actualizado hace 2 días
+            </div>
+            <div class="diagram-owner">
+              <i class="fas fa-user"></i>
+              Juan Pérez
+            </div>
+          </div>
+          <div class="diagram-tags">
+            <span class="diagram-tag">Arquitectura</span>
+            <span class="diagram-tag">Sistema</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Another Diagram Card -->
+      <div class="diagram-card">
+        <div class="diagram-preview">
+          <!-- Imagen de Vista Previa -->
+          <img src="/img/dia.jpg" alt="Vista previa de Flujo de Trabajo v2" />
+        </div>
+        <div class="diagram-info">
+          <div class="diagram-header">
+            <h3 class="diagram-title">Flujo de Trabajo v2</h3>
+            <div class="diagram-menu">
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+          </div>
+          <div class="diagram-meta">
+            <div class="diagram-date">
+              <i class="fas fa-calendar-alt"></i>
+              Actualizado hace 1 hora
+            </div>
+            <div class="diagram-owner">
+              <i class="fas fa-user"></i>
+              María García
+            </div>
+          </div>
+          <div class="diagram-tags">
+            <span class="diagram-tag">Workflow</span>
+            <span class="diagram-tag">Proceso</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Another Diagram Card -->
+      <div class="diagram-card">
+        <div class="diagram-preview">
+          <!-- Imagen de Vista Previa -->
+          <img src="/img/dia.jpg" alt="Vista previa de Modelo de Datos" />
+        </div>
+        <div class="diagram-info">
+          <div class="diagram-header">
+            <h3 class="diagram-title">Modelo de Datos</h3>
+            <div class="diagram-menu">
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+          </div>
+          <div class="diagram-meta">
+            <div class="diagram-date">
+              <i class="fas fa-calendar-alt"></i>
+              Actualizado hace 5 días
+            </div>
+            <div class="diagram-owner">
+              <i class="fas fa-user"></i>
+              Ana Martínez
+            </div>
+          </div>
+          <div class="diagram-tags">
+            <span class="diagram-tag">Base de datos</span>
+            <span class="diagram-tag">ERD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Section -->
+    <div class="pagination">
+      <button class="pagination-button" disabled><i class="fas fa-chevron-left"></i> Anterior</button>
+      <span>Página 1 de 3</span>
+      <button class="pagination-button"><i class="fas fa-chevron-right"></i> Siguiente</button>
+    </div>
+  </div>
 </div>

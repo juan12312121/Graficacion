@@ -1,33 +1,39 @@
 <div class="diagrams-grid">
-    <div class="diagram-card" *ngFor="let diagram of diagrams; let i = index; trackBy: trackByIndex">
-      <div class="diagram-preview">
-        <fa-icon [icon]="faSitemap"></fa-icon>
-      </div>
-      <div class="diagram-info">
-        <div class="diagram-header">
-          <div class="diagram-title">{{ diagram.title }}</div>
-          <div class="diagram-menu">
-            <fa-icon [icon]="faEllipsisV" (click)="toggleMenu(i, $event)"></fa-icon>
-            <div class="menu-dropdown" [ngClass]="{ 'show': openMenus[i] }">
-              <div class="menu-item" *ngFor="let menu of diagram.menuItems" (click)="ejecutarAccion(menu.action, $event)">
-                <fa-icon [icon]="menu.icon"></fa-icon> {{ menu.label }}
-              </div>
+  <div class="diagram-card" *ngFor="let diagram of diagrams; let i = index; trackBy: trackByIndex">
+    <div class="diagram-preview">
+      <!-- Icono FontAwesome para "Sitemap" -->
+      <i class="fas fa-sitemap"></i>
+    </div>
+    <div class="diagram-info">
+      <div class="diagram-header">
+        <div class="diagram-title">{{ diagram.title }}</div>
+        <div class="diagram-menu">
+          <!-- Icono FontAwesome para "Ellipsis V" -->
+          <i class="fas fa-ellipsis-v" (click)="toggleMenu(i, $event)"></i>
+          <div class="menu-dropdown" [ngClass]="{ 'show': openMenus[i] }">
+            <div class="menu-item" *ngFor="let menu of diagram.menuItems" (click)="ejecutarAccion(menu.action, $event)">
+              <!-- Icono FontAwesome para cada elemento del menú -->
+              <i [class]="menu.icon"></i> {{ menu.label }}
             </div>
           </div>
         </div>
-        <div class="diagram-meta">
-          <div class="diagram-date">
-            <fa-icon [icon]="faClock"></fa-icon> {{ diagram.lastEdited }}
-          </div>
-          <div class="diagram-owner">
-            <fa-icon [icon]="faUser"></fa-icon> {{ diagram.owner }}
-          </div>
+      </div>
+      <div class="diagram-meta">
+        <div class="diagram-date">
+          <!-- Icono FontAwesome para "Clock" -->
+          <i class="fas fa-clock"></i> {{ diagram.lastEdited }}
         </div>
-        <div class="diagram-tags">
-          <span class="diagram-tag" *ngFor="let tag of diagram.tags">
-            <fa-icon [icon]="faTags"></fa-icon> {{ tag }}
-          </span>
+        <div class="diagram-owner">
+          <!-- Icono FontAwesome para "User" -->
+          <i class="fas fa-user"></i> {{ diagram.owner }}
         </div>
+      </div>
+      <div class="diagram-tags">
+        <span class="diagram-tag" *ngFor="let tag of diagram.tags">
+          <!-- Icono FontAwesome para "Tags" -->
+          <i class="fas fa-tags"></i> {{ tag }}
+        </span>
       </div>
     </div>
   </div>
+</div>
