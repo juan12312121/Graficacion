@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
+  faBox,
   faBrain,
+  faClipboard, // Added faClipboard
   faClock,
+  faCogs,
+  faDatabase,
   faEdit,
   faEllipsisV,
   faEnvelope,
   faFilter,
-  faHome, faLock, faNetworkWired, faProjectDiagram,
-  faQuestionCircle, faRandom,
+  faHome,
+  faList,
+  faLock,
+  faNetworkWired,
+  faProjectDiagram,
+  faQuestionCircle,
+  faRandom,
   faSearch,
-  faShareAlt, faSitemap,
+  faShareAlt,
+  faSitemap,
   faSort,
   faStar,
   faTags,
+  faTimesCircle,
   faTrash,
   faUser
 } from '@fortawesome/free-solid-svg-icons';
@@ -38,20 +49,27 @@ export class IconService {
     edit: faEdit,
     clock: faClock,
     user: faUser,
-    tags: faTags, // Asegúrate de que este icono está en la lista
+    tags: faTags,
     search: faSearch,
     filter: faFilter,
     sort: faSort,
-    ellipsisV: faEllipsisV
+    ellipsisV: faEllipsisV,
+    cogs: faCogs,
+    database: faDatabase,
+    list: faList,
+    box: faBox,
+    clipboard: faClipboard,
+    timesCircle: faTimesCircle
   };
 
-
   constructor(private library: FaIconLibrary) {
-    // Register icons
-    this.library.addIcons(faHome, faEnvelope, faLock, faProjectDiagram, faQuestionCircle, 
-                          faTrash, faStar, faShareAlt, faSitemap, faRandom, faNetworkWired, 
-                          faBrain, faEdit, faClock, faUser, faTags, faSearch, faFilter, 
-                          faSort, faEllipsisV);
+    // Register icons in the library
+    this.library.addIcons(
+      faHome, faEnvelope, faLock, faProjectDiagram, faQuestionCircle,
+      faTrash, faStar, faShareAlt, faSitemap, faRandom, faNetworkWired,
+      faBrain, faEdit, faClock, faUser, faTags, faSearch, faFilter,
+      faSort, faEllipsisV, faCogs, faDatabase, faList, faBox, faClipboard, faTimesCircle
+    );
   }
 
   getIcon(name: keyof typeof this.icons) {

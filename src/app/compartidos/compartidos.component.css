@@ -35,14 +35,6 @@
     letter-spacing: -0.025em;
 }
 
-.page-title::before {
-    content: '';
-    display: block;
-    width: 4px;
-    height: 24px;
-    background: linear-gradient(to bottom, #6366f1, #4f46e5);
-    border-radius: 2px;
-}
 
 /* Search and Filter Section */
 .search-and-filters {

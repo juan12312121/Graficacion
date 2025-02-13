@@ -27,36 +27,7 @@
     font-weight: 600;
   }
 
-  /* Sidebar content */
-  .sidebar-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
 
-  /* New diagram button */
-  .new-diagram {
-    margin: 20px;
-    background-color: #3b82f6;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.2s;
-  }
-
-  /* Hover effect for new diagram button */
-  .new-diagram:hover {
-    background-color: #2563eb;
-  }
-
-  /* Sidebar section */
   .sidebar-section {
     padding: 16px 12px;
   }
