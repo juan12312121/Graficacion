@@ -1,24 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; // Agrega esta importación
 import {
   faClock, faEdit, faEllipsisV, faEye, faFilter, faInfoCircle,
   faProjectDiagram, faSearch, faShareAlt, faSitemap,
   faSort, faTags, faTrash, faUser
 } from '@fortawesome/free-solid-svg-icons';
-import { DiagramasRecientesComponent } from '../diagramas-recientes/diagramas-recientes.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+
 
 
 @Component({
-  selector: 'app-principal',
+  selector: 'app-diagramas-recientes',
   standalone: true,
-  imports: [FontAwesomeModule, SidebarComponent, CommonModule,DiagramasRecientesComponent],
-  templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css']
+  imports: [FontAwesomeModule,CommonModule],
+  templateUrl: './diagramas-recientes.component.html',
+  styleUrl: './diagramas-recientes.component.css'
 })
-export class PrincipalComponent {
-  // Íconos de FontAwesome
+export class DiagramasRecientesComponent {
+ // Íconos de FontAwesome
   faProjectDiagram = faProjectDiagram;
   faSearch = faSearch;
   faFilter = faFilter;

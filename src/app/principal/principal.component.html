@@ -8,7 +8,7 @@
   <main class="main-content">
     <div class="main-header">
       <h1 class="page-title">
-        <fa-icon [icon]="faProjectDiagram"></fa-icon> Mis Diagramas
+        <fa-icon [icon]="faProjectDiagram"></fa-icon> Diagramas Recientes
       </h1>
     </div>
 
@@ -29,38 +29,6 @@
     </div>
 
     <!-- Diagrams Section -->
-    <div class="diagrams-grid">
-      <div class="diagram-card" *ngFor="let diagram of diagrams; let i = index; trackBy: trackByIndex">
-        <div class="diagram-preview">
-          <fa-icon [icon]="faSitemap"></fa-icon>
-        </div>
-        <div class="diagram-info">
-          <div class="diagram-header">
-            <div class="diagram-title">{{ diagram.title }}</div>
-            <div class="diagram-menu">
-              <fa-icon [icon]="faEllipsisV" (click)="toggleMenu(i, $event)"></fa-icon>
-              <div class="menu-dropdown" [ngClass]="{ 'show': openMenus[i] }">
-                <div class="menu-item" *ngFor="let menu of diagram.menuItems" (click)="ejecutarAccion(menu.action, $event)">
-                  <fa-icon [icon]="menu.icon"></fa-icon> {{ menu.label }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="diagram-meta">
-            <div class="diagram-date">
-              <fa-icon [icon]="faClock"></fa-icon> {{ diagram.lastEdited }}
-            </div>
-            <div class="diagram-owner">
-              <fa-icon [icon]="faUser"></fa-icon> {{ diagram.owner }}
-            </div>
-          </div>
-          <div class="diagram-tags">
-            <span class="diagram-tag" *ngFor="let tag of diagram.tags">
-              <fa-icon [icon]="faTags"></fa-icon> {{ tag }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-diagramas-recientes></app-diagramas-recientes>
   </main>
 </div>

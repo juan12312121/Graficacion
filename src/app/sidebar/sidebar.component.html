@@ -13,28 +13,30 @@
         <div class="sidebar-section">
             <div class="sidebar-section-title">Navegación</div>
             <ul class="sidebar-menu">
-                <li class="sidebar-menu-item active">
+                <li class="sidebar-menu-item" routerLinkActive="active">
                     <fa-icon [icon]="iconService.getIcon('home')"></fa-icon>
-                    Inicio
+                    <a routerLink="/principal">Inicio</a>
                 </li>
-                <li class="sidebar-menu-item">
+                <li class="sidebar-menu-item" routerLinkActive="active">
                     <fa-icon [icon]="iconService.getIcon('projectDiagram')"></fa-icon>
-                    Mis Diagramas
+                    <a routerLink="/mis-diagramas">Mis Diagramas</a>
                 </li>
-                <li class="sidebar-menu-item">
-                    <fa-icon [icon]="iconService.getIcon('shareAlt')"></fa-icon> <!-- Updated for Compartidos -->
-                    Compartidos
+                <li class="sidebar-menu-item" routerLinkActive="active">
+                    <fa-icon [icon]="iconService.getIcon('shareAlt')"></fa-icon>
+                    <a routerLink="/compartidos">Compartidos</a>
                 </li>
-                <li class="sidebar-menu-item">
-                    <fa-icon [icon]="iconService.getIcon('star')"></fa-icon>  <!-- Updated for Favorites -->
-                    Favoritos
+                <li class="sidebar-menu-item" routerLinkActive="active">
+                    <fa-icon [icon]="iconService.getIcon('star')"></fa-icon>
+                    <a routerLink="/favoritos">Favoritos</a>
                 </li>
-                <li class="sidebar-menu-item">
-                    <fa-icon [icon]="iconService.getIcon('trash')"></fa-icon>  <!-- Updated for Trash -->
-                    Papelera
+                <li class="sidebar-menu-item" routerLinkActive="active">
+                    <fa-icon [icon]="iconService.getIcon('trash')"></fa-icon>
+                    <a routerLink="/papelera">Papelera</a>
                 </li>
             </ul>
         </div>
+        
+        
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Plantillas</div>
