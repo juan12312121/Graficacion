@@ -1,10 +1,15 @@
 /* Container for Sidebar and Main Content */
 .container {
     display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-}
-
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    min-height: 100vh; 
+    background: #f0f8ff;
+  }
+  
+  
+  
 /* Main Content Area */
 .main-content {
     flex: 1;
