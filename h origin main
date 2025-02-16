@@ -1,0 +1,83 @@
+[33mcommit 99b2a15196874d210d1e58e27838283385641c3e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Sat Feb 15 21:11:42 2025 -0700
+
+    Corregir navegación y crear el registro
+
+[33mcommit b947a97be15c95a93c3a5009017b1677d0fbf87c[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 17:59:07 2025 -0700
+
+    Removed unnecessary files from public/diagrama_files2
+
+[33mcommit 56e990f56b6e220ace46e282ca7cf4d3c268e8c2[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 17:57:06 2025 -0700
+
+    Removed unnecessary files from public/diagrama_files
+
+[33mcommit 68eff758170f0bc2b19fda5fb579a1ec9014e973[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 17:23:09 2025 -0700
+
+    Correcciones en estilos y estructura
+
+[33mcommit f7cc11758d1171967ca70a87c659fd4b9b79476b[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 15:18:47 2025 -0700
+
+    Edicion4
+
+[33mcommit 07ff96c6c450aab110d6df9da9fddac4209310c5[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 13:35:34 2025 -0700
+
+    Otro puto avance alv
+
+[33mcommit e5ca1d1b9d529384eb29d55dfbfc35029b62f0d2[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 12:11:22 2025 -0700
+
+    Edicion3
+
+[33mcommit f6b776b1a2be5bec1896afb55b3f10c246c657e9[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 12:05:51 2025 -0700
+
+    Edicion2
+
+[33mcommit 943b36bc67d2547bcd9b8aabf80f2d47654b3e55[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 12:03:44 2025 -0700
+
+    Edicion
+
+[33mcommit 1ac5788bbb20a5a5440212ec5f6dd72f1afd3ed1[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Thu Feb 13 12:00:48 2025 -0700
+
+    Creacion de la vista de compartidos
+
+[33mcommit 69003611c80f90f529dc53e1ddbc85d4edecd04e[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Wed Feb 12 21:16:23 2025 -0700
+
+    Creacion del componente compartidos
+
+[33mcommit 04d838290b720c655a1c675621d07099e5180292[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Wed Feb 12 20:49:39 2025 -0700
+
+    Separacion de la pagina principal en componentes y creacion de un nuevo componente para los diagramas totales creados por el usuario
+
+[33mcommit 921ea9f078bb13043c6d27f4c4332b2ab20691a8[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Wed Feb 12 17:05:52 2025 -0700
+
+    Uso de submenu en cada diagrama creado (tiene bug xd)
+
+[33mcommit 8778f8394b1eabe91eeb20f6f4b6e6322d951cf8[m
+Author: Juan Carlos de Jesus Gonzalez Lopez <97489315+juan12312121@users.noreply.github.com>
+Date:   Tue Feb 11 23:12:47 2025 -0700
+
+    Primer commit: Subida inicial del proyecto
