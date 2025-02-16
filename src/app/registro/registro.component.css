@@ -1,0 +1,151 @@
+.body {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);            
+    color: #333;
+}
+
+
+/* Contenedor principal */
+.signup-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: float 3s infinite ease-in-out;
+
+}
+
+@keyframes float {
+0% {
+transform: translateY(0px);
+}
+
+50% {
+transform: translateY(-10px);
+}
+
+100% {
+transform: translateY(0px);
+}
+}
+
+
+/* Logo */
+.logo {
+    margin-bottom: 1rem;
+}
+
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    background: #3a7ca5;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.logo-icon i {
+    font-size: 1.5rem;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    letter-spacing: 1px;
+
+}
+
+/* Campos de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+margin-bottom: 0.5rem;
+color: #4a5568;
+font-size: 0.875rem;
+font-weight: 500;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon input {
+    width: 100%;
+    padding: 0.7rem 0.7rem 0.7rem 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.input-icon i {
+    position: absolute;
+    left: 0.8rem;
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+.input-icon input:focus {
+    outline: none;
+    border-color: #2a5298;
+    box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
+}
+
+/* Botón de registro */
+.signup-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #2a5298;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.signup-button:hover {
+    background: #1e3c72;
+}
+
+/* Enlace de login */
+.login-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.login-link a {
+    color: #2a5298;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.login-link a:hover {
+    color: #1e3c72;
+}

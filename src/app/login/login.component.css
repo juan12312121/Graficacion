@@ -1,11 +1,8 @@
-
-
 /* Estilos generales */
 body {
   font-family: 'Playfair Display', serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);
   color: #333;
   display: flex;
@@ -13,19 +10,14 @@ body {
   justify-content: center;
   height: 100vh;
   overflow: hidden;
-  animation: fadeIn 1.2s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeIn{
-  0%{
-    opacity: 0;
-    transition: scale(0.9);
-  }
-  100%{
-    opacity: 1;
-    transform: scale(1);
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
+
 
 /* Contenedor principal */
 .body-container {
@@ -56,13 +48,16 @@ body {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
+
   100% {
     transform: translateY(0px);
   }
 }
+
 /* Logo */
 .logo {
   margin-bottom: 1.5rem;
@@ -94,6 +89,8 @@ body {
 /* Campos de formulario */
 .form-group {
   margin-bottom: 1.5rem;
+  text-align: left;
+
 }
 
 .form-group label {
@@ -114,12 +111,11 @@ body {
 
 .input-icon input {
   width: 100%;
-  padding: 0.75rem 1rem 0.75rem 3rem;
-  /* Espacio para el ícono */
+  padding: 0.7rem 0.7rem 0.7rem 2.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .input-icon fa-icon {
@@ -187,7 +183,7 @@ body {
   color: #2a5298;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  cursor: pointer;
 }
 
 .signup-link a:hover {
