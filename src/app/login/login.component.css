@@ -1,25 +1,3 @@
-/* Estilos generales */
-body {
-  font-family: 'Playfair Display', serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-  animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-
-/* Contenedor principal */
 .body-container {
   display: flex;
   justify-content: center;
@@ -31,6 +9,7 @@ body {
   overflow: hidden;
 }
 
+/* Contenedor del login */
 .login-container {
   background: rgba(255, 255, 255, 0.85);
   padding: 2.5rem;
@@ -45,17 +24,9 @@ body {
 }
 
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 /* Logo */
@@ -90,7 +61,6 @@ body {
 .form-group {
   margin-bottom: 1.5rem;
   text-align: left;
-
 }
 
 .form-group label {
@@ -107,11 +77,13 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .input-icon input {
   width: 100%;
   padding: 0.7rem 0.7rem 0.7rem 2.5rem;
+  padding-right: 2.5rem;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   font-size: 1rem;
@@ -120,16 +92,26 @@ body {
 
 .input-icon i {
   position: absolute;
-  left: 10px;
-  color: #999;
-  font-size: 1.2rem; /* Tamaño del ícono */
-  transition: color 0.3s ease; /* Transición de color al hacer foco */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .input-icon input:focus {
   outline: none;
   border-color: #2a5298;
   box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
+}
+
+.input-icon .fa-lock {
+  left: 10px;
+}
+
+.input-icon .eye-icon {
+  right: 10px;
 }
 
 /* Enlace de "Forgot Password?" */
@@ -190,5 +172,33 @@ body {
 }
 
 .signup-link a:hover {
-    color: #1e3c72;
+  color: #1e3c72;
+}
+
+/* Ícono del ojo para la visibilidad de la contraseña */
+.eye-icon:hover {
+  color: #2a5298;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .logo-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .login-button {
+    font-size: 1rem;
+    padding: 0.65rem;
+  }
 }

@@ -1,49 +1,39 @@
 .body {
-    font-family: 'Playfair Display', serif;
-    margin: 0;
-    padding: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);            
-    color: #333;
+    width: 100%;
+    background: linear-gradient(135deg, #4a90e2 0%, #6f88d1 50%, #3b5998 100%);
+    background-size: cover;
+    overflow: hidden;
 }
 
-
-/* Contenedor principal */
+/* Contenedor del signup */
 .signup-container {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 450px;
+    height: 100%;
+    max-height: 810px;
     text-align: center;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     animation: float 3s infinite ease-in-out;
-
 }
 
 @keyframes float {
-0% {
-transform: translateY(0px);
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
-
-50% {
-transform: translateY(-10px);
-}
-
-100% {
-transform: translateY(0px);
-}
-}
-
 
 /* Logo */
 .logo {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .logo-icon {
@@ -54,12 +44,8 @@ transform: translateY(0px);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 1rem;
+    margin-bottom: 1rem;
     transition: transform 0.3s ease;
-}
-
-.logo-icon i {
-    font-size: 1.5rem;
 }
 
 .logo-icon:hover {
@@ -67,11 +53,10 @@ transform: translateY(0px);
 }
 
 .logo-text {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #2d3748;
     letter-spacing: 1px;
-
 }
 
 /* Campos de formulario */
@@ -82,23 +67,25 @@ transform: translateY(0px);
 
 .form-group label {
     display: block;
-margin-bottom: 0.5rem;
-color: #4a5568;
-font-size: 0.875rem;
-font-weight: 500;
-text-transform: uppercase;
-letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .input-icon {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .input-icon input {
     width: 100%;
     padding: 0.7rem 0.7rem 0.7rem 2.5rem;
+    padding-right: 2.5rem;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
     font-size: 1rem;
@@ -107,11 +94,13 @@ letter-spacing: 0.5px;
 
 .input-icon i {
     position: absolute;
-    left: 10px;
-    color: black;
-    font-size: 1.2rem; /* Tamaño del ícono */
-    transition: color 0.3s ease; /* Transición de color al hacer foco */
-  }
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
 
 .input-icon input:focus {
     outline: none;
@@ -119,7 +108,15 @@ letter-spacing: 0.5px;
     box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
 }
 
-/* Botón de registro */
+.input-icon .fa-user, .input-icon .fa-envelope, .input-icon .fa-lock, .input-icon .fa-check-circle {
+    left: 10px;
+}
+
+.input-icon .eye-icon {
+    right: 10px;
+}
+
+/* Botón de signup */
 .signup-button {
     width: 100%;
     padding: 0.75rem;
@@ -127,30 +124,65 @@ letter-spacing: 0.5px;
     color: white;
     border: none;
     border-radius: 6px;
-    font-size: 1.1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s, transform 0.2s ease;
 }
 
 .signup-button:hover {
     background: #1e3c72;
+    transform: translateY(-2px);
+}
+
+.signup-button:active {
+    background: #1e3c72;
+    transform: translateY(2px);
 }
 
 /* Enlace de login */
 .login-link {
     text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
+    margin-top: 1.5rem;
+    color: #4a5568;
+    font-size: 0.875rem;
 }
 
 .login-link a {
     color: #2a5298;
-    font-weight: 600;
     text-decoration: none;
+    font-weight: 500;
     cursor: pointer;
 }
 
 .login-link a:hover {
     color: #1e3c72;
+}
+
+/* Ícono del ojo para la visibilidad de la contraseña */
+.eye-icon:hover {
+    color: #2a5298;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .signup-container {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+
+    .logo-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .signup-button {
+        font-size: 1rem;
+        padding: 0.65rem;
+    }
 }

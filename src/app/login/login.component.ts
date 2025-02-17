@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router'; // Importa RouterModule aquí
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconService } from '../services/icon-service.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  imports: [FormsModule, FontAwesomeModule, CommonModule, RouterModule],  // Añade RouterModule a las importaciones
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -21,10 +21,11 @@ export class LoginComponent implements OnInit {
 
   email: string = '';
   password: string = '';
+  isPasswordVisible: boolean = false;
 
   constructor(private iconService: IconService, private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.faHome = this.iconService.getIcon('home');
     this.faEnvelope = this.iconService.getIcon('envelope');
     this.faLock = this.iconService.getIcon('lock');
@@ -32,26 +33,24 @@ export class LoginComponent implements OnInit {
     this.faProjectDiagram = this.iconService.getIcon('projectDiagram');
   }
 
-  onSubmit() {
+  onSubmit(): void {
     console.log('Email:', this.email);
     console.log('Password:', this.password);
   }
 
-  navigateToRegistro() {
-    try {
-      console.log('Navegando a la página de registro');
-      this.router.navigate(['/registro']).then(success => {
-        if (success) {
-          console.log('Navegación exitosa a /registro');
-        } else {
-          console.error('Error en la navegación a /registro');
-        }
-      }).catch(error => {
-        console.error('Error en la navegación:', error);
-      });
-    } catch (error) {
-      console.error('Error capturado en navigateToRegistro:', error);
-    }
+  navigateToRegistro(): void {
+    this.router.navigate(['/registro']).catch((error: any) => {
+      console.error('Error en la navegación a /registro', error);
+    });
   }
-  
+
+  navigateToForgotPassword(): void {
+    this.router.navigate(['/forgot-password']).catch((error: any) => {
+      console.error('Error en la navegación:', error);
+    });
+  }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 }
