@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconService } from '../services/icon-service.service';
 
-
 @Component({
   selector: 'app-btn-crear-diagrama',
   standalone: true,
-  imports: [FontAwesomeModule,CommonModule],
+  imports: [FontAwesomeModule, CommonModule],
   templateUrl: './btn-crear-diagrama.component.html',
   styleUrls: ['./btn-crear-diagrama.component.css']
 })

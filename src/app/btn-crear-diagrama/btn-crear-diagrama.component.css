@@ -1,51 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
 .button-wrapper {
-    padding: 10px;  /* Padding to add separation around the button */
-    display: flex;
-    justify-content: center;  /* Centering the button horizontally */
-    align-items: center;  /* Centering the button vertically */
-    gap: 10px;  /* Optional: Adds space between button and other content inside the div */
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn {
-    border: none;
-    width: 16em;  /* Smaller width */
-    height: 3em;  /* Smaller height */
-    border-radius: 2em;  /* Rounded corners */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    background: #007BFF;  /* Blue color */
-    cursor: pointer;
-    transition: all 450ms ease-in-out;
-    padding: 0 1em;  /* Horizontal padding to make it more spacious */
+  border: none;
+  width: 16em;
+  height: 3em;
+  border-radius: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: #007BFF;
+  cursor: pointer;
+  transition: all 450ms ease-in-out;
+  padding: 0 1em;
 }
 
 .sparkle {
-    color: #FFFFFF;  /* White color for the icon */
-    transition: all 800ms ease;
+  color: #FFFFFF;
+  transition: all 800ms ease;
 }
 
 .text {
-    font-weight: 600;
-    color: #FFFFFF;  /* White text */
-    font-size: medium;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: medium;
 }
 
 .btn:hover {
-    background: linear-gradient(0deg, #66aaff, #0056b3);  /* Light blue to dark blue gradient */
-    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
-    inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
-    0px 0px 0px 4px rgba(255, 255, 255, 0.2),
-    0px 0px 180px 0px #3399FF;  /* Blue glow */
-    transform: translateY(-2px);
+  background: linear-gradient(0deg, #66aaff, #0056b3);
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+              inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+              0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+              0px 0px 180px 0px #3399FF;
+  transform: translateY(-2px);
 }
 
 .btn:hover .text {
-    color: white;  /* White text on hover */
+  color: white;
 }
 
 .btn:hover .sparkle {
-    color: #FFD700;  /* Gold color for the icon on hover */
-    transform: scale(1.2);  /* Scale effect */
+  color: #FFD700;
+  transform: scale(1.2);
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  color: #2D3748;
+  background: linear-gradient(120deg, #6B46C1 0%, #4299E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.close-button {
+  background: #EDF2F7;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: #4A5568;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background: #E2E8F0;
+  transform: scale(1.05);
+}
+
+.diagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.diagram-card {
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.diagram-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6B46C1, #4299E1);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.diagram-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.diagram-card:hover::before {
+  transform: scaleX(1);
+}
+
+.diagram-preview {
+  background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.diagram-preview i {
+  font-size: 4rem;
+  color: #6B46C1;
+  transition: all 0.3s ease;
+}
+
+.diagram-card:hover .diagram-preview {
+  background: linear-gradient(135deg, #EDF2F7 0%, #E2E8F0 100%);
+}
+
+.diagram-card:hover .diagram-preview i {
+  transform: scale(1.1);
+  color: #4299E1;
+}
+
+.diagram-title {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2D3748;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.diagram-title i {
+  color: #6B46C1;
+}
+
+.diagram-description {
+  font-size: 0.95rem;
+  color: #718096;
+  line-height: 1.5;
+}
+
+.badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(120deg, #6B46C1 0%, #4299E1 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hidden {
+    display: none;
+  }
