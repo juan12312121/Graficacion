@@ -3,8 +3,9 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
     padding-bottom: 24px;
+
   }
-  
+
   .diagram-card {
     background-color: white;
     border-radius: 12px;
@@ -27,7 +28,7 @@
     justify-content: center;
     border-bottom: 1px solid #e2e8f0;
   }
-  
+
   .diagram-preview i {
     font-size: 48px;
     color: #3b82f6;
@@ -36,20 +37,20 @@
   .diagram-info {
     padding: 16px;
   }
-  
+
   .diagram-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 8px;
   }
-  
+
   .diagram-title {
     font-size: 16px;
     font-weight: 500;
     color: #1e293b;
   }
-  
+
 
   .diagram-menu {
     color: #64748b;
@@ -57,12 +58,12 @@
     cursor: pointer;
     border-radius: 4px;
   }
-  
+
   .diagram-menu:hover {
     background-color: #f1f5f9;
     color: #1e293b;
   }
-  
+
   .diagram-meta {
     display: flex;
     align-items: center;
@@ -70,25 +71,25 @@
     color: #64748b;
     font-size: 13px;
   }
-  
+
   .diagram-date {
     display: flex;
     align-items: center;
     gap: 4px;
   }
-  
+
   .diagram-owner {
     display: flex;
     align-items: center;
     gap: 4px;
   }
-  
+
   .diagram-tags {
     display: flex;
     gap: 8px;
     margin-top: 12px;
   }
-  
+
   .diagram-tag {
     padding: 4px 8px;
     background-color: #f1f5f9;
@@ -96,7 +97,7 @@
     border-radius: 4px;
     font-size: 12px;
   }
-  
+
   .diagram-menu {
     position: relative;
     display: inline-block;

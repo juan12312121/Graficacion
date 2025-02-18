@@ -4,25 +4,32 @@
     margin: 0;
     padding: 0;
     min-width: 100%;
-    min-height: 100vh; 
+    min-height: 100vh;
     background: #f0f8ff;
+
   }
-  
-  
-  
+
+
+
 /* Main Content Area */
 .main-content {
+
+   margin-left: 280px;
     flex: 1;
     padding: 2rem;
-    max-width: 1400px;
-    margin-left: 85px; /* Adjust to prevent overlap with sidebar */
+    max-width: 100%;
     display: flex;
     flex-direction: column;
+
 }
 
 /* Header Section */
 .main-header {
-    margin-bottom: 2rem;
+
+  z-index: 1;
+  width: calc(100% - 200px);
+  position: fixed;
+      margin-bottom: 2rem;
     background: white;
     padding: 1.5rem;
     border-radius: 1rem;
@@ -106,11 +113,13 @@
 
 /* Diagrams Grid Section */
 .diagrams-grid {
+
+
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
-    padding: 0.5rem;
-}
+    padding-top: 200px;
+  }
 
 /* Diagram Cards */
 .diagram-card {
