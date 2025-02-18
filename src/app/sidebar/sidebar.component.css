@@ -52,24 +52,29 @@
   /* Sidebar menu */
   .sidebar-menu {
     list-style: none;
+    padding-left: 5px;
   }
 
   /* Sidebar menu item */
   .sidebar-menu-item {
     display: flex;
     align-items: center;
-    padding: 10px 8px;
+    padding: 10px 8px 10px 8px ;
     color: #e2e8f0;
     border-radius: 6px;
     cursor: pointer;
     margin-bottom: 2px;
     transition: background-color 0.2s;
     gap: 12px; /* Add space between icon and text */
+    text-decoration: none;
+    font-weight: 500;
+    font-size:14px;
   }
 
   /* Hover effect for menu items */
   .sidebar-menu-item:hover {
     background-color: rgba(255,255,255,0.1);
+    color:rgb(59,130,246) ;
   }
 
   /* Active menu item */
@@ -204,7 +209,7 @@
     width: 100%; /* Ensures the link covers the entire menu item */
   }
 
-  
+
   .sidebar-menu-item a:hover {
     color: #3b82f6; /* Change link color on hover */
   }

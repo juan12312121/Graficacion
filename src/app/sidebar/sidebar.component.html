@@ -1,79 +1,79 @@
 <div class="sidebar">
-    <div class="logo">
-        <fa-icon [icon]="iconService.getIcon('projectDiagram')"></fa-icon>
-        <span>DiagramMaker</span>
-    </div>
-    
-    <div class="sidebar-content">
-       <app-btn-crear-diagrama></app-btn-crear-diagrama>
-     
+  <div class="logo">
+    <fa-icon [icon]="iconService.getIcon('projectDiagram')"></fa-icon>
+    <span>DiagramMaker</span>
+  </div>
 
-        <div class="sidebar-section">
-            <div class="sidebar-section-title">Navegación</div>
-            <ul class="sidebar-menu">
-                <li class="sidebar-menu-item" routerLinkActive="active">
-                    <fa-icon [icon]="iconService.getIcon('home')"></fa-icon>
-                    <a routerLink="/principal">Inicio</a>
-                </li>
-                <li class="sidebar-menu-item" routerLinkActive="active">
-                    <fa-icon [icon]="iconService.getIcon('projectDiagram')"></fa-icon>
-                    <a routerLink="/mis-diagramas">Mis Diagramas</a>
-                </li>
-                <li class="sidebar-menu-item" routerLinkActive="active">
-                    <fa-icon [icon]="iconService.getIcon('shareAlt')"></fa-icon>
-                    <a routerLink="/compartidos">Compartidos</a>
-                </li>
-                <li class="sidebar-menu-item" routerLinkActive="active">
-                    <fa-icon [icon]="iconService.getIcon('star')"></fa-icon>
-                    <a routerLink="/favoritos">Favoritos</a>
-                </li>
-                <li class="sidebar-menu-item" routerLinkActive="active">
-                    <fa-icon [icon]="iconService.getIcon('trash')"></fa-icon>
-                    <a routerLink="/papelera">Papelera</a>
-                </li>
-            </ul>
-        </div>
-        
-        
+  <div class="sidebar-content">
+    <app-btn-crear-diagrama></app-btn-crear-diagrama>
 
-        <div class="sidebar-section">
-            <div class="sidebar-section-title">Plantillas</div>
-            <div class="templates-grid">
-                <div class="template-item">
-                    <fa-icon [icon]="iconService.getIcon('sitemap')"></fa-icon> <!-- Organigrama -->
-                    <span>Organigrama</span>
-                </div>
-                <div class="template-item">
-                    <fa-icon [icon]="iconService.getIcon('random')"></fa-icon> <!-- Flujo -->
-                    <span>Flujo</span>
-                </div>
-                <div class="template-item">
-                    <fa-icon [icon]="iconService.getIcon('networkWired')"></fa-icon> <!-- Red -->
-                    <span>Red</span>
-                </div>
-                <div class="template-item">
-                    <fa-icon [icon]="iconService.getIcon('brain')"></fa-icon> <!-- Mental -->
-                    <span>Mental</span>
-                </div>
-            </div>
-        </div>
-        
-        
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Navegación</div>
+      <ul class="sidebar-menu">
+
+        <a routerLink="/principal" class="sidebar-menu-item" routerLinkActive="active"><fa-icon
+            [icon]="iconService.getIcon('home')"></fa-icon>Inicio</a>
+
+        <a routerLink="/mis-diagramas" class="sidebar-menu-item" routerLinkActive="active"><fa-icon
+            [icon]="iconService.getIcon('projectDiagram')"></fa-icon>Mis Diagramas</a>
+
+
+        <a routerLink="/compartidos" class="sidebar-menu-item" routerLinkActive="active"><fa-icon
+            [icon]="iconService.getIcon('shareAlt')"></fa-icon>Compartidos</a>
+
+
+        <a routerLink="/favoritos" class="sidebar-menu-item" routerLinkActive="active"><fa-icon
+            [icon]="iconService.getIcon('star')"></fa-icon>Favoritos</a>
+
+        <a routerLink="/papelera" class="sidebar-menu-item" routerLinkActive="active"><fa-icon
+            [icon]="iconService.getIcon('trash')"></fa-icon>Papelera</a>
+
+
+
+      </ul>
     </div>
 
-    <div class="sidebar-footer">
-        <div class="user-profile">
-            <div class="user-avatar">
-                <fa-icon [icon]="iconService.getIcon('lock')"></fa-icon>
-            </div>
-            <div class="user-info">
-                <div class="user-name">Juan Pérez</div>
-                <div class="user-email">juanejemplocom</div>
-            </div>
+
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Plantillas</div>
+      <div class="templates-grid">
+        <div class="template-item">
+          <fa-icon [icon]="iconService.getIcon('sitemap')"></fa-icon> <!-- Organigrama -->
+          <span>Organigrama</span>
         </div>
-        <button class="logout-button">
-            <fa-icon [icon]="iconService.getIcon('lock')"></fa-icon>
-            Cerrar Sesión
-        </button>
+        <div class="template-item">
+          <fa-icon [icon]="iconService.getIcon('random')"></fa-icon> <!-- Flujo -->
+          <span>Flujo</span>
+        </div>
+        <div class="template-item">
+          <fa-icon [icon]="iconService.getIcon('networkWired')"></fa-icon> <!-- Red -->
+          <span>Red</span>
+        </div>
+        <div class="template-item">
+          <fa-icon [icon]="iconService.getIcon('brain')"></fa-icon> <!-- Mental -->
+          <span>Mental</span>
+        </div>
+      </div>
     </div>
+
+
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar">
+        <fa-icon [icon]="iconService.getIcon('lock')"></fa-icon>
+      </div>
+      <div class="user-info">
+        <div class="user-name">Juan Pérez</div>
+        <div class="user-email">juanejemplocom</div>
+      </div>
+    </div>
+    <button class="logout-button">
+      <fa-icon [icon]="iconService.getIcon('lock')"></fa-icon>
+      Cerrar Sesión
+    </button>
+  </div>
 </div>
