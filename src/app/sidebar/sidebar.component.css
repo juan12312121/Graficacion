@@ -1,6 +1,6 @@
   /* Sidebar styling */
   .sidebar {
-
+z-index: 0;
     width: 280px;
     background-color: #1e293b;
     color: #fff;
