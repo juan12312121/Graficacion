@@ -1,55 +1,6 @@
-<div class="sidebar-content">
-    <!-- Botón para abrir el modal -->
-    <button class="new-diagram" (click)="openModal()">
-      <fa-icon [icon]="iconService.getIcon('projectDiagram')"></fa-icon>
-      Nuevo Diagrama
-    </button>
-  </div>
-  
-  <!-- Estructura del Modal -->
-  <div *ngIf="isModalVisible" class="custom-modal-overlay" (click)="closeModal()">
-    <div class="custom-modal" (click)="$event.stopPropagation()">
-      <!-- Cabecera del Modal -->
-      <div class="modal-header">
-        <div class="modal-title-container">
-          <fa-icon [icon]="iconService.getIcon('questionCircle')"></fa-icon>
-          <h5 class="modal-title">Seleccione una opción</h5>
-        </div>
-        
-        <button type="button" class="close-btn" (click)="closeModal()">
-          <fa-icon [icon]="iconService.getIcon('timesCircle')"></fa-icon>
-        </button>
-      </div>
-  
-      <!-- Cuerpo del Modal -->
-      <div class="modal-body">
-        <!-- Contenedor de las categorías con iconos -->
-        <div class="grid-container">
-          <div class="grid-item">
-            <fa-icon [icon]="iconService.getIcon('clipboard')"></fa-icon>
-            <span>Clases</span>
-          </div>
-          <div class="grid-item">
-            <fa-icon [icon]="iconService.getIcon('box')"></fa-icon>
-            <span>Paquetes</span>
-          </div>
-          <div class="grid-item">
-            <fa-icon [icon]="iconService.getIcon('cogs')"></fa-icon>
-            <span>Componentes</span>
-          </div>
-          <div class="grid-item">
-            <fa-icon [icon]="iconService.getIcon('database')"></fa-icon>
-            <span>BD</span>
-          </div>
-          <div class="grid-item">
-            <fa-icon [icon]="iconService.getIcon('list')"></fa-icon>
-            <span>Secuencias</span>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Pie del Modal -->
-     
-    </div>
-  </div>
-  
+<div class="button-wrapper">
+  <button class="btn">
+    <i class="fas fa-project-diagram sparkle"></i> <!-- Font Awesome Diagram Icon -->
+    <span class="text">Crear Diagrama</span>
+  </button>
+</div>

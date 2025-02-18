@@ -1,219 +1,51 @@
-/* Sidebar Content */
+.button-wrapper {
+    padding: 10px;  /* Padding to add separation around the button */
+    display: flex;
+    justify-content: center;  /* Centering the button horizontally */
+    align-items: center;  /* Centering the button vertically */
+    gap: 10px;  /* Optional: Adds space between button and other content inside the div */
+}
 
-
-/* New Diagram Button */
-.new-diagram {
-    margin: 20px;
-    background: linear-gradient(135deg, #00aaff, #0077cc); /* Azul más vibrante */
-    color: white;
-    padding: 15px 20px; /* Ajuste en tamaño */
-    border-radius: 14px;
+.btn {
     border: none;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 5px 10px rgba(0, 119, 204, 0.4); /* Sombra más definida */
-    position: relative;
-    overflow: hidden;
-}
-
-/* Efecto de brillo repetitivo */
-.new-diagram::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: none;
-}
-
-/* Iniciar animación al hacer hover */
-.new-diagram:hover::before {
-    animation: shineEffect 1.5s infinite linear;
-}
-
-/* Definición de la animación */
-@keyframes shineEffect {
-    0% {
-        left: -100%;
-    }
-    50% {
-        left: 100%;
-    }
-    100% {
-        left: -100%;
-    }
-}
-
-/* Animación al pasar el mouse */
-.new-diagram:hover {
-    background: linear-gradient(135deg, #0077cc, #005fa3);
-    box-shadow: 0px 8px 15px rgba(0, 119, 204, 0.6);
-}
-
-/* Modal Overlay */
-.custom-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
+    width: 16em;  /* Smaller width */
+    height: 3em;  /* Smaller height */
+    border-radius: 2em;  /* Rounded corners */
     display: flex;
     justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-/* Modal */
-.custom-modal {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    max-width: 700px;
-    width: 100%;
-    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-/* Modal Header */
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-}
-
-.modal-title {
-    font-size: 22px;
-    color: #333;
-    font-weight: 600;
-    margin: 0;
-}
-
-.modal-title-container {
-    display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.modal-title-container fa-icon {
-    font-size: 28px;
-    margin-right: 12px;
-    color: #4f52ba;
-}
-
-/* Close Button */
-.close-btn {
-    background: red;
-    border: none;
-    font-size: 28px;
-    color: white;
+    background: #007BFF;  /* Blue color */
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    transition: background-color 0.3s ease;
+    transition: all 450ms ease-in-out;
+    padding: 0 1em;  /* Horizontal padding to make it more spacious */
 }
 
-.close-btn:hover {
-    background: darkred;
+.sparkle {
+    color: #FFFFFF;  /* White color for the icon */
+    transition: all 800ms ease;
 }
 
-.close-btn fa-icon {
-    font-size: 20px;
-    margin: 0;
-    color: white;
-}
-
-.close-btn:hover fa-icon {
-    color: white;
-}
-
-/* Modal Footer */
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 15px;
-}
-
-/* Buttons */
-.btn {
-    padding: 14px 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 12px;
+.text {
     font-weight: 600;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    color: #FFFFFF;  /* White text */
+    font-size: medium;
 }
 
-.btn-secondary {
-    background: #4f52ba;
-    color: white;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+.btn:hover {
+    background: linear-gradient(0deg, #66aaff, #0056b3);  /* Light blue to dark blue gradient */
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+    inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+    0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+    0px 0px 180px 0px #3399FF;  /* Blue glow */
+    transform: translateY(-2px);
 }
 
-.btn-secondary:hover {
-    background: #3b44a0;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+.btn:hover .text {
+    color: white;  /* White text on hover */
 }
 
-/* Grid Layout for Modal Categories */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    margin-top: 20px;
-}
-
-/* Grid Item */
-.grid-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    border: 1px solid #ddd;
-}
-
-.grid-item:hover {
-    background-color: #f9f9f9;
-}
-
-.grid-item fa-icon {
-    font-size: 50px;
-    color: #0077cc; /* Azul primario */
-    text-shadow: 2px 2px 8px rgba(0, 163, 255, 0.5); /* Efecto de brillo sutil */
-    margin-bottom: 18px;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.grid-item:hover fa-icon {
-    color: #00a3ff; /* Azul más claro al hacer hover */
-    text-shadow: 3px 3px 10px rgba(0, 119, 204, 0.7);
-}
-
-.grid-item span {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    text-align: center;
+.btn:hover .sparkle {
+    color: #FFD700;  /* Gold color for the icon on hover */
+    transform: scale(1.2);  /* Scale effect */
 }
