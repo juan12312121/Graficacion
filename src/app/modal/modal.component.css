@@ -176,14 +176,7 @@
     height: auto;
   }
   
-  .diagram-description:not(.expanded)::after {
-    content: '...';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: white;
-    padding-left: 4px;
-  }
+ 
   
   .badge {
     position: absolute;
