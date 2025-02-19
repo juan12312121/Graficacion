@@ -18,7 +18,7 @@
     flex: 1;
     padding: 2rem;
     max-width: 100%;
-    display: flex;
+    /*display: flex;*/
     flex-direction: column;
 
 }
@@ -28,7 +28,7 @@
 
   z-index: 1;
   width: calc(100% - 200px);
-  position: fixed;
+  /*position: fixed;*/
       margin-bottom: 2rem;
     background: white;
     padding: 1.5rem;
@@ -57,7 +57,7 @@
 
 /* Search Bar Styling */
 .search-bar {
-    position: relative;
+    /*position: relative;*/
     flex: 1;
     min-width: 300px;
     max-width: 500px;
@@ -118,7 +118,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
-    padding-top: 200px;
+    /*padding-top: 200px;*/
   }
 
 /* Diagram Cards */
@@ -128,7 +128,7 @@
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid #e2e8f0;
-    position: relative;
+    /*position: relative;*/
 }
 
 .diagram-card:hover {
@@ -143,13 +143,11 @@
 .diagram-preview {
     height: 180px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #e2e8f0;
     color: #64748b;
     font-size: 0.94rem;
-    position: relative;
     overflow: hidden; /* Ensure image stays within bounds */
 }
 
