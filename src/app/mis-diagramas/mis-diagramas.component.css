@@ -35,7 +35,7 @@
   }
 
   .search-bar {
-    position: relative;
+    position:relative;
     display: flex;
     align-items: center;
     width: 400px;

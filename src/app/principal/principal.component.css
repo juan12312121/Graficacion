@@ -105,7 +105,6 @@
 }
 
 .search-bar {
-  position: relative;
   display: flex;
   align-items: center;
   width: 400px;
@@ -114,18 +113,17 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px 10px;
+  gap: 8px; /* Espaciado entre el icono y el input */
 }
 
-.search-bar fa-icon {
-  position: absolute;
-  left: 10px;
-  color: #888;
+.search-bar i {
+  color: #94a3b8;
   font-size: 16px;
 }
 
 .search-bar input {
-  width: 100%;
-  padding: 8px 8px 8px 35px; /* Espacio para el icono */
+  flex: 1; /* Ocupa todo el espacio disponible */
+  padding: 8px;
   border: none;
   outline: none;
   font-size: 14px;
@@ -133,16 +131,7 @@
 }
 
 .search-bar input:focus {
-  outline: none;
   border-color: #3b82f6;
-}
-
-.search-bar i {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
 }
 
 .filter-button {
