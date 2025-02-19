@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router'; // Importa RouterModule aquí
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconService } from '../services/icon-service.service';
 
 @Component({
   selector: 'app-login',
@@ -13,24 +12,15 @@ import { IconService } from '../services/icon-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  faHome: any;
-  faEnvelope: any;
-  faLock: any;
-  faQuestionCircle: any;
-  faProjectDiagram: any;
-
+  // No es necesario definir los íconos desde IconService
   email: string = '';
   password: string = '';
   isPasswordVisible: boolean = false;
 
-  constructor(private iconService: IconService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.faHome = this.iconService.getIcon('home');
-    this.faEnvelope = this.iconService.getIcon('envelope');
-    this.faLock = this.iconService.getIcon('lock');
-    this.faQuestionCircle = this.iconService.getIcon('questionCircle');
-    this.faProjectDiagram = this.iconService.getIcon('projectDiagram');
+    // No es necesario inicializar íconos desde IconService
   }
 
   onSubmit(): void {

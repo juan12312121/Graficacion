@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="logo">
       <div class="logo-icon">
-        <i class="fas fa-project-diagram fa-2x"></i>
+        <i class="fas fa-project-diagram fa-2x"></i> <!-- Ícono de FontAwesome -->
       </div>
       <div class="logo-text">DiagramMaker</div>
     </div>
@@ -10,26 +10,26 @@
       <div class="form-group">
         <label for="email">Correo electrónico</label>
         <div class="input-icon">
-          <i class="fas fa-envelope"></i>
+          <i class="fas fa-envelope"></i> <!-- Ícono de FontAwesome -->
           <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="tu@email.com" required />
         </div>
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
         <div class="input-icon">
-          <i class="fas fa-lock"></i>
+          <i class="fas fa-lock"></i> <!-- Ícono de FontAwesome -->
           <input [type]="isPasswordVisible ? 'text' : 'password'" 
                  id="password" 
                  [(ngModel)]="password" 
                  name="password" 
                  placeholder="••••••••" 
                  required />
-          <i class="fas fa-eye eye-icon" (click)="togglePasswordVisibility()"></i>
+          <i class="fas fa-eye eye-icon" (click)="togglePasswordVisibility()"></i> <!-- Ícono de FontAwesome para mostrar contraseña -->
         </div>
       </div>
       <div class="forgot-password">
         <a href="#" (click)="navigateToForgotPassword()">
-          <i class="fas fa-question-circle"></i>
+          <i class="fas fa-question-circle"></i> <!-- Ícono de FontAwesome -->
           ¿Olvidaste tu contraseña?
         </a>
       </div>
@@ -40,3 +40,6 @@
     </form>
   </div>
 </div>
+
+<!-- Incluye Font Awesome desde CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

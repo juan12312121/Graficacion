@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconService } from '../services/icon-service.service';
 
 @Component({
   selector: 'app-btn-crear-diagrama',
@@ -14,7 +13,7 @@ export class BtnCrearDiagramaComponent {
   
   isModalVisible = false;
 
-  constructor(public iconService: IconService) {}
+  constructor() {}
 
   // Open modal
   openModal() {

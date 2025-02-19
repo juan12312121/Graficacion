@@ -1,101 +1,102 @@
+<div class="diagram-container">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <div class="button-wrapper">
+    <button class="btn" (click)="openModal()">
+      <i class="fas fa-project-diagram sparkle"></i>
+      <span class="text">Crear Diagrama</span>
+    </button>
+  </div>
 
-<div class="button-wrapper">
-  <button class="btn" (click)="openModal()">
-    <i class="fas fa-project-diagram sparkle"></i>
-    <span class="text">Crear Diagrama</span>
-  </button>
-</div>
-
-<!-- Modal -->
-<div class="modal-overlay" [class.hidden]="!isModalVisible">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2><i class="fas fa-project-diagram"></i> Selecciona el Tipo de Diagrama</h2>
-      <button class="close-button" (click)="closeModal()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <div class="diagram-grid">
-      <!-- Diagrama de Clases -->
-      <div class="diagram-card">
-        <span class="badge">OOP</span>
-        <div class="diagram-preview">
-          <i class="fas fa-cubes"></i>
-        </div>
-        <h3 class="diagram-title">
-          <i class="fas fa-cube"></i>
-          Diagrama de Clases
-        </h3>
-        <p class="diagram-description">
-          Representa la estructura de clases en programación orientada a objetos. 
-          Perfecto para diseñar la arquitectura de software.
-        </p>
+  <!-- Modal -->
+  <div class="modal-overlay" [class.visible]="isModalVisible" [class.hidden]="!isModalVisible">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-project-diagram"></i> Selecciona el Tipo de Diagrama</h2>
+        <button class="close-button" (click)="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
-      <!-- Diagrama de Paquetes -->
-      <div class="diagram-card">
-        <span class="badge">Estructura</span>
-        <div class="diagram-preview">
-          <i class="fas fa-box-open"></i>
+      <div class="diagram-grid">
+        <!-- Diagrama de Clases -->
+        <div class="diagram-card">
+          <span class="badge">OOP</span>
+          <div class="diagram-preview">
+            <i class="fas fa-cubes"></i>
+          </div>
+          <h3 class="diagram-title">
+            <i class="fas fa-cube"></i>
+            Diagrama de Clases
+          </h3>
+          <p class="diagram-description">
+            Representa la estructura de clases en programación orientada a objetos. 
+            Perfecto para diseñar la arquitectura de software.
+          </p>
         </div>
-        <h3 class="diagram-title">
-          <i class="fas fa-boxes"></i>
-          Diagrama de Paquetes
-        </h3>
-        <p class="diagram-description">
-          Organiza y muestra la estructura de paquetes y sus dependencias.
-          Ideal para visualizar la arquitectura a alto nivel.
-        </p>
-      </div>
 
-      <!-- Diagrama de Componentes -->
-      <div class="diagram-card">
-        <span class="badge">Arquitectura</span>
-        <div class="diagram-preview">
-          <i class="fas fa-puzzle-piece"></i>
+        <!-- Diagrama de Paquetes -->
+        <div class="diagram-card">
+          <span class="badge">Estructura</span>
+          <div class="diagram-preview">
+            <i class="fas fa-box-open"></i>
+          </div>
+          <h3 class="diagram-title">
+            <i class="fas fa-boxes"></i>
+            Diagrama de Paquetes
+          </h3>
+          <p class="diagram-description">
+            Organiza y muestra la estructura de paquetes y sus dependencias.
+            Ideal para visualizar la arquitectura a alto nivel.
+          </p>
         </div>
-        <h3 class="diagram-title">
-          <i class="fas fa-boxes"></i>
-          Diagrama de Componentes
-        </h3>
-        <p class="diagram-description">
-          Muestra la organización y dependencias entre componentes de software. 
-          Perfecto para arquitecturas de sistemas.
-        </p>
-      </div>
 
-      <!-- Diagrama de Base de Datos -->
-      <div class="diagram-card">
-        <span class="badge">Base de Datos</span>
-        <div class="diagram-preview">
-          <i class="fas fa-database"></i>
+        <!-- Diagrama de Componentes -->
+        <div class="diagram-card">
+          <span class="badge">Arquitectura</span>
+          <div class="diagram-preview">
+            <i class="fas fa-puzzle-piece"></i>
+          </div>
+          <h3 class="diagram-title">
+            <i class="fas fa-boxes"></i>
+            Diagrama de Componentes
+          </h3>
+          <p class="diagram-description">
+            Muestra la organización y dependencias entre componentes de software. 
+            Perfecto para arquitecturas de sistemas.
+          </p>
         </div>
-        <h3 class="diagram-title">
-          <i class="fas fa-project-diagram"></i>
-          Diagrama de Base de Datos
-        </h3>
-        <p class="diagram-description">
-          Modela la estructura de bases de datos y relaciones entre entidades. 
-          Fundamental para el diseño de sistemas de información.
-        </p>
-      </div>
 
-      <!-- Diagrama de Secuencia -->
-      <div class="diagram-card">
-        <div class="diagram-preview">
-          <i class="fas fa-exchange-alt"></i>
+        <!-- Diagrama de Base de Datos -->
+        <div class="diagram-card">
+          <span class="badge">Base de Datos</span>
+          <div class="diagram-preview">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3 class="diagram-title">
+            <i class="fas fa-project-diagram"></i>
+            Diagrama de Base de Datos
+          </h3>
+          <p class="diagram-description">
+            Modela la estructura de bases de datos y relaciones entre entidades. 
+            Fundamental para el diseño de sistemas de información.
+          </p>
         </div>
-        <h3 class="diagram-title">
-          <i class="fas fa-random"></i>
-          Diagrama de Secuencia
-        </h3>
-        <p class="diagram-description">
-          Visualiza la interacción entre diferentes componentes o actores a lo largo del tiempo. 
-          Excelente para modelar procesos de comunicación.
-        </p>
+
+        <!-- Diagrama de Secuencia -->
+        <div class="diagram-card">
+          <div class="diagram-preview">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <h3 class="diagram-title">
+            <i class="fas fa-random"></i>
+            Diagrama de Secuencia
+          </h3>
+          <p class="diagram-description">
+            Visualiza la interacción entre diferentes componentes o actores a lo largo del tiempo. 
+            Excelente para modelar procesos de comunicación.
+          </p>
+        </div>
       </div>
     </div>
   </div>

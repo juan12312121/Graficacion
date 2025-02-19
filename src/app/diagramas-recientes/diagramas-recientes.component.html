@@ -1,39 +1,69 @@
-<div class="diagrams-grid">
-  <div class="diagram-card" *ngFor="let diagram of diagrams; let i = index; trackBy: trackByIndex">
-    <div class="diagram-preview">
-      <!-- Icono FontAwesome para "Sitemap" -->
-      <i class="fas fa-sitemap"></i>
-    </div>
-    <div class="diagram-info">
-      <div class="diagram-header">
-        <div class="diagram-title">{{ diagram.title }}</div>
-        <div class="diagram-menu">
-          <!-- Icono FontAwesome para "Ellipsis V" -->
-          <i class="fas fa-ellipsis-v" (click)="toggleMenu(i, $event)"></i>
-          <div class="menu-dropdown" [ngClass]="{ 'show': openMenus[i] }">
-            <div class="menu-item" *ngFor="let menu of diagram.menuItems" (click)="ejecutarAccion(menu.action, $event)">
-              <!-- Icono FontAwesome para cada elemento del menú -->
-              <i [class]="menu.icon"></i> {{ menu.label }}
+ <div class="diagrams-grid">
+        <div class="diagram-card">
+            <div class="diagram-preview">
+                <i class="fas fa-sitemap"></i>
             </div>
-          </div>
+            <div class="diagram-info">
+                <div class="diagram-header">
+                    <div class="diagram-title">Organigrama Empresarial</div>
+                </div>
+                <div class="diagram-meta">
+                    <div class="diagram-date">
+                        <i class="fas fa-clock"></i>
+                        Hace 2 días
+                    </div>
+                    <div class="diagram-owner">
+                        <i class="fas fa-user"></i>
+                        Juan Pérez
+                    </div>
+                </div>
+                <div class="diagram-tags">
+                    <span class="diagram-tag">
+                        <i class="fas fa-tags"></i>
+                        Organización
+                    </span>
+                    <span class="diagram-tag">
+                        <i class="fas fa-tags"></i>
+                        RR.HH
+                    </span>
+                </div>
+                <button class="delete-button">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="diagram-meta">
-        <div class="diagram-date">
-          <!-- Icono FontAwesome para "Clock" -->
-          <i class="fas fa-clock"></i> {{ diagram.lastEdited }}
+
+        <div class="diagram-card">
+            <div class="diagram-preview">
+                <i class="fas fa-sitemap"></i>
+            </div>
+            <div class="diagram-info">
+                <div class="diagram-header">
+                    <div class="diagram-title">Flujo de Procesos</div>
+                </div>
+                <div class="diagram-meta">
+                    <div class="diagram-date">
+                        <i class="fas fa-clock"></i>
+                        Hace 5 días
+                    </div>
+                    <div class="diagram-owner">
+                        <i class="fas fa-user"></i>
+                        María Gómez
+                    </div>
+                </div>
+                <div class="diagram-tags">
+                    <span class="diagram-tag">
+                        <i class="fas fa-tags"></i>
+                        Procesos
+                    </span>
+                    <span class="diagram-tag">
+                        <i class="fas fa-tags"></i>
+                        Producción
+                    </span>
+                </div>
+                <button class="delete-button">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
         </div>
-        <div class="diagram-owner">
-          <!-- Icono FontAwesome para "User" -->
-          <i class="fas fa-user"></i> {{ diagram.owner }}
-        </div>
-      </div>
-      <div class="diagram-tags">
-        <span class="diagram-tag" *ngFor="let tag of diagram.tags">
-          <!-- Icono FontAwesome para "Tags" -->
-          <i class="fas fa-tags"></i> {{ tag }}
-        </span>
-      </div>
     </div>
-  </div>
-</div>

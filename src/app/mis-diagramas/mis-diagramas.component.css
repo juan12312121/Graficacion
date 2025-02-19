@@ -2,7 +2,6 @@
   display: flex;
   margin: 0;
   padding: 0;
-  z-index: 0;
   min-width: 100%;
   min-height: 100vh;
 }
@@ -100,7 +99,7 @@
     gap: 24px;
     padding-bottom: 24px;
   }
-
+  
   .diagram-card {
     background-color: white;
     border-radius: 12px;
@@ -108,13 +107,16 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     transition: all 0.2s;
     border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
-
+  
   .diagram-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
-
+  
   .diagram-preview {
     height: 160px;
     background-color: #f8fafc;
@@ -123,199 +125,80 @@
     justify-content: center;
     border-bottom: 1px solid #e2e8f0;
   }
-
+  
   .diagram-preview i {
     font-size: 48px;
     color: #3b82f6;
   }
-
+  
   .diagram-info {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
-
+  
   .diagram-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 8px;
   }
-
+  
   .diagram-title {
     font-size: 16px;
     font-weight: 500;
     color: #1e293b;
   }
-
-
-  .diagram-menu {
-    color: #64748b;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-
-  .diagram-menu:hover {
-    background-color: #f1f5f9;
-    color: #1e293b;
-  }
-
+  
   .diagram-meta {
     display: flex;
     align-items: center;
     gap: 16px;
     color: #64748b;
     font-size: 13px;
+    margin-top: 8px;
   }
-
-  .diagram-date {
+  
+  .diagram-date, .diagram-owner {
     display: flex;
     align-items: center;
     gap: 4px;
   }
-
-  .diagram-owner {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
+  
   .diagram-tags {
     display: flex;
     gap: 8px;
     margin-top: 12px;
+    flex-wrap: wrap;
   }
-
+  
   .diagram-tag {
     padding: 4px 8px;
     background-color: #f1f5f9;
     color: #64748b;
     border-radius: 4px;
     font-size: 12px;
-  }
-
-  .diagram-menu {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.diagram-menu {
-    position: relative;
-    cursor: pointer;
-}
-
-.menu-dropdown {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 10px;
-    width: 150px;
-    display: none; /* Inicialmente oculto */
-    z-index: 100;
-}
-
-.menu-dropdown.show {
-    display: block; /* Se muestra cuando tiene la clase 'show' */
-}
-
-.menu-item {
-    padding: 8px 12px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+  }
+  
+  .delete-button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    color: #64748b;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 8px;
+    display: flex;
+    align-items: center;
     font-size: 14px;
-    color: #64748b;
-    transition: background 0.2s;
-}
-
-.menu-item:hover {
-    background: #f5f5f5;
-}
-
-.menu-item i {
-    font-size: 16px;
-    color: #94a3b8;
-}
-
-/* Estilos del icono */
-.fa-icon {
-    font-size: 16px;
-    color: #64748b;
-}
-
-/* Añadir animación al mostrar/ocultar el menú */
-.menu-dropdown {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.menu-dropdown.show {
-    opacity: 1;
-}
-
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  gap: 8px;
-  font-family: 'Poppins', sans-serif;
-}
-
-.pagination-button {
-  background: linear-gradient(45deg, #2c3e50, #2980b9); /* Azul oscuro y azul más brillante */
-  color: #fff; /* Texto blanco */
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.pagination-button:hover {
-  background: linear-gradient(45deg, #2980b9, #16a085); /* Azul y verde esmeralda para hover */
-  transform: scale(1.05);
-  box-shadow: 3px 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.pagination button:active {
-  transform: scale(0.95);
-}
-
-.pagination-button:disabled {
-  background: linear-gradient(45deg, #bdc3c7, #95a5a6); /* Grises suaves pero elegantes para deshabilitado */
-  color: #fff; /* Texto blanco */
-  cursor: not-allowed;
-  opacity: 0.6; /* Opacidad baja para indicar que está deshabilitado */
-  box-shadow: none; /* Sin sombra */
-}
-
-.pagination-info {
-  color: #7f8c8d; /* Gris elegante para la información */
-  font-size: 14px;
-  margin: 0 12px;
-}
-
-.pagination .active {
-  background: linear-gradient(45deg, #16a085, #2980b9); /* Verde esmeralda y azul para el activo */
-  color: white;
-  font-weight: bold;
-  pointer-events: none;
-  box-shadow: 0px 4px 12px rgba(22, 160, 133, 0.5);
-}
-
-.pagination span {
-  color: #2c3e50; /* Azul oscuro para el texto de la página */
-  font-size: 14px;
-  font-weight: 500;
-}
+  }
+  
+  .delete-button:hover {
+    color: #ef4444;
+  }
