@@ -110,296 +110,158 @@
 
 /* Diagrams Grid Section */
 .diagrams-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Más espacio para los cards */
-    gap: 20px;
-    padding-bottom: 30px;
-    width: 100%;
-    max-width: 1550px;
-}
-  
-  .diagram-card {
-    width: 100%;
-    height: 320px;
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border: 1px solid #e2e8f0;
-    background-color: white;
-  }
-  
-  .diagram-preview {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    transition: transform 0.6s ease, opacity 0.4s ease;
-  }
-  
-  .preview-image {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .preview-image i {
-    font-size: 64px;
-  }
-  
-  .preview-title {
-    font-size: 16px;
-    font-weight: 500;
-    color: #1e293b;
-    text-align: center;
-    padding: 15px 20px;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background: linear-gradient(to bottom, #f8fafc, white);
-  }
-  
-  .diagram-info {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-    background-color: rgba(255, 255, 255, 0.97);
-    border-radius: 12px;
-  }
-  
-  .info-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .diagram-header {
-    margin-bottom: 15px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .diagram-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 12px;
-  }
-  
-  .diagram-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: #64748b;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  
-  .diagram-date, .diagram-owner {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .diagram-date i {
-    color: #0ea5e9;
-    transition: transform 0.3s ease;
-  }
-  
-  .diagram-owner i {
-    color: #8b5cf6;
-    transition: transform 0.3s ease;
-  }
-  
-  .diagram-meta div:hover i {
-    transform: scale(1.1);
-  }
-  
-  .diagram-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .diagram-tag {
-    padding: 6px 12px;
-    background-color: #f1f5f9;
-    color: #64748b;
-    border-radius: 6px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-  }
-  
-  .diagram-tag i {
-    color: #f59e0b;
-    transition: transform 0.3s ease;
-  }
-  
-  .diagram-tag:hover {
-    background-color: #e2e8f0;
-  }
-  
-  .diagram-tag:hover i {
-    transform: scale(1.1);
-  }
-  
-  .delete-button {
-    margin-top: auto;
-    align-self: center;
-    color: #6b7280;
-    background: #f1f5f9;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    border-radius: 6px;
-    width: fit-content;
-  }
-  
-  .delete-button i {
-    color: #ef4444;
-    transition: color 0.3s ease;
-  }
-  
-  .delete-button:hover {
-    background: #fee2e2;
-    color: #dc2626;
-  }
-  
-  .delete-button:hover i {
-    color: #dc2626;
-  }
-  
-  .diagram-card:hover .diagram-preview {
-    transform: scale(1.02);
-    opacity: 0.05;
-  }
-  
-  .diagram-card:hover .diagram-info {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  
-  /* Colores específicos para los íconos de fallback */
-  .fa-chart-pie {
-    color: #8b5cf6 !important;
-  }
-  
-  .fa-diagram-project {
-    color: #0ea5e9 !important;
-  }
-  
-  .fa-sitemap {
-    color: #10b981 !important;
-  }
-  
-  .fa-code-branch {
-    color: #f59e0b !important;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
 
-/* Pagination Section */
-.pagination {
-    margin-top: 2.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.25rem;
+  padding: 20px;
+  width: 100%;
+  max-width: 1550px;
+  background-color: #f8fafc;
 }
 
-.pagination-button {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.94rem;
-    box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+.diagram-card {
+  width: 100%;
+  height: 320px;
+  display: grid;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid #e2e8f0;
+  background-color: white;
 }
 
-.pagination-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 12px -3px rgba(99, 102, 241, 0.3);
-    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+.diagram-preview {
+  width: 100%;
+  height: 100%;
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  transition: transform 0.6s ease, opacity 0.4s ease;
 }
 
-.pagination-button:disabled {
-    background: #e2e8f0;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+.diagram-info {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
 }
 
-.pagination span {
-    font-size: 0.94rem;
-    color: #64748b;
-    font-weight: 500;
+.preview-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e2e8f0;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .main-content {
-        padding: 1rem;
-    }
-
-    .search-and-filters {
-        flex-direction: column;
-    }
-
-    .search-bar {
-        max-width: 100%;
-    }
-
-    .filter-button {
-        width: 100%;
-        justify-content: center;
-    }
+.preview-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e293b;
+  text-align: center;
+  padding: 15px 20px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: linear-gradient(to bottom, #f8fafc, white);
 }
 
-@media (max-width: 480px) {
-    .main-header {
-        padding: 1rem;
-    }
+.info-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
-    .page-title {
-        font-size: 1.5rem;
-    }
+.diagram-header {
+  margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
 
-    .diagram-card {
-        border-radius: 0.75rem;
-    }
+.diagram-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.diagram-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.diagram-date, .diagram-owner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.diagram-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.diagram-tag {
+  padding: 6px 12px;
+  background-color: #f1f5f9;
+  color: #64748b;
+  border-radius: 6px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.delete-button {
+  margin-top: auto;
+  align-self: center;
+  color: #6b7280;
+  background: #f1f5f9;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.diagram-card:hover .diagram-preview {
+  transform: scale(1.02);
+  opacity: 0.05;
+}
+
+.diagram-card:hover .diagram-info {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
