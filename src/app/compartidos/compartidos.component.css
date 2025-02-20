@@ -117,7 +117,7 @@
   padding: 20px;
   width: 100%;
   max-width: 1550px;
-  background-color: #f8fafc;
+  background-color: inherit;
 }
 
 .diagram-card {

@@ -2,9 +2,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
-       padding-bottom: 24px;
-      padding-left: 20px;
-      padding-top: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1550px;
+  background-color: inherit;
 }
 
 .diagram-card {
@@ -14,9 +15,8 @@
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
-  background-color: white;
 }
 
 .diagram-preview {
@@ -101,7 +101,8 @@
   margin-bottom: 20px;
 }
 
-.diagram-date, .diagram-owner {
+.diagram-date,
+.diagram-owner {
   display: flex;
   align-items: center;
   gap: 6px;
