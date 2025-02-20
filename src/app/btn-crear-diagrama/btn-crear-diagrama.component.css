@@ -1,55 +1,51 @@
-
-
 /* --- Botón principal --- */
 .button-wrapper {
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn {
-    border: none;
-    width: 16em;
-    height: 3em;
-    border-radius: 2em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    background: #007BFF;
-    cursor: pointer;
-    transition: all 450ms ease-in-out;
-    padding: 0 1em;
+  border: none;
+  width: 16em;
+  height: 3em;
+  border-radius: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: #007BFF;
+  cursor: pointer;
+  transition: all 450ms ease-in-out;
+  padding: 0 1em;
 }
 
 .sparkle {
-    color: #FFFFFF;
-    transition: all 800ms ease;
+  color: #FFFFFF;
+  transition: all 800ms ease;
 }
 
 .text {
-    font-weight: 600;
-    color: #FFFFFF;
-    font-size: medium;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: medium;
 }
 
 .btn:hover {
-    background: linear-gradient(0deg, #66aaff, #0056b3);
-    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
-                inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
-                0px 0px 0px 4px rgba(255, 255, 255, 0.2),
-                0px 0px 180px 0px #3399FF;
-    transform: translateY(-2px);
+  background: #3e9bff;
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+    inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+    0px 0px 180px 0px #3399FF;
+  transform: translateY(-2px);
 }
 
 .btn:hover .text {
-    color: white;
+  color: white;
 }
 
 .btn:hover .sparkle {
-    color: #FFD700;
-    transform: scale(1.2);
+  color: #FFD700;
+  transform: scale(1.2);
 }
-
