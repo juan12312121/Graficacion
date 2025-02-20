@@ -78,62 +78,89 @@
 }
 
 .main-content {
-  flex: 1;
   padding: 24px;
-  background-color: #f0f8ff; /* Un azul muy claro y fresco */
+  background-color: #f0f8ff;  /* Un azul muy claro y fresco */
   overflow-y: auto;
+
   margin-left: 280px;
+  flex: 1;
+  padding: 2rem;
+  max-width: 100%;
+  /*display: flex;*/
+  flex-direction: column;
 
 }
 
+
 .main-header {
-  margin-bottom: 24px;
+  width: 100%;
+
+  z-index: 1;
+  /*width: calc(100% - 200px);*/
+  /*position: fixed;*/
+      margin-bottom: 2rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .page-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 8px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    letter-spacing: -0.025em;
 }
 
 .search-and-filters {
-  display: flex;
-  z-index: 1;
-  gap: 16px;
-  margin-bottom: 24px;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .search-bar {
-  display: flex;
-  align-items: center;
-  width: 400px;
-  max-width: 600px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px 10px;
-  gap: 8px; /* Espaciado entre el icono y el input */
+    /*position: relative;*/
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
 }
 
-.search-bar i {
-  color: #94a3b8;
+.search-bar fa-icon {
+  position: absolute;
+  left: 10px;
+  color: #888;
   font-size: 16px;
 }
 
 .search-bar input {
-  flex: 1; /* Ocupa todo el espacio disponible */
-  padding: 8px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  border-radius: 5px;
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 0.94rem;
+    background: #f8fafc;
+    transition: all 0.2s ease;
 }
 
 .search-bar input:focus {
-  border-color: #3b82f6;
+    border-color: #6366f1;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    outline: none;
 }
 
+.search-bar i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 1.125rem;
+}
 .filter-button {
   padding: 12px 20px;
   background-color: white;
