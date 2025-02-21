@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { PaginacionComponent } from '../paginacion/paginacion.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+
 
 @Component({
   selector: 'app-mis-diagramas',
   standalone: true,
-  imports: [SidebarComponent, CommonModule],
+  imports: [SidebarComponent, CommonModule,PaginacionComponent],
   templateUrl: './mis-diagramas.component.html',
   styleUrl: './mis-diagramas.component.css'
 })
