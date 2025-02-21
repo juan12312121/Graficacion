@@ -1,5 +1,29 @@
-<div class="pagination">
-    <button class="pagination-button pagination-izq" disabled><i class="fas fa-chevron-left"></i> Anterior</button>
-    <span>Página 1 de 3</span>
-    <button class="pagination-button pagination-der"><i class="fas fa-chevron-right"></i> Siguiente</button>
+<div class="pagination-wrapper">
+  <div class="pagination">
+    <!-- Grupo izquierdo: botón anterior -->
+    <div class="pagination-group-left">
+      <button class="pagination-button" disabled>
+        <i class="fas fa-chevron-left"></i>
+        <span>Anterior</span>
+      </button>
+    </div>
+    
+    <!-- Grupo central: números de página -->
+    <div class="pagination-group-center">
+      <button class="page-number active">1</button>
+      <button class="page-number">2</button>
+      <button class="page-number">3</button>
+      <button class="page-number extra">4</button>
+      <button class="page-number extra">5</button>
+    </div>
+    
+    <!-- Grupo derecho: información de página y botón siguiente -->
+    <div class="pagination-group-right">
+     
+      <button class="pagination-button">
+        <span>Siguiente</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
   </div>
+</div>
