@@ -27,8 +27,9 @@
 
 
   .modal-content {
+    padding-right: 10px; /* Esto efectivamente "moverá" el scrollbar */
     background: white;
-    padding: 2rem;
+    padding: 0px 2rem 2rem 2rem;
     border-radius: 20px;
     width: 90%;
     max-width: 1000px;
@@ -41,6 +42,7 @@
     transition: transform 0.3s ease-in-out;
     position: relative;
     box-sizing: border-box;
+
   }
 
 
@@ -53,14 +55,35 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-  }
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    padding: 2rem;
+    margin-bottom: 0;
+    /* Agregamos una transición suave para la sombra */
+    transition: box-shadow 0.3s ease;
 
+    box-shadow: 0 4px 6px -6px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(white 0%, white 100%);
+    background-size: 100% calc(100% - 1px);
+    background-repeat: no-repeat;
+  }
+  .modal-header::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: white;
+}
   .modal-header h2 {
     font-size: 1.8rem;
     color: #2D3748;
     background: linear-gradient(120deg, #6B46C1 0%, #4299E1 100%);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 600;
     display: flex;
@@ -222,21 +245,12 @@
   /* Estilizar el scrollbar del modal */
   .modal-content::-webkit-scrollbar {
     width: 8px;
-    margin-left: 10px !important;  /* Mueve el scrollbar a la izquierda */
+    padding-left: 19px !important;  /* Mueve el scrollbar a la izquierda */
+
+
+  }
+  ::-webkit-scrollbar {
+    padding-left: 19px !important;  /* Mueve el scrollbar a la izquierda */
 
   }
 
-  .modal-content::-webkit-scrollbar-track {
-    /*background: #EDF2F7; /* Color de fondo del modal */
-    background:white;
-    border-radius: 10px;
-  }
-
-  .modal-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(120deg, #6B46C1 0%, #4299E1 100%); /* Mismo degradado que el título */
-    border-radius: 10px;
-  }
-
-  .modal-content::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(120deg, #5A3DA8 0%, #3182CE 100%);
-  }
