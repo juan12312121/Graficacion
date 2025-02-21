@@ -7,7 +7,7 @@
 }
 
 .diagram-menu {
-  position:absolute;
+  position: absolute;
   cursor: pointer;
 }
 
@@ -79,7 +79,8 @@
 
 .main-content {
   padding: 24px;
-  background-color: #f0f8ff;  /* Un azul muy claro y fresco */
+  background-color: #f0f8ff;
+  /* Un azul muy claro y fresco */
   overflow-y: auto;
 
   margin-left: 280px;
@@ -98,35 +99,39 @@
   z-index: 1;
   /*width: calc(100% - 200px);*/
   /*position: fixed;*/
-      margin-bottom: 2rem;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .page-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    letter-spacing: -0.025em;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: -0.025em;
+  color: #2D3748;
+  background-image: linear-gradient(to right bottom, #6b46c1, #575fd0, #4575da, #3c88df, #4299e1);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .search-and-filters {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .search-bar {
-    /*position: relative;*/
-    flex: 1;
-    min-width: 300px;
-    max-width: 500px;
+  /*position: relative;*/
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
 }
 
 .search-bar fa-icon {
@@ -137,30 +142,31 @@
 }
 
 .search-bar input {
-    width: 100%;
-    padding: 0.75rem 1rem 0.75rem 2.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 0.75rem;
-    font-size: 0.94rem;
-    background: #f8fafc;
-    transition: all 0.2s ease;
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.75rem;
+  font-size: 0.94rem;
+  background: #f8fafc;
+  transition: all 0.2s ease;
 }
 
 .search-bar input:focus {
-    border-color: #6366f1;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    outline: none;
+  border-color: #6366f1;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  outline: none;
 }
 
 .search-bar i {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #64748b;
-    font-size: 1.125rem;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 1.125rem;
 }
+
 .filter-button {
   padding: 12px 20px;
   background-color: white;

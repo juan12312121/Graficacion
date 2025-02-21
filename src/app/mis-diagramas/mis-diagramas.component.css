@@ -46,6 +46,9 @@
       align-items: center;
       gap: 0.75rem;
       letter-spacing: -0.025em;
+       color: #2D3748;
+       background-image: linear-gradient(to right bottom, #6b46c1, #575fd0, #4575da, #3c88df, #4299e1);    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
 
