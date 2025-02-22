@@ -1,0 +1,274 @@
+.container {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    min-height: 100vh;
+  }
+  
+  
+  .main-content {
+  padding-right: 10px; /* Esto efectivamente "moverá" el scrollbar */
+      overflow-y: auto;
+    padding: 24px;
+    background-color: #f0f8ff;  /* Un azul muy claro y fresco */
+    overflow-y: auto;
+  
+    margin-left: 280px;
+    flex: 1;
+    padding: 2rem;
+    max-width: 100%;
+    /*display: flex;*/
+    flex-direction: column;
+  }
+  
+  
+    .main-header {
+      width: 100%;
+  
+      z-index: 1;
+      /*width: calc(100% - 200px);*/
+      /*position: fixed;*/
+          margin-bottom: 2rem;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  
+  
+  
+    .page-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        letter-spacing: -0.025em;
+         color: #2D3748;
+         background-image: linear-gradient(to right bottom, #6b46c1, #575fd0, #4575da, #3c88df, #4299e1);    background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  
+  
+    .search-and-filters {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .search-bar {
+        /*position: relative;*/
+        flex: 1;
+        min-width: 300px;
+        max-width: 500px;
+    }
+  
+    .search-bar fa-icon {
+      position: absolute;
+      left: 10px;
+      color: #888;
+      font-size: 16px;
+    }
+  
+    .search-bar input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.75rem;
+        font-size: 0.94rem;
+        background: #f8fafc;
+        transition: all 0.2s ease;
+    }
+  
+    .search-bar input:focus {
+        border-color: #6366f1;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        outline: none;
+    }
+  
+    .search-bar i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-size: 1.125rem;
+    }
+      .filter-button {
+        padding: 12px 20px;
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+  
+      .filter-button:hover {
+        border-color: #cbd5e1;
+        color: #1e293b;
+      }
+  
+  
+      .diagrams-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 20px;
+        width: 100%;
+        max-width: 1550px;
+        background-color: inherit;
+      }
+  
+      .diagram-card {
+        width: 100%;
+        height: 320px;
+        display: grid;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+      }
+  
+      .diagram-preview {
+        width: 100%;
+        height: 100%;
+        grid-area: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        transition: transform 0.6s ease, opacity 0.4s ease;
+      }
+  
+      .diagram-info {
+        grid-area: 1 / 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(10px);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+        background-color: rgba(255, 255, 255, 0.97);
+        border-radius: 12px;
+      }
+  
+      .preview-image {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e2e8f0;
+      }
+  
+      .preview-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #1e293b;
+        text-align: center;
+        padding: 15px 20px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background: linear-gradient(to bottom, #f8fafc, white);
+      }
+  
+      .info-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+  
+      .diagram-header {
+        margin-bottom: 15px;
+        width: 100%;
+        text-align: center;
+      }
+  
+      .diagram-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 12px;
+      }
+  
+      .diagram-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+  
+      .diagram-date,
+      .diagram-owner {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+  
+      .diagram-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+  
+      .diagram-tag {
+        padding: 6px 12px;
+        background-color: #f1f5f9;
+        color: #64748b;
+        border-radius: 6px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+  
+      .delete-button {
+        margin-top: auto;
+        align-self: center;
+        color: #6b7280;
+        background: #f1f5f9;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        border-radius: 6px;
+        width: fit-content;
+      }
+  
+      .diagram-card:hover .diagram-preview {
+        transform: scale(1.02);
+        opacity: 0.05;
+      }
+  
+      .diagram-card:hover .diagram-info {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+  

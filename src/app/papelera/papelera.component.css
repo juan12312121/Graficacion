@@ -1,0 +1,368 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background-color: #f0f8ff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f8ff;  /* Un azul muy claro y fresco */
+
+    gap: 2rem;
+    max-width: calc(100% - 280px);
+}
+
+.main-header {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.page-title i {
+    color: #ef4444;
+    font-size: 1.5em;
+}
+
+.search-and-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-bar {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    background: #f0f8ff;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.search-bar:focus-within {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    transform: translateY(-1px);
+}
+
+.search-bar i {
+    color: #64748b;
+    margin-right: 0.75rem;
+    font-size: 1.1em;
+}
+
+.search-bar input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+.search-bar input::placeholder {
+    color: #64748b;
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.empty-trash-button {
+    padding: 0.875rem 1.75rem;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.empty-trash-button:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+}
+
+.trash-notice {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.875rem;
+    padding: 1.25rem;
+    background-color: #fff7ed;
+    border-radius: 0.75rem;
+    border: 1px solid #fed7aa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.trash-notice i {
+    color: #f97316;
+    font-size: 1.1em;
+}
+
+.diagrams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.diagram-card {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.diagram-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #ef4444;
+}
+
+.preview-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 1rem;
+}
+
+.deletion-countdown {
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.diagram-info {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    flex: 1;
+}
+
+.diagram-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+}
+
+.diagram-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.meta-item i {
+    font-size: 1.1em;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.tag {
+    background: #f0f8ff;
+    color: #64748b;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.tag:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+    transform: translateY(-1px);
+}
+
+.card-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.restore-button,
+.delete-permanent-button {
+    flex: 1;
+    padding: 0.875rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.restore-button {
+    background-color: #10b981;
+    color: white;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.restore-button:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+}
+
+.delete-permanent-button {
+    background-color: #ef4444;
+    color: white;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.delete-permanent-button:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2rem 1rem;
+}
+
+.pagination button {
+    padding: 0.75rem 1.25rem;
+    border: 2px solid #e2e8f0;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+    background: #f0f8ff;
+    color: #1e293b;
+    border-color: #ef4444;
+    transform: translateY(-1px);
+}
+
+.pagination button.active {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+    
+    .main-content {
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .search-and-actions {
+        flex-direction: column;
+    }
+    
+    .search-bar {
+        width: 100%;
+    }
+    
+    .empty-trash-button {
+        width: 100%;
+        justify-content: center;
+    }
+}

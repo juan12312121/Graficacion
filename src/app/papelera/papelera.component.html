@@ -1,0 +1,113 @@
+<div class="container">
+    <aside class="sidebar">
+        <app-sidebar></app-sidebar>
+    </aside>
+
+    <main class="main-content">
+        <div class="main-header">
+            <div class="header-content">
+                <h1 class="page-title">
+                    <i class="fas fa-trash"></i>
+                    Papelera de Diagramas
+                </h1>
+                <div class="search-and-actions">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar en papelera...">
+                    </div>
+                    <button class="empty-trash-button">
+                        <i class="fas fa-trash-alt"></i>
+                        Vaciar Papelera
+                    </button>
+                </div>
+                <div class="trash-notice">
+                    <i class="fas fa-info-circle"></i>
+                    Los elementos se eliminarán permanentemente después de 30 días
+                </div>
+            </div>
+        </div>
+
+        <div class="diagrams-grid">
+            <!-- Ejemplo de tarjeta -->
+            <div class="diagram-card">
+                <div class="preview-image" style="background-image: url('img/dia.jpg')">
+                </div>
+                <div class="diagram-info">
+                    <h3 class="diagram-title">Organigrama Empresarial</h3>
+                    <div class="diagram-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-trash"></i>
+                            Eliminado hace 5 días
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            Juan Pérez
+                        </div>
+                    </div>
+                    <div class="tags-container">
+                        <span class="tag">
+                            <i class="fas fa-tag"></i>
+                            Organización
+                        </span>
+                        <span class="tag">
+                            <i class="fas fa-tag"></i>
+                            RR.HH
+                        </span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="restore-button">
+                            <i class="fas fa-undo"></i>
+                            Restaurar
+                        </button>
+                        <button class="delete-permanent-button">
+                            <i class="fas fa-trash-alt"></i>
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repite la tarjeta más veces para más elementos -->
+            <div class="diagram-card">
+                <div class="preview-image" style="background-image: url('img/dia.jpg')">
+                </div>
+                <div class="diagram-info">
+                    <h3 class="diagram-title">Flujo de Procesos</h3>
+                    <div class="diagram-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-trash"></i>
+                            Eliminado hace 2 días
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            María Gómez
+                        </div>
+                    </div>
+                    <div class="tags-container">
+                        <span class="tag">
+                            <i class="fas fa-tag"></i>
+                            Procesos
+                        </span>
+                        <span class="tag">
+                            <i class="fas fa-tag"></i>
+                            Producción
+                        </span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="restore-button">
+                            <i class="fas fa-undo"></i>
+                            Restaurar
+                        </button>
+                        <button class="delete-permanent-button">
+                            <i class="fas fa-trash-alt"></i>
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paginación -->
+       <app-paginacion></app-paginacion>
+    </main>
+</div>

@@ -1,0 +1,164 @@
+<div class="container">
+    <!-- Sidebar Section -->
+    <aside class="sidebar">
+      <app-sidebar></app-sidebar>
+    </aside>
+  
+    <!-- Main Content Section -->
+    <main class="main-content">
+      <div class="main-header">
+        <h1 class="page-title">
+          <!-- Icono FontAwesome para "Project Diagram" -->
+          <i class="fas fa-project-diagram"></i> Mis Diagramas Favoritos
+        </h1>
+        <div class="search-and-filters">
+          <div class="search-bar">
+            <!-- Icono FontAwesome para "Search" -->
+            <input type="text" placeholder="Buscar diagramas..." />
+          </div>
+          <button class="filter-button">
+            <!-- Icono FontAwesome para "Filter" -->
+            <i class="fas fa-filter"></i>
+            Filtros
+          </button>
+          <button class="filter-button">
+            <!-- Icono FontAwesome para "Sort" -->
+            <i class="fas fa-sort"></i>
+            Ordenar
+          </button>
+        </div>
+      </div>
+  
+      <!-- Diagrams Grid -->
+      <div class="diagrams-grid">
+          <!-- Tarjeta 1 -->
+          <div class="diagram-card">
+            <div class="diagram-preview">
+              <div class="preview-image" style="background-image: url('/img/dia.jpg');">
+              </div>
+              <div class="preview-title">Organigrama Empresarial</div>
+            </div>
+            <div class="diagram-info">
+              <div class="info-content">
+                <div class="diagram-header">
+                  <div class="diagram-title">Organigrama Empresarial</div>
+                  <div class="diagram-meta">
+                    <div class="diagram-date">
+                      <i class="fas fa-clock"></i>
+                      Hace 2 días
+                    </div>
+                    <div class="diagram-owner">
+                      <i class="fas fa-user"></i>
+                      Juan Pérez
+                    </div>
+                  </div>
+                </div>
+                <div class="diagram-tags">
+                  <span class="diagram-tag">
+                    <i class="fas fa-tags"></i>
+                    Organización
+                  </span>
+                  <span class="diagram-tag">
+                    <i class="fas fa-tags"></i>
+                    RR.HH
+                  </span>
+                </div>
+              </div>
+              <button class="delete-button">
+                <i class="fas fa-trash"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+  
+          <!-- Tarjeta 2 -->
+          <div class="diagram-card">
+            <div class="diagram-preview">
+              <div class="preview-image" style="background-image: url('/img/dia.jpg');">
+              </div>
+              <div class="preview-title">Flujo de Procesos</div>
+            </div>
+            <div class="diagram-info">
+              <div class="info-content">
+                <div class="diagram-header">
+                  <div class="diagram-title">Flujo de Procesos</div>
+                  <div class="diagram-meta">
+                    <div class="diagram-date">
+                      <i class="fas fa-clock"></i>
+                      Hace 5 días
+                    </div>
+                    <div class="diagram-owner">
+                      <i class="fas fa-user"></i>
+                      María Gómez
+                    </div>
+                  </div>
+                </div>
+                <div class="diagram-tags">
+                  <span class="diagram-tag">
+                    <i class="fas fa-tags"></i>
+                    Procesos
+                  </span>
+                  <span class="diagram-tag">
+                    <i class="fas fa-tags"></i>
+                    Producción
+                  </span>
+                </div>
+              </div>
+              <button class="delete-button">
+                <i class="fas fa-trash"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+  
+  
+  
+          <!-- Tarjeta 4 -->
+          <div class="diagram-card">
+            <div class="diagram-preview">
+              <div class="preview-image" style="background-image: url('/img/dia.jpg');">
+              </div>
+              <div class="preview-title">Flujo de Desarrollo</div>
+            </div>
+            <div class="diagram-info">
+              <div class="info-content">
+                <div class="diagram-header">
+                  <div class="diagram-title">Flujo de Desarrollo</div>
+                  <div class="diagram-meta">
+                    <div class="diagram-date">
+                      <i class="fas fa-clock"></i>
+                      Hace 3 días
+                    </div>
+                    <div class="diagram-owner">
+                      <i class="fas fa-user"></i>
+                      Laura Torres
+                    </div>
+                  </div>
+                </div>
+                <div class="diagram-tags">
+                  <span class="diagram-tag">
+                    <i class="fas fa-tags"></i>
+                    Desarrollo
+                  </span>
+                  <span class="diagram-tag">
+                    <i class="fas fa-tags"></i>
+                    Git
+                  </span>
+                </div>
+              </div>
+              <button class="delete-button">
+                <i class="fas fa-trash"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+        <app-paginacion></app-paginacion>
+  
+    </main>
+  </div>
+  
+  
+  <!-- FontAwesome CDN -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  
