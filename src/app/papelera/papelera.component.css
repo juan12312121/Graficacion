@@ -1,25 +1,13 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
 
-body {
-    background-color: #f0f8ff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 
 .container {
     display: flex;
-    flex: 1;
-    width: 100%;
-    max-width: 1920px;
-    margin: 0 auto;
-}
-
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    min-height: 100vh;
+  }
+  
 .sidebar {
     width: 280px;
     flex-shrink: 0;
