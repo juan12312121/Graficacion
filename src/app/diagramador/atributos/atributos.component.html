@@ -1,0 +1,119 @@
+<div class="sidebar-right">
+    <div class="properties-header">
+        Propiedades
+    </div>
+    
+    <div class="properties-content">
+        <div class="property-section">
+            <div class="property-section-title">Información General</div>
+            
+            <div class="property-group">
+                <div class="property-label">Nombre</div>
+                <input type="text" class="property-input" value="usuarios">
+            </div>
+            
+            <div class="property-group">
+                <div class="property-label">Descripción</div>
+                <textarea class="property-input property-textarea">Tabla que almacena los usuarios registrados en el sistema.</textarea>
+            </div>
+            
+            <div class="property-group">
+                <div class="property-label">Esquema</div>
+                <select class="property-select">
+                    <option>public</option>
+                    <option>auth</option>
+                    <option>sistema</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="property-section">
+            <div class="property-section-title">Columnas</div>
+            
+            <div class="property-column-list">
+                <div class="property-column-item">
+                    <span>id (INT, PK)</span>
+                    <div class="column-actions">
+                        <div class="column-action" title="Editar">✎</div>
+                        <div class="column-action" title="Eliminar">✕</div>
+                    </div>
+                </div>
+                <div class="property-column-item">
+                    <span>nombre (VARCHAR)</span>
+                    <div class="column-actions">
+                        <div class="column-action" title="Editar">✎</div>
+                        <div class="column-action" title="Eliminar">✕</div>
+                    </div>
+                </div>
+                <div class="property-column-item">
+                    <span>email (VARCHAR)</span>
+                    <div class="column-actions">
+                        <div class="column-action" title="Editar">✎</div>
+                        <div class="column-action" title="Eliminar">✕</div>
+                    </div>
+                </div>
+                <div class="property-column-item">
+                    <span>fecha_registro (DATETIME)</span>
+                    <div class="column-actions">
+                        <div class="column-action" title="Editar">✎</div>
+                        <div class="column-action" title="Eliminar">✕</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="add-column-button">
+                + Añadir Columna
+            </div>
+        </div>
+        
+        <div class="property-section">
+            <div class="property-section-title">Apariencia</div>
+            
+            <div class="property-group">
+                <div class="property-label">Color de fondo</div>
+                <div class="colors-group">
+                    <div class="color-option bg-white selected"></div>
+                    <div class="color-option bg-blue-light"></div>
+                    <div class="color-option bg-blue-medium"></div>
+                    <div class="color-option bg-blue-dark"></div>
+                    <div class="color-option bg-indigo-light"></div>
+                </div>
+            </div>
+            
+            <div class="property-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="check-show-icons" class="checkbox-input" checked>
+                    <label for="check-show-icons" class="checkbox-label">
+                        <span class="checkmark"></span>
+                        Mostrar iconos de clave
+                    </label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="check-show-types" class="checkbox-input" checked>
+                    <label for="check-show-types" class="checkbox-label">
+                        <span class="checkmark"></span>
+                        Mostrar tipos de datos
+                    </label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="check-show-nullable" class="checkbox-input" checked>
+                    <label for="check-show-nullable" class="checkbox-label">
+                        <span class="checkmark"></span>
+                        Mostrar restricciones NULL
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="property-section">
+            <div class="property-section-title">Acciones</div>
+            
+            <div class="button-group">
+                <button class="button button-primary">Guardar Cambios</button>
+                <button class="button button-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,201 @@
+.sidebar-right {
+    width: 320px;
+    background-color: #ffffff;
+    border-left: 1px solid  #90caf9;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: -2px 0 8px rgba(33, 150, 243, 0.1);
+}
+
+.properties-header {
+    padding: 16px;
+    background-color: #2962ff;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.properties-content {
+    padding: 16px;
+}
+
+.property-section {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid  #90caf9;
+}
+
+.property-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.property-section-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #0039cb;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #768fff;
+}
+
+.property-group {
+    margin-bottom: 14px;
+}
+
+.property-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #3949ab;
+}
+
+.property-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid  #90caf9;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.property-input:focus {
+    outline: none;
+    border-color: #768fff;
+    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.2);
+}
+
+.property-textarea {
+    min-height: 80px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.property-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid  #90caf9;
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%233949ab%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px auto;
+    cursor: pointer;
+}
+
+.property-column-list {
+    background-color: #f5f9ff;
+    border: 1px solid  #90caf9;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.property-column-item {
+    padding: 8px 10px;
+    border-bottom: 1px solid  #90caf9;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.property-column-item:last-child {
+    border-bottom: none;
+}
+
+.column-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.column-action {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: rgba(41, 98, 255, 0.1);
+    color: #2962ff;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.column-action:hover {
+    background-color: rgba(41, 98, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.colors-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    border: 1px solid  #90caf9;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    box-shadow: 0 0 0 2px #2962ff;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.button {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.button-primary {
+    background-color: #2962ff;
+    color: white;
+}
+
+.button-primary:hover {
+    background-color: #0039cb;
+    box-shadow:  0 2px 5px rgba(33, 150, 243, 0.1);
+    transform: translateY(-2px);
+}
+
+.button-secondary {
+    background-color: white;
+    color: #2962ff;
+    border: 1px solid #2962ff;;
+}
+
+.button-secondary:hover {
+    background-color: rgba(41, 98, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.button-sm {
+    padding: 6px 10px;
+    font-size: 12px;
+}

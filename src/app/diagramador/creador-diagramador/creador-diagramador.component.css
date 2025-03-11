@@ -1,0 +1,441 @@
+
+
+.container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    background-color: #f5f9ff;
+    color: #1a237e;
+    overflow: hidden;
+}
+
+
+
+.canvas-container {
+    flex: 1;
+    position: relative;
+    background-color: #f5f9ff;
+    overflow: auto;
+}
+
+.canvas {
+    width: 3000px;
+    height: 3000px;
+    position: relative;
+    background-image: linear-gradient(#e1f5fe, 1px, transparent 1px),
+                     linear-gradient(90deg, #e1f5fe ,1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Barra de herramientas */
+.toolbar {
+    position: fixed;
+    top: 16px;
+    left: 276px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
+    z-index: 100;
+}
+
+.tool-group {
+    display: flex;
+    gap: 4px;
+    padding-right: 8px;
+    margin-right: 8px;
+    border-right: 1px solid  #90caf9;
+}
+
+.tool-group:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.tool {
+    width: 40px;
+    height: 40px;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 18px;
+    color: #3949ab;
+    transition: all 0.2s;
+}
+
+.tool:hover {
+    background-color: #bbdefb;
+    color: #2962ff;
+    transform: translateY(-2px);
+}
+
+.tool.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    color: #2962ff;
+    border-color: #768fff;
+    box-shadow: 0 2px 4px rgba(41, 98, 255, 0.2);
+}
+
+/* Estilos de elementos de Base de Datos */
+.db-element {
+    position: absolute;
+    background-color: white;
+    border: 1px solid  #90caf9;
+    box-shadow:  0 2px 5px rgba(33, 150, 243, 0.1);
+    transition: all 0.2s;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.db-element:hover {
+    box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
+    transform: translateY(-2px);
+}
+
+.db-element.selected {
+    border-color: #2962ff;
+    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.3);
+}
+
+/* Base de datos */
+.database {
+    width: 150px;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+}
+
+.db-top {
+    width: 100%;
+    height: 24px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom: 1px solid  #90caf9;
+    background-color: #768fff;
+}
+
+.db-body {
+    width: 100%;
+    flex-grow: 1;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    color: #1a237e;
+}
+
+.db-bottom {
+    width: 100%;
+    height: 24px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top: 1px solid  #90caf9;
+    background-color: #768fff;
+}
+
+/* Tabla */
+.table {
+    width: 240px;
+    min-height: 150px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.table-name {
+    padding: 10px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid  #90caf9;
+    background-color: #e3f2fd;
+    color: #0039cb;
+    font-size: 14px;
+}
+
+.table-columns {
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.table-column {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(144, 202, 249, 0.3);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.table-column:hover {
+    background-color:  #f1f8fe;
+}
+
+.table-column:last-child {
+    border-bottom: none;
+}
+
+.column-key {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.primary-key {
+    background-color: #bbdefb;
+    color: #0039cb;
+}
+
+.foreign-key {
+    background-color: #e1f5fe;
+}
+
+.column-details {
+    flex: 1;
+}
+
+.column-name {
+    font-weight: 500;
+    color: #1a237e;
+}
+
+.column-type {
+    font-size: 12px;
+    color: #3949ab;
+    margin-left: 4px;
+}
+
+.column-nullable {
+    font-size: 11px;
+    color: #9e9e9e;
+    margin-left: 4px;
+}
+
+/* Schema */
+.schema {
+    width: 220px;
+    min-height: 100px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px dashed  #90caf9;
+    border-radius: 6px;
+}
+
+.schema-name {
+    padding: 8px;
+    font-weight: 600;
+    text-align: center;
+    background-color: rgba(187, 222, 251, 0.4);
+    color: #1a237e;
+    border-bottom: 1px dashed  #90caf9;
+}
+
+.schema-body {
+    padding: 12px;
+    min-height: 60px;
+    font-size: 13px;
+    color: #3949ab;
+    text-align: center;
+}
+
+/* Líneas de relación */
+.relation {
+    position: absolute;
+    height: 2px;
+    background-color: #0039cb;
+    z-index: 0;
+}
+
+.relation-end {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #0039cb;
+    top: -5px;
+}
+
+.relation-start {
+    left: -6px;
+}
+
+.relation-finish {
+    right: -6px;
+}
+
+.relation-text {
+    position: absolute;
+    background-color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid  #90caf9;
+    color: #3949ab;
+}
+
+.relation-one {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #0039cb;
+    top: -10px;
+}
+
+.relation-many {
+    position: absolute;
+    width: 12px;
+    height: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0039cb;
+    top: -10px;
+}
+
+/* Nota */
+.note {
+    width: 180px;
+    min-height: 80px;
+    background-color: #e8f5e9;
+    position: relative;
+    border-radius: 0;
+    border-color: #a5d6a7;
+}
+
+.note-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background-color: #e8f5e9;
+    border-bottom-left-radius: 8px;
+    border-left: 1px solid #a5d6a7;
+    border-bottom: 1px solid #a5d6a7;
+}
+
+.note-content {
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #2e7d32;
+}
+
+
+ /* Barra de zoom */
+ .zoom-toolbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid  #90caf9;
+    border-radius: 24px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
+    z-index: 100;
+}
+
+.zoom-text {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 6px;
+    color: #1a237e;
+}
+
+.zoom-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    font-size: 18px;
+    color: #2962ff;
+}
+
+.zoom-button:hover {
+    background-color: #bbdefb;
+}
+
+/* Checkboxes personalizados */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px;
+    color: #1a237e;
+}
+
+.checkmark {
+    height: 18px;
+    width: 18px;
+    background-color: white;
+    border: 1px solid  #90caf9;
+    border-radius: 3px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-input:checked ~ .checkmark {
+    background-color: #2962ff;
+    border-color: #2962ff;
+}
+
+.checkmark:after {
+    content: "✓";
+    display: none;
+    color: white;
+    font-size: 12px;
+}
+
+.checkbox-input:checked ~ .checkmark:after {
+    display: block;
+}

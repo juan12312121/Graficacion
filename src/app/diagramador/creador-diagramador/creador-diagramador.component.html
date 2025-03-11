@@ -1,0 +1,136 @@
+<div class="container">
+    <app-aside></app-aside>
+
+
+    <div class="canvas-container">
+        <div class="canvas" id="canvas">
+            <!-- Ejemplo de una tabla -->
+            <div class="db-element table" style="top: 100px; left: 300px;">
+                <div class="table-name">usuarios</div>
+                <div class="table-columns">
+                    <div class="table-column">
+                        <div class="column-key primary-key">PK</div>
+                        <div class="column-details">
+                            <span class="column-name">id</span>
+                            <span class="column-type">INT</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                    <div class="table-column">
+                        <div class="column-key"></div>
+                        <div class="column-details">
+                            <span class="column-name">nombre</span>
+                            <span class="column-type">VARCHAR(50)</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                    <div class="table-column">
+                        <div class="column-key"></div>
+                        <div class="column-details">
+                            <span class="column-name">email</span>
+                            <span class="column-type">VARCHAR(100)</span>
+                            <span class="column-nullable">UNIQUE</span>
+                        </div>
+                    </div>
+                    <div class="table-column">
+                        <div class="column-key"></div>
+                        <div class="column-details">
+                            <span class="column-name">fecha_registro</span>
+                            <span class="column-type">DATETIME</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejemplo de otra tabla -->
+            <div class="db-element table" style="top: 100px; left: 600px;">
+                <div class="table-name">pedidos</div>
+                <div class="table-columns">
+                    <div class="table-column">
+                        <div class="column-key primary-key">PK</div>
+                        <div class="column-details">
+                            <span class="column-name">id</span>
+                            <span class="column-type">INT</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                    <div class="table-column">
+                        <div class="column-key foreign-key">FK</div>
+                        <div class="column-details">
+                            <span class="column-name">usuario_id</span>
+                            <span class="column-type">INT</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                    <div class="table-column">
+                        <div class="column-key"></div>
+                        <div class="column-details">
+                            <span class="column-name">fecha</span>
+                            <span class="column-type">DATETIME</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                    <div class="table-column">
+                        <div class="column-key"></div>
+                        <div class="column-details">
+                            <span class="column-name">total</span>
+                            <span class="column-type">DECIMAL(10,2)</span>
+                            <span class="column-nullable">NOT NULL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejemplo de relación -->
+            <div class="relation" style="width: 60px; top: 150px; left: 540px;">
+                <div class="relation-end relation-start">1</div>
+                <div class="relation-end relation-finish">*</div>
+                <div class="relation-text">Usuario-Pedidos</div>
+            </div>
+            
+            <!-- Ejemplo de nota -->
+            <div class="db-element note" style="top: 300px; left: 450px;">
+                <div class="note-corner"></div>
+                <div class="note-content">
+                    La tabla de usuarios almacena información básica de los clientes registrados.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Barra de herramientas -->
+        <div class="toolbar">
+            <div class="tool-group">
+                <div class="tool active" title="Seleccionar">◎</div>
+                <div class="tool" title="Mover">⇱</div>
+            </div>
+            
+            <div class="tool-group">
+                <div class="tool" title="Tabla">▭</div>
+                <div class="tool" title="Relación">↔</div>
+                <div class="tool" title="Nota">◺</div>
+            </div>
+            
+            <div class="tool-group">
+                <div class="tool" title="Agrupar">⋲</div>
+                <div class="tool" title="Desagrupar">⋰</div>
+            </div>
+            
+            <div class="tool-group">
+                <div class="tool" title="Deshacer">↶</div>
+                <div class="tool" title="Rehacer">↷</div>
+            </div>
+        </div>
+        
+        <!-- Barra de zoom -->
+        <div class="zoom-toolbar">
+            <div class="zoom-button" title="Alejar">−</div>
+            <div class="zoom-text">100%</div>
+            <div class="zoom-button" title="Acercar">+</div>
+            <div class="zoom-button" title="Ajustar a la ventana">⤡</div>
+        </div>
+    </div>
+
+
+    <app-atributos></app-atributos>
+</div>

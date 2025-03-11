@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { CompartidosComponent } from './compartidos/compartidos.component';
+import { CreadorDiagramadorComponent } from './diagramador/creador-diagramador/creador-diagramador.component';
 import { FavoritosComponent } from './favoritos/favoritos.component';
 import { LoginComponent } from './login/login.component';
 import { MisDiagramasComponent } from './mis-diagramas/mis-diagramas.component';
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'mis-diagramas', component: MisDiagramasComponent },
     {path: 'compartidos', component: CompartidosComponent},
     {path: 'favoritos', component: FavoritosComponent},
-    {path: 'papelera', component: PapeleraComponent}
+    {path: 'papelera', component: PapeleraComponent},
+    {path: 'diagramador', component:CreadorDiagramadorComponent}
 ];
