@@ -10,11 +10,11 @@
 }
 /* Main Content Area */
 .main-content {
-
    margin-left: 280px;
     flex: 1;
     padding: 2rem;
     max-width: 100%;
+    width: 1200px;
     /*display: flex;*/
     flex-direction: column;
 
@@ -22,7 +22,6 @@
 
 /* Header Section */
 .main-header {
-
   z-index: 1;
   width: calc(100% - 200px);
   /*position: fixed;*/
