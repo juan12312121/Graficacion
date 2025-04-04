@@ -1,0 +1,294 @@
+.body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    background-color: #f5f9ff;
+    color: #1a237e;
+    overflow: hidden;
+  }
+
+
+  .canvas-container {
+    flex: 1;
+    position: relative;
+    background-color: #f5f9ff;
+    overflow: auto;
+  }
+  
+  .canvas {
+    width: 3000px;
+    height: 3000px;
+    position: relative;
+    background-image: linear-gradient(#e1f5fe, 1px, transparent 1px),
+                     linear-gradient(90deg, #e1f5fe, 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .toolbar {
+    position: fixed;
+    top: 16px;
+    left: 276px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
+    z-index: 100;
+  }
+  
+  .tool-group {
+    display: flex;
+    gap: 4px;
+    padding-right: 8px;
+    margin-right: 8px;
+    border-right: 1px solid #90caf9;
+  }
+  
+  .tool-group:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+  }
+  
+  .tool {
+    width: 40px;
+    height: 40px;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #3949ab;
+    transition: all 0.2s;
+  }
+  
+  .tool:hover {
+    background-color: #bbdefb;
+    color: #2962ff;
+    transform: translateY(-2px);
+  }
+  
+  .tool.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    color: #2962ff;
+    border-color: #768fff;
+    box-shadow: 0 2px 4px rgba(41, 98, 255, 0.2);
+  }
+
+  .package {
+    position: absolute;
+    background-color: rgba(227, 242, 253, 0.6);
+    border: 1px solid #90caf9;
+    border-radius: 0;
+    min-width: 300px;
+    min-height: 200px;
+    z-index: 1;
+  }
+  
+  .package-tab {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 80px;
+    height: 30px;
+    background-color: rgba(227, 242, 253, 0.8);
+    border: 1px solid #90caf9;
+    border-bottom: none;
+    margin-top: -30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0039cb;
+  }
+  
+  .package-name {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0039cb;
+  }
+  
+  .package-body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nested-package {
+    position: absolute;
+    background-color: rgba(187, 222, 251, 0.5);
+    border: 1px solid #64b5f6;
+    border-radius: 0;
+    min-width: 200px;
+    min-height: 150px;
+  }
+  
+  .module {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+    min-width: 150px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .module-name {
+    padding: 8px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid #90caf9;
+    background-color: #e3f2fd;
+    color: #0039cb;
+    font-size: 13px;
+  }
+  
+  .module-body {
+    padding: 8px;
+    font-size: 12px;
+    color: #3949ab;
+  }
+  
+  .relation {
+    position: absolute;
+    height: 2px;
+    background-color: #0039cb;
+    z-index: 0;
+  }
+  
+  .relation-dashed {
+    background: repeating-linear-gradient(to right, #0039cb, #0039cb 5px, transparent 5px, transparent 10px);
+  }
+  
+  .relation-end {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #0039cb;
+    top: -5px;
+  }
+  
+  .relation-start {
+    left: -6px;
+  }
+  
+  .relation-finish {
+    right: -6px;
+  }
+  
+  .relation-arrow {
+    position: absolute;
+    right: -15px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 15px solid #0039cb;
+  }
+  
+  .relation-text {
+    position: absolute;
+    background-color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #90caf9;
+    color: #3949ab;
+  }
+  
+  .note-box {
+    width: 200px;
+    min-height: 100px;
+    background-color: #fffde7;
+    border: 1px solid #ffd54f;
+    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    position: absolute;
+  }
+  
+  .note-fold {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 15px 15px 0;
+    border-color: transparent #ffd54f transparent transparent;
+  }
+  
+  .zoom-toolbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #90caf9;
+    border-radius: 24px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
+    z-index: 100;
+  }
+  
+  .zoom-text {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 6px;
+    color: #1a237e;
+  }
+  
+  .zoom-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    font-size: 18px;
+    color: #2962ff;
+  }
+  
+  .zoom-button:hover {
+    background-color: #bbdefb;
+  }
+
+  .stereotype {
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    font-style: italic;
+  }

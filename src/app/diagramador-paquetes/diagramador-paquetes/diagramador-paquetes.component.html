@@ -1,0 +1,227 @@
+<div class="body">
+    <div class="container">
+       
+        <app-aside></app-aside>
+        
+
+        <div class="canvas-container">
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div class="tool-group">
+                <div class="tool active" title="Seleccionar">
+                  <i class="fas fa-mouse-pointer"></i>
+                </div>
+                <div class="tool" title="Mover">
+                  <i class="fas fa-arrows-alt"></i>
+                </div>
+                <div class="tool" title="Eliminar">
+                  <i class="fas fa-trash-alt"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Paquete">
+                  <i class="fas fa-box"></i>
+                </div>
+                <div class="tool" title="Módulo">
+                  <i class="fas fa-cubes"></i>
+                </div>
+                <div class="tool" title="Capa">
+                  <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="tool" title="Subsistema">
+                  <i class="fas fa-tasks"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Dependencia">
+                  <i class="fas fa-long-arrow-alt-right"></i>
+                </div>
+                <div class="tool" title="Importación">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="tool" title="Acceso">
+                  <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="tool" title="Refinamiento">
+                  <i class="fas fa-compress-arrows-alt"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Nota">
+                  <i class="fas fa-sticky-note"></i>
+                </div>
+                <div class="tool" title="Texto">
+                  <i class="fas fa-font"></i>
+                </div>
+                <div class="tool" title="Comentario">
+                  <i class="fas fa-comment"></i>
+                </div>
+                <div class="tool" title="Restricción">
+                  <i class="fas fa-quote-right"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Deshacer">
+                  <i class="fas fa-undo"></i>
+                </div>
+                <div class="tool" title="Rehacer">
+                  <i class="fas fa-redo"></i>
+                </div>
+                <div class="tool" title="Exportar">
+                  <i class="fas fa-file-export"></i>
+                </div>
+                <div class="tool" title="Guardar">
+                  <i class="fas fa-save"></i>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Canvas -->
+            <div class="canvas">
+              <!-- Example Package -->
+              <div class="package" style="top: 100px; left: 300px; width: 500px; height: 350px;">
+                <div class="package-tab">api</div>
+                <div class="package-name">api</div>
+                <div class="package-body">
+                  <!-- Nested Package -->
+                  <div class="package" style="top: 50px; left: 50px; width: 180px; height: 120px;">
+                    <div class="package-tab">rest</div>
+                    <div class="package-name">rest</div>
+                  </div>
+                  
+                  <!-- Nested Package -->
+                  <div class="package" style="top: 50px; left: 270px; width: 180px; height: 120px;">
+                    <div class="package-tab">graphql</div>
+                    <div class="package-name">graphql</div>
+                  </div>
+                  
+                  <!-- Module -->
+                  <div class="module" style="top: 200px; left: 50px; width: 180px; height: 100px;">
+                    <div class="module-name">Autenticación</div>
+                    <div class="module-body">
+                      <div class="stereotype">«módulo»</div>
+                      Componentes para manejo de autenticación y autorización
+                    </div>
+                  </div>
+                  
+                  <!-- Module -->
+                  <div class="module" style="top: 200px; left: 270px; width: 180px; height: 100px;">
+                    <div class="module-name">Endpoints</div>
+                    <div class="module-body">
+                      <div class="stereotype">«módulo»</div>
+                      Definición de rutas y controladores
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Package -->
+              <div class="package" style="top: 100px; left: 880px; width: 220px; height: 350px;">
+                <div class="package-tab">core</div>
+                <div class="package-name">core</div>
+                <div class="package-body">
+                  <!-- Module -->
+                  <div class="module" style="top: 50px; left: 20px; width: 180px; height: 100px;">
+                    <div class="module-name">Modelos</div>
+                    <div class="module-body">
+                      <div class="stereotype">«módulo»</div>
+                      Entidades de negocio principales
+                    </div>
+                  </div>
+                  
+                  <!-- Module -->
+                  <div class="module" style="top: 180px; left: 20px; width: 180px; height: 100px;">
+                    <div class="module-name">Servicios</div>
+                    <div class="module-body">
+                      <div class="stereotype">«módulo»</div>
+                      Lógica de negocio central
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Package -->
+              <div class="package" style="top: 500px; left: 300px; width: 500px; height: 180px;">
+                <div class="package-tab">data</div>
+                <div class="package-name">data</div>
+                <div class="package-body">
+                  <!-- Module -->
+                  <div class="module" style="top: 50px; left: 50px; width: 180px; height: 100px;">
+                    <div class="module-name">Repositorios</div>
+                    <div class="module-body">
+                      <div class="stereotype">«módulo»</div>
+                      Acceso a datos y operaciones CRUD
+                    </div>
+                  </div>
+                  
+                  <!-- Module -->
+                  <div class="module" style="top: 50px; left: 270px; width: 180px; height: 100px;">
+                    <div class="module-name">Cache</div>
+                    <div class="module-body">
+                      <div class="stereotype">«módulo»</div>
+                      Manejo de caché y estrategias
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Package -->
+              <div class="package" style="top: 500px; left: 880px; width: 220px; height: 180px;">
+                <div class="package-tab">util</div>
+                <div class="package-name">util</div>
+                <div class="package-body">
+                  <!-- Module -->
+                  <div class="module" style="top: 50px; left: 20px; width: 180px; height: 100px;">
+                    <div class="module-name">Herramientas</div>
+                    <div class="module-body">
+                      <div class="stereotype">«utilidad»</div>
+                      Clases y métodos de uso común
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Relationship -->
+              <div class="relation" style="top: 275px; left: 800px; width: 80px;">
+                <div class="relation-end relation-start"></div>
+                <div class="relation-arrow"></div>
+                <div class="relation-text">usa</div>
+              </div>
+              
+              <!-- Example Relationship -->
+              <div class="relation relation-dashed" style="top: 400px; left: 550px; width: 2px; height: 100px; transform: rotate(90deg);">
+                <div class="relation-end relation-start"></div>
+                <div class="relation-arrow"></div>
+                <div class="relation-text">depende</div>
+              </div>
+              
+              <!-- Example Relationship -->
+              <div class="relation relation-dashed" style="top: 550px; left: 820px; width: 60px;">
+                <div class="relation-end relation-start"></div>
+                <div class="relation-arrow"></div>
+                <div class="relation-text">usa</div>
+              </div>
+              
+              <!-- Example Note -->
+              <div class="note-box" style="top: 300px; left: 1150px;">
+                <div class="note-fold"></div>
+                La arquitectura sigue un diseño modular por capas con separación clara de responsabilidades.
+              </div>
+            </div>
+            
+            <!-- Zoom Toolbar -->
+            <div class="zoom-toolbar">
+              <div class="zoom-button"><i class="fas fa-search-minus"></i></div>
+              <div class="zoom-text">100%</div>
+              <div class="zoom-button"><i class="fas fa-search-plus"></i></div>
+            </div>
+          </div>
+
+
+    </div>
+    
+</div>

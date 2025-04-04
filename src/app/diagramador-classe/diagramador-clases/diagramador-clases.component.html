@@ -1,0 +1,243 @@
+<div class="body">
+    <div class="container">
+        <app-aside></app-aside>
+        <div class="canvas-container">
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <div class="tool-group">
+                <div class="tool active" title="Seleccionar">
+                  <i class="fas fa-mouse-pointer"></i>
+                </div>
+                <div class="tool" title="Mover">
+                  <i class="fas fa-arrows-alt"></i>
+                </div>
+                <div class="tool" title="Eliminar">
+                  <i class="fas fa-trash-alt"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Clase">
+                  <i class="fas fa-cube"></i>
+                </div>
+                <div class="tool" title="Interfaz">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="tool" title="Clase Abstracta">
+                  <i class="fas fa-cubes"></i>
+                </div>
+                <div class="tool" title="Enumeración">
+                  <i class="fas fa-list-ul"></i>
+                </div>
+                <div class="tool" title="Instancia de Objeto">
+                  <i class="fas fa-box-open"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Asociación">
+                  <i class="fas fa-long-arrow-alt-right"></i>
+                </div>
+                <div class="tool" title="Herencia">
+                  <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="tool" title="Implementación">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="tool" title="Agregación">
+                  <i class="far fa-gem"></i>
+                </div>
+                <div class="tool" title="Composición">
+                  <i class="fas fa-gem"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Nota">
+                  <i class="fas fa-sticky-note"></i>
+                </div>
+                <div class="tool" title="Paquete">
+                  <i class="fas fa-box"></i>
+                </div>
+                <div class="tool" title="Texto">
+                  <i class="fas fa-font"></i>
+                </div>
+                <div class="tool" title="Comentario">
+                  <i class="fas fa-comment"></i>
+                </div>
+                <div class="tool" title="Restricción">
+                  <i class="fas fa-quote-right"></i>
+                </div>
+              </div>
+              
+              <div class="tool-group">
+                <div class="tool" title="Deshacer">
+                  <i class="fas fa-undo"></i>
+                </div>
+                <div class="tool" title="Rehacer">
+                  <i class="fas fa-redo"></i>
+                </div>
+                <div class="tool" title="Exportar">
+                  <i class="fas fa-file-export"></i>
+                </div>
+                <div class="tool" title="Guardar">
+                  <i class="fas fa-save"></i>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Canvas -->
+            <div class="canvas">
+              <!-- Example Class -->
+              <div class="db-element class-box" style="top: 100px; left: 300px;">
+                <div class="class-name">Persona</div>
+                <div class="class-attributes">
+                  <div class="attribute">
+                    <div class="visibility private">-</div>
+                    <div class="attribute-details">id: int</div>
+                  </div>
+                  <div class="attribute">
+                    <div class="visibility private">-</div>
+                    <div class="attribute-details">nombre: String</div>
+                  </div>
+                  <div class="attribute">
+                    <div class="visibility private">-</div>
+                    <div class="attribute-details">edad: int</div>
+                  </div>
+                </div>
+                <div class="class-methods">
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">getNombre(): String</div>
+                  </div>
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">setNombre(nombre: String): void</div>
+                  </div>
+                  <div class="method">
+                    <div class="visibility protected">#</div>
+                    <div class="method-details">validarEdad(): boolean</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Interface -->
+              <div class="db-element class-box" style="top: 100px; left: 600px;">
+                <div class="class-name">«interfaz»<br>Serializable</div>
+                <div class="class-methods">
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">serializar(): byte[]</div>
+                  </div>
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">deserializar(datos: byte[]): Object</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Abstract Class -->
+              <div class="db-element class-box" style="top: 350px; left: 300px;">
+                <div class="class-name">«abstracta»<br>Empleado</div>
+                <div class="class-attributes">
+                  <div class="attribute">
+                    <div class="visibility protected">#</div>
+                    <div class="attribute-details">idEmpleado: String</div>
+                  </div>
+                  <div class="attribute">
+                    <div class="visibility protected">#</div>
+                    <div class="attribute-details">departamento: String</div>
+                  </div>
+                </div>
+                <div class="class-methods">
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">abstract calcularSalario(): double</div>
+                  </div>
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">getDepartamento(): String</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Object Instance -->
+              <div class="db-element object-box" style="top: 350px; left: 600px;">
+                <div class="object-name">juan : Persona</div>
+                <div class="class-attributes">
+                  <div class="attribute">
+                    <div class="visibility private">-</div>
+                    <div class="attribute-details">id = "1001"</div>
+                  </div>
+                  <div class="attribute">
+                    <div class="visibility private">-</div>
+                    <div class="attribute-details">nombre = "Juan Pérez"</div>
+                  </div>
+                  <div class="attribute">
+                    <div class="visibility private">-</div>
+                    <div class="attribute-details">edad = 28</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Note -->
+              <div class="note-box" style="top: 200px; left: 850px;">
+                <div class="note-fold"></div>
+                La clase Persona representa usuarios de la aplicación con información básica. Todos los empleados deben heredar de la clase abstracta Empleado.
+              </div>
+              
+              <!-- Example Package -->
+              <div class="package" style="top: 50px; left: 250px; width: 380px; height: 450px;">
+                <div class="package-name">modelo</div>
+              </div>
+              
+              <!-- Example Text Annotation -->
+              <div class="text-annotation" style="top: 480px; left: 500px;">
+                Las subclases de Empleado manejan diferentes tipos de contratos laborales.
+              </div>
+              
+              <!-- Example Template Parameter -->
+              <div class="db-element class-box" style="top: 520px; left: 300px;">
+                <div class="class-name">Repositorio</div>
+                <div class="template-parameter">&lt;T&gt;</div>
+                <div class="class-methods">
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">buscarPorId(id: String): T</div>
+                  </div>
+                  <div class="method">
+                    <div class="visibility public">+</div>
+                    <div class="method-details">guardar(entidad: T): void</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Example Relationships -->
+              <div class="relation" style="width: 60px; top: 175px; left: 540px;">
+                <div class="relation-end relation-start"></div>
+                <div class="relation-end relation-finish"></div>
+                <div class="relation-text">implementa</div>
+              </div>
+              
+              <div class="relation" style="width: 2px; height: 80px; top: 250px; left: 370px; transform: rotate(90deg);">
+                <div class="relation-end relation-start"></div>
+                <div class="relation-end relation-finish"></div>
+                <div class="relation-text">extiende</div>
+              </div>
+              
+              <!-- Example Multiplicity -->
+              <div class="multiplicity-marker" style="top: 390px; left: 510px;">
+                1..*
+              </div>
+            </div>
+            
+            <!-- Zoom Toolbar -->
+            <div class="zoom-toolbar">
+              <div class="zoom-button"><i class="fas fa-search-minus"></i></div>
+              <div class="zoom-text">100%</div>
+              <div class="zoom-button"><i class="fas fa-search-plus"></i></div>
+            </div>
+          </div>
+        
+    </div>
+</div>

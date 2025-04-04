@@ -1,0 +1,221 @@
+<div class="body">
+    <div class="container">
+
+    <app-aside></app-aside>
+        
+
+    <div class="canvas-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div class="tool-group">
+            <div class="tool active" title="Seleccionar">
+              <i class="fas fa-mouse-pointer"></i>
+            </div>
+            <div class="tool" title="Mover">
+              <i class="fas fa-arrows-alt"></i>
+            </div>
+            <div class="tool" title="Eliminar">
+              <i class="fas fa-trash-alt"></i>
+            </div>
+          </div>
+          
+          <div class="tool-group">
+            <div class="tool" title="Componente">
+              <i class="fas fa-puzzle-piece"></i>
+            </div>
+            <div class="tool" title="Interfaz">
+              <i class="fas fa-circle"></i>
+            </div>
+            <div class="tool" title="Puerto">
+              <i class="fas fa-dot-circle"></i>
+            </div>
+            <div class="tool" title="Subsistema">
+              <i class="fas fa-cubes"></i>
+            </div>
+          </div>
+          
+          <div class="tool-group">
+            <div class="tool" title="Interfaz Proveída">
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+            <div class="tool" title="Interfaz Requerida">
+              <i class="fas fa-long-arrow-alt-left"></i>
+            </div>
+            <div class="tool" title="Conector de Ensamblaje">
+              <i class="fas fa-link"></i>
+            </div>
+            <div class="tool" title="Conector de Delegación">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
+          </div>
+          
+          <div class="tool-group">
+            <div class="tool" title="Nota">
+              <i class="fas fa-sticky-note"></i>
+            </div>
+            <div class="tool" title="Comentario">
+              <i class="fas fa-comment"></i>
+            </div>
+            <div class="tool" title="Restricción">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="tool" title="Estereotipo">
+              <i class="fas fa-tag"></i>
+            </div>
+          </div>
+          
+          <div class="tool-group">
+            <div class="tool" title="Deshacer">
+              <i class="fas fa-undo"></i>
+            </div>
+            <div class="tool" title="Rehacer">
+              <i class="fas fa-redo"></i>
+            </div>
+            <div class="tool" title="Exportar">
+              <i class="fas fa-file-export"></i>
+            </div>
+            <div class="tool" title="Guardar">
+              <i class="fas fa-save"></i>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Canvas with example components -->
+        <div class="canvas">
+          <!-- Frontend Subsystem -->
+          <div class="subsystem" style="top: 100px; left: 300px; width: 600px; height: 300px;">
+            <div class="subsystem-header">
+              <i class="fas fa-cubes mr-2"></i>&nbsp;
+              Frontend
+            </div>
+            <div class="subsystem-body">
+              <!-- UI Component -->
+              <div class="component" style="top: 50px; left: 50px; width: 220px; height: 140px;">
+                <div class="component-header">
+                  UI
+                  <div class="component-symbol"><i class="fas fa-puzzle-piece"></i></div>
+                </div>
+                <div class="component-body">
+                  <div class="stereotype">«componente»</div>
+                  Interfaz de usuario y componentes visuales
+                </div>
+                <!-- Ports -->
+                <div class="port port-right" style="top: 70px;"></div>
+              </div>
+              
+              <!-- State Manager Component -->
+              <div class="component" style="top: 50px; left: 330px; width: 220px; height: 140px;">
+                <div class="component-header">
+                  Estado
+                  <div class="component-symbol"><i class="fas fa-puzzle-piece"></i></div>
+                </div>
+                <div class="component-body">
+                  <div class="stereotype">«componente»</div>
+                  Gestión del estado y datos de la aplicación
+                </div>
+                <!-- Ports -->
+                <div class="port port-left" style="top: 70px;"></div>
+                <div class="port port-right" style="top: 70px;"></div>
+              </div>
+              
+              <!-- Assembly Connector between UI and State Manager -->
+              <div class="assembly-connector" style="top: 120px; left: 272px;">
+                <div class="assembly-line"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Backend Subsystem -->
+          <div class="subsystem" style="top: 450px; left: 300px; width: 600px; height: 300px;">
+            <div class="subsystem-header">
+              <i class="fas fa-cubes mr-2"></i>&nbsp;
+              Backend
+            </div>
+            <div class="subsystem-body">
+              <!-- API Component -->
+              <div class="component" style="top: 50px; left: 50px; width: 220px; height: 140px;">
+                <div class="component-header">
+                  API
+                  <div class="component-symbol"><i class="fas fa-puzzle-piece"></i></div>
+                </div>
+                <div class="component-body">
+                  <div class="stereotype">«servicio»</div>
+                  Endpoints REST y controladores
+                </div>
+                <!-- Ports -->
+                <div class="port port-right" style="top: 70px;"></div>
+                <div class="port port-top" style="left: 110px;"></div>
+              </div>
+              
+              <!-- Database Component -->
+              <div class="component" style="top: 50px; left: 330px; width: 220px; height: 140px;">
+                <div class="component-header">
+                  Base de Datos
+                  <div class="component-symbol"><i class="fas fa-database"></i></div>
+                </div>
+                <div class="component-body">
+                  <div class="stereotype">«almacenamiento»</div>
+                  Persistencia y acceso a datos
+                </div>
+                <!-- Ports -->
+                <div class="port port-left" style="top: 70px;"></div>
+              </div>
+              
+              <!-- Assembly Connector between API and Database -->
+              <div class="assembly-connector" style="top: 120px; left: 272px;">
+                <div class="assembly-line"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Interfaces -->
+          <div class="interface" style="top: 130px; left: 970px;">
+            <div class="interface-circle">
+              <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="interface-text">AuthService</div>
+          </div>
+          
+          <!-- External API Interface -->
+          <div class="interface" style="top: 550px; left: 970px;">
+            <div class="interface-circle">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <div class="interface-text">ExternalAPI</div>
+          </div>
+          
+          <!-- Provided Interface from Frontend to Auth Service -->
+          <div class="provided-interface" style="top: 150px; left: 900px;">
+            <div class="provided-interface-line"></div>
+            <div class="provided-interface-circle"></div>
+          </div>
+          
+          <!-- Required Interface from Backend to External API -->
+          <div class="required-interface" style="top: 570px; left: 900px;">
+            <div class="required-interface-line"></div>
+            <div class="required-interface-semicircle"></div>
+          </div>
+          
+          <!-- Vertical Connector between Frontend and Backend -->
+          <div class="delegation-connector" style="top: 399px; left: 160px; transform: rotate(90deg);">
+            <div class="delegation-line"></div>
+          </div>
+          
+          <!-- Note -->
+          <div class="note-box" style="top: 300px; left: 970px;">
+            <div class="note-fold"></div>
+            Arquitectura de componentes siguiendo el patrón cliente-servidor con separación clara entre frontend y backend.
+          </div>
+        </div>
+        
+        <!-- Zoom Toolbar -->
+        <div class="zoom-toolbar">
+          <div class="zoom-button"><i class="fas fa-search-minus"></i></div>
+          <div class="zoom-text">100%</div>
+          <div class="zoom-button"><i class="fas fa-search-plus"></i></div>
+        </div>
+      </div>
+        
+    </div>
+    
+</div>
