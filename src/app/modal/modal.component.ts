@@ -22,6 +22,8 @@ export class ModalComponent implements OnInit {
       }
       if (event instanceof NavigationEnd) {
         console.log('NavigationEnd:', event);
+        // Cerrar el modal después de la navegación
+        this.closeModal();
       }
       if (event instanceof NavigationError) {
         console.error('NavigationError:', event);
@@ -35,11 +37,25 @@ export class ModalComponent implements OnInit {
   }
 
   toggleDescription(event: MouseEvent): void {
+    // Prevenir que el evento propague al enlace padre
+    event.preventDefault();
+    event.stopPropagation();
+    
     const target = event.currentTarget as HTMLElement;
-    const descriptionEl = target.previousElementSibling;
-    if (descriptionEl) {
+    const descriptionEl = target.previousElementSibling as HTMLElement;
+    
+    if (descriptionEl && descriptionEl.classList.contains('diagram-description')) {
       descriptionEl.classList.toggle('expanded');
+      
+      // Cambiar el texto del botón según el estado
+      const spanElement = target.querySelector('span');
+      if (spanElement) {
+        if (descriptionEl.classList.contains('expanded')) {
+          spanElement.textContent = 'Leer menos';
+        } else {
+          spanElement.textContent = 'Leer más';
+        }
+      }
     }
   }
-  
 }
