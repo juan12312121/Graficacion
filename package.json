@@ -23,8 +23,11 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@ngneat/tailwind": "^7.0.3",
+    "@types/backbone": "^1.4.22",
+    "@types/jquery": "^3.5.32",
     "bootstrap": "^5.3.3",
     "fontfaceobserver": "^2.3.0",
+    "jointjs": "^3.7.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

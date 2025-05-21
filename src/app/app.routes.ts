@@ -11,6 +11,10 @@ import { MisDiagramasComponent } from './mis-diagramas/mis-diagramas.component';
 import { PapeleraComponent } from './papelera/papelera.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { RegistroComponent } from './registro/registro.component';
+import {ExampleDClaseComponent} from './example-diagrams/example-d-clase/example-d-clase.component';
+import {ExampleDComponentesComponent} from './example-diagrams/example-d-componentes/example-d-componentes.component';
+import { ExampleDPaquetesComponent } from './example-diagrams/example-d-paquetes/example-d-paquetes.component';
+import { ExampleDSecuenciaComponent } from './example-diagrams/example-d-secuencia/example-d-secuencia.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -25,5 +29,9 @@ export const routes: Routes = [
     {path: 'diagramador-clases', component: DiagramadorClasesComponent},
     {path: 'diagramador-paquetes', component:DiagramadorPaquetesComponent},
     {path: 'diagramador-componentes', component:DiagramadorComponentesComponent},
-    {path: 'diagramador-secuencias', component:DiagramadorSecuenciaComponent}
+    {path: 'diagramador-secuencias', component:DiagramadorSecuenciaComponent},
+    {path: 'example-d-clase', component:ExampleDClaseComponent},
+    {path: 'example-d-componentes', component:ExampleDComponentesComponent},
+    {path: 'example-d-paquetes',component:ExampleDPaquetesComponent},
+    {path: 'example-d-secuencia',component:ExampleDSecuenciaComponent}
 ];

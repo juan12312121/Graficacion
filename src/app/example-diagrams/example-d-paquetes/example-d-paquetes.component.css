@@ -15,13 +15,15 @@
     color: #1a237e;
     overflow: hidden;
   }
+
+
   .canvas-container {
     flex: 1;
     position: relative;
     background-color: #f5f9ff;
     overflow: auto;
   }
-
+  
   .canvas {
     width: 3000px;
     height: 3000px;
@@ -30,7 +32,7 @@
                      linear-gradient(90deg, #e1f5fe, 1px, transparent 1px);
     background-size: 20px 20px;
   }
-
+  
   .toolbar {
     position: fixed;
     top: 16px;
@@ -44,7 +46,7 @@
     box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
     z-index: 100;
   }
-
+  
   .tool-group {
     display: flex;
     gap: 4px;
@@ -52,13 +54,13 @@
     margin-right: 8px;
     border-right: 1px solid #90caf9;
   }
-
+  
   .tool-group:last-child {
     border-right: none;
     padding-right: 0;
     margin-right: 0;
   }
-
+  
   .tool {
     width: 40px;
     height: 40px;
@@ -72,13 +74,13 @@
     color: #3949ab;
     transition: all 0.2s;
   }
-
+  
   .tool:hover {
     background-color: #bbdefb;
     color: #2962ff;
     transform: translateY(-2px);
   }
-
+  
   .tool.active {
     background-color: rgba(41, 98, 255, 0.15);
     color: #2962ff;
@@ -86,100 +88,97 @@
     box-shadow: 0 2px 4px rgba(41, 98, 255, 0.2);
   }
 
-  .db-element {
+  .package {
+    position: absolute;
+    background-color: rgba(227, 242, 253, 0.6);
+    border: 1px solid #90caf9;
+    border-radius: 0;
+    min-width: 300px;
+    min-height: 200px;
+    z-index: 1;
+  }
+  
+  .package-tab {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 80px;
+    height: 30px;
+    background-color: rgba(227, 242, 253, 0.8);
+    border: 1px solid #90caf9;
+    border-bottom: none;
+    margin-top: -30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0039cb;
+  }
+  
+  .package-name {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0039cb;
+  }
+  
+  .package-body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nested-package {
+    position: absolute;
+    background-color: rgba(187, 222, 251, 0.5);
+    border: 1px solid #64b5f6;
+    border-radius: 0;
+    min-width: 200px;
+    min-height: 150px;
+  }
+  
+  .module {
     position: absolute;
     background-color: white;
     border: 1px solid #90caf9;
-    box-shadow: 0 2px 5px rgba(33, 150, 243, 0.1);
-    transition: all 0.2s;
     border-radius: 4px;
-    overflow: hidden;
-    z-index: 1;
+    min-width: 150px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
   }
-
-  .db-element:hover {
-    box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
-    transform: translateY(-2px);
-  }
-
-  .db-element.selected {
-    border-color: #2962ff;
-    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.3);
-  }
-
-  .class-box {
-    width: 240px;
-    min-height: 150px;
-    background-color: white;
-    overflow: hidden;
-  }
-
-  .class-name {
-    padding: 10px;
+  
+  .module-name {
+    padding: 8px;
     font-weight: 600;
     text-align: center;
     border-bottom: 1px solid #90caf9;
     background-color: #e3f2fd;
     color: #0039cb;
-    font-size: 14px;
-  }
-
-  .class-attributes, .class-methods {
-    padding: 0;
     font-size: 13px;
-    line-height: 1.6;
   }
-
-  .class-attributes {
-    border-bottom: 1px solid #90caf9;
-  }
-
-  .attribute, .method {
-    padding: 8px 10px;
-    border-bottom: 1px solid rgba(144, 202, 249, 0.3);
-    display: flex;
-    align-items: center;
-    transition: background-color 0.2s;
-  }
-
-  .attribute:hover, .method:hover {
-    background-color: #f1f8fe;
-  }
-
-  .attribute:last-child, .method:last-child {
-    border-bottom: none;
-  }
-
-  .visibility {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-    border-radius: 4px;
+  
+  .module-body {
+    padding: 8px;
     font-size: 12px;
+    color: #3949ab;
   }
-
-  .private {
-    color: #f44336;
-  }
-
-  .protected {
-    color: #ff9800;
-  }
-
-  .public {
-    color: #4caf50;
-  }
-
+  
   .relation {
     position: absolute;
     height: 2px;
     background-color: #0039cb;
     z-index: 0;
   }
-
+  
+  .relation-dashed {
+    background: repeating-linear-gradient(to right, #0039cb, #0039cb 5px, transparent 5px, transparent 10px);
+  }
+  
   .relation-end {
     position: absolute;
     width: 12px;
@@ -189,15 +188,26 @@
     border: 2px solid #0039cb;
     top: -5px;
   }
-
+  
   .relation-start {
     left: -6px;
   }
-
+  
   .relation-finish {
     right: -6px;
   }
-
+  
+  .relation-arrow {
+    position: absolute;
+    right: -15px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 15px solid #0039cb;
+  }
+  
   .relation-text {
     position: absolute;
     background-color: white;
@@ -211,7 +221,30 @@
     border: 1px solid #90caf9;
     color: #3949ab;
   }
-
+  
+  .note-box {
+    width: 200px;
+    min-height: 100px;
+    background-color: #fffde7;
+    border: 1px solid #ffd54f;
+    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    position: absolute;
+  }
+  
+  .note-fold {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 15px 15px 0;
+    border-color: transparent #ffd54f transparent transparent;
+  }
+  
   .zoom-toolbar {
     position: fixed;
     bottom: 20px;
@@ -227,14 +260,14 @@
     box-shadow: 0 3px 8px rgba(33, 150, 243, 0.15);
     z-index: 100;
   }
-
+  
   .zoom-text {
     font-size: 13px;
     font-weight: 500;
     padding: 0 6px;
     color: #1a237e;
   }
-
+  
   .zoom-button {
     width: 30px;
     height: 30px;
@@ -248,123 +281,14 @@
     font-size: 18px;
     color: #2962ff;
   }
-
+  
   .zoom-button:hover {
     background-color: #bbdefb;
   }
 
-  /* Object diagram specific */
-  .object-box {
-    width: 240px;
-    min-height: 100px;
-    background-color: white;
-    overflow: hidden;
-  }
-
-  .object-name {
-    padding: 10px;
-    font-weight: 600;
+  .stereotype {
+    font-size: 12px;
+    color: #555;
     text-align: center;
-    border-bottom: 1px solid #90caf9;
-    background-color: #e3f2fd;
-    color: #0039cb;
-    font-size: 14px;
     font-style: italic;
   }
-
-  .note-box {
-    width: 200px;
-    min-height: 100px;
-    background-color: #fffde7;
-    border: 1px solid #ffd54f;
-    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.1);
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 13px;
-    position: absolute;
-  }
-
-  .note-fold {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 15px 15px 0;
-    border-color: transparent #ffd54f transparent transparent;
-  }
-
-  .package {
-    position: absolute;
-    background-color: rgba(227, 242, 253, 0.6);
-    border: 1px solid #90caf9;
-    border-radius: 4px;
-    min-width: 300px;
-    min-height: 200px;
-  }
-
-  .package-name {
-    position: absolute;
-    top: -10px;
-    left: 20px;
-    background-color: #e3f2fd;
-    border: 1px solid #90caf9;
-    padding: 2px 10px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 4px;
-    color: #0039cb;
-  }
-  
-  .text-annotation {
-    position: absolute;
-    width: 150px;
-    min-height: 30px;
-    background-color: transparent;
-    padding: 5px;
-    font-size: 12px;
-    color: #3949ab;
-    border: 1px dashed #90caf9;
-    border-radius: 4px;
-  }
-  
-  .multiplicity-marker {
-    position: absolute;
-    background-color: white;
-    padding: 2px 5px;
-    border-radius: 4px;
-    font-size: 11px;
-    border: 1px solid #90caf9;
-    color: #3949ab;
-  }
-  
-  .template-parameter {
-    position: absolute;
-    top: -12px;
-    right: 10px;
-    background-color: white;
-    border: 1px solid #90caf9;
-    padding: 2px 5px;
-    font-size: 12px;
-    border-radius: 4px;
-    color: #0039cb;
-  }
-
-  .floating-input {
-  position: fixed;
-  z-index: 1000;
-  display: none;
-  width: 300px;
-  height: 150px;
-  resize: vertical;
-  border: 1px solid #00796b;
-  border-radius: 4px;
-  font-size: 14px;
-  padding: 8px;
-  background-color: white;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-}

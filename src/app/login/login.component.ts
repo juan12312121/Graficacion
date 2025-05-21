@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   isPasswordVisible: boolean = false;
+  staticMail: string='correo@';
+  staticPass: string='1234'
 
   constructor(private router: Router) {}
 
@@ -24,8 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
+
+    if(this.email===this.staticMail && this.password===this.staticPass){
+        this.router.navigate(['/principal']);
+    } 
   }
 
   navigateToRegistro(): void {
