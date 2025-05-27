@@ -1,0 +1,18 @@
+ <div id="properties-sidebar">
+        <span class="close-sidebar" onclick="closePropertiesSidebar()">×</span>
+        <div class="tool-section">
+            <h3>Table Properties</h3>
+            <div class="property-group">
+                <label>Table Name</label>
+                <input type="text" id="table-name-input">
+                <button class="danger" onclick="deleteCurrentTable()" style="width: 100%; margin-top: 10px;">
+                    Delete Table
+                </button>
+            </div>
+            <div class="property-group">
+                <h4>Fields</h4>
+                <div id="fields-list"></div>
+                <button onclick="addNewField()" style="width: 100%;">Add Field</button>
+            </div>
+        </div>
+    </div>
