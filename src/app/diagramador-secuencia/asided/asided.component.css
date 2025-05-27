@@ -1,4 +1,3 @@
-
 .sidebar-left {
     width: 260px;
     background-color: #e3f2fd;
@@ -8,23 +7,23 @@
     overflow-y: auto;
     z-index: 10;
     position: relative;
-  }
+}
 
-  .sidebar-header {
+.sidebar-header {
     padding: 16px;
     background-color: #2962ff;
     color: white;
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+}
 
-  .sidebar-header h2 {
+.sidebar-header h2 {
     font-size: 18px;
     font-weight: 500;
-  }
+}
 
-  .logo {
+.logo {
     width: 32px;
     height: 32px;
     background-color: white;
@@ -35,13 +34,13 @@
     font-weight: bold;
     color: #2962ff;
     font-size: 18px;
-  }
+}
 
-  .sidebar-section {
+.sidebar-section {
     margin-bottom: 10px;
-  }
+}
 
-  .sidebar-section h3 {
+.sidebar-section h3 {
     padding: 12px 16px;
     margin: 0;
     font-size: 14px;
@@ -49,15 +48,15 @@
     color: #0039cb;
     background-color: rgba(41, 98, 255, 0.08);
     border-left: 4px solid #2962ff;
-  }
+}
 
-  .sidebar-items {
+.sidebar-items {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
+}
 
-  .sidebar-items li {
+.sidebar-items li {
     padding: 12px 16px;
     cursor: pointer;
     display: flex;
@@ -65,15 +64,15 @@
     font-size: 14px;
     transition: all 0.2s;
     border-bottom: 1px solid rgba(144, 202, 249, 0.2);
-  }
+}
 
-  .sidebar-items li:hover {
+.sidebar-items li:hover {
     background-color: #bbdefb;
     color: #2962ff;
     padding-left: 20px;
-  }
+}
 
-  .sidebar-items .icon {
+.sidebar-items .icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,4 +82,81 @@
     border-radius: 4px;
     color: #2962ff;
     background-color: rgba(41, 98, 255, 0.1);
-  }
+}
+
+/* Footer mejorado */
+.sidebar-footer {
+    padding: 16px;
+    margin-top: auto;
+    background-color: rgba(41, 98, 255, 0.03);
+    border-top: 1px solid rgba(41, 98, 255, 0.1);
+}
+
+.back-home-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #2962ff;
+    font-weight: 600;
+    font-size: 14px;
+    background: linear-gradient(135deg, rgba(41, 98, 255, 0.08), rgba(41, 98, 255, 0.04));
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(41, 98, 255, 0.2);
+    box-shadow: 0 1px 3px rgba(41, 98, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.back-home-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.back-home-btn i {
+    margin-right: 10px;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-home-btn span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.back-home-btn:hover {
+    background: linear-gradient(135deg, #2962ff, #1565c0);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(41, 98, 255, 0.25);
+    border-color: #2962ff;
+}
+
+.back-home-btn:hover::before {
+    left: 100%;
+}
+
+.back-home-btn:hover i {
+    transform: translateX(-2px);
+}
+
+.back-home-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(41, 98, 255, 0.2);
+    transition: all 0.1s ease;
+}
+
+.back-home-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.3);
+}

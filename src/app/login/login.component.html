@@ -33,7 +33,7 @@
           ¿Olvidaste tu contraseña?
         </a>
       </div>
-      <button type="submit" class="login-button">Iniciar Sesión</button>
+      <button type="submit" (click)="onSubmit()" class="login-button">Iniciar Sesión</button>
       <div class="signup-link">
         ¿No tienes una cuenta? <a [routerLink]="'/registro'" class="register-link">Regístrate</a>
       </div>

@@ -1,0 +1,623 @@
+/* Contenedor principal */
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Canvas Container */
+.canvas-container {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Canvas principal */
+.canvas {
+    flex: 1;
+    background: #ffffff;
+    background-image: 
+        radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+}
+
+.canvas:active {
+    cursor: grabbing;
+}
+
+/* Properties Sidebar */
+.properties-sidebar {
+    position: fixed;
+    right: -350px;
+    top: 0;
+    width: 350px;
+    height: 100vh;
+    background: #ffffff;
+    border-left: 1px solid #e1e5e9;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.properties-sidebar.active {
+    right: 0;
+}
+
+/* Properties Header */
+.properties-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e1e5e9;
+    background: #f8f9fa;
+    min-height: 64px;
+}
+
+.properties-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #718096;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: #e2e8f0;
+    color: #2d3748;
+}
+
+/* Properties Content */
+.properties-content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a5568;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #2d3748;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+/* Fields Section */
+.fields-section {
+    margin-top: 24px;
+}
+
+.fields-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.fields-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+/* Field Items */
+.fields-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.field-item {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+}
+
+.field-item:hover {
+    border-color: #cbd5e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.field-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.field-item-header strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.field-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.field-details {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #718096;
+}
+
+.field-constraints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.constraint {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.constraint.pk {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.constraint.fk {
+    background: #c6f6d5;
+    color: #2f855a;
+}
+
+.constraint.nn {
+    background: #fef5e7;
+    color: #dd6b20;
+}
+
+.constraint.ai {
+    background: #e6fffa;
+    color: #00a3c4;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #2c5aa0;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+}
+
+.btn-edit {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: #2f855a;
+}
+
+.btn-danger {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background: #c53030;
+}
+
+/* Table Actions */
+.table-actions {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Zoom Toolbar */
+.zoom-toolbar {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.zoom-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a5568;
+    transition: all 0.2s ease;
+}
+
+.zoom-button:hover {
+    background: #f7fafc;
+    color: #2d3748;
+}
+
+.zoom-text {
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #718096;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Connection Status Bar */
+.connection-status-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    z-index: 100;
+}
+
+.connection-status {
+    background: #e6fffa;
+    border: 1px solid #81e6d9;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #234e52;
+    flex: 1;
+    margin-right: 16px;
+}
+
+.connection-mode-btn {
+    background: #718096;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.connection-mode-btn.active {
+    background: #38a169;
+}
+
+.connection-mode-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Dialog Styles */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.field-dialog {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.field-dialog h3 {
+    margin: 0 0 24px 0;
+    padding: 24px 24px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.field-dialog form {
+    padding: 0 24px 24px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Connection Styles */
+.port {
+    fill: #3182ce;
+    stroke: white;
+    stroke-width: 2;
+    cursor: crosshair;
+    r: 5;
+    transition: all 0.2s ease;
+}
+
+.port:hover {
+    fill: #38a169;
+    r: 7;
+    cursor: crosshair;
+}
+
+.port-group:hover .port {
+    fill: #38a169;
+    r: 7;
+}
+
+.selected {
+    outline: 2px solid #3182ce;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.connection {
+    stroke: #3182ce;
+    stroke-width: 2;
+    fill: none;
+    marker-end: url(#arrowhead);
+}
+
+.connection-wrap {
+    stroke: transparent;
+    stroke-width: 12;
+    fill: none;
+    cursor: pointer;
+}
+
+.connection-wrap:hover + .connection {
+    stroke: #38a169;
+    stroke-width: 3;
+}
+
+.marker-target {
+    fill: #3182ce;
+}
+
+.link-tools .tool-remove {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.link-tools .tool-remove:hover {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .properties-sidebar {
+        width: 100vw;
+        right: -100vw;
+    }
+    
+    .connection-status-bar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .connection-status {
+        margin-right: 0;
+    }
+    
+    .zoom-toolbar {
+        bottom: 80px;
+    }
+}
+
+/* Scrollbar Styles */
+.properties-sidebar::-webkit-scrollbar,
+.fields-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.properties-sidebar::-webkit-scrollbar-track,
+.fields-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.properties-sidebar::-webkit-scrollbar-thumb,
+.fields-list::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+.properties-sidebar::-webkit-scrollbar-thumb:hover,
+.fields-list::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/* Loading and Empty States */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #718096;
+}
+
+.empty-state h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: #4a5568;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Focus States for Accessibility */
+.form-control:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
+.btn-edit:focus,
+.btn-danger:focus,
+.zoom-button:focus,
+.connection-mode-btn:focus {
+    outline: 2px solid #3182ce;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .field-item {
+        border-width: 2px;
+    }
+    
+    .constraint {
+        border: 1px solid currentColor;
+    }
+}

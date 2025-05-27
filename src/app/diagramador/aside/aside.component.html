@@ -1,48 +1,78 @@
-<div class="sidebar-left">
-    <div class="sidebar-header">
-        <div class="logo">DB</div>
-        <h2>Diagramador de BD</h2>
-    </div>
-    
+<aside class="sidebar-left">
+  <!-- Header -->
+  <div class="sidebar-header">
+    <div class="logo"><i class="fas fa-database"></i></div>
+    <h2>Diagrama de Base de Datos</h2>
+  </div>
+
+  <!-- Contenido principal que puede hacer scroll -->
+  <div class="sidebar-content">
+    <!-- Tablas -->
     <div class="sidebar-section">
-        <h3>Elementos de Base de Datos</h3>
-        <ul class="sidebar-items">
-            <li><div class="icon">⦿</div> Base de Datos</li>
-            <li><div class="icon">▭</div> Tabla</li>
-            <li><div class="icon">⌘</div> Schema</li>
-            <li><div class="icon">⚙</div> Procedimiento</li>
-            <li><div class="icon">⚑</div> Trigger</li>
-        </ul>
+      <h3>Tablas</h3>
+      <ul class="sidebar-items">
+        <li 
+           draggable="true"
+           (dragstart)="onDragStart($event, 'table')"
+           (dragend)="onDragEnd($event)"
+           class="draggable-item">
+          <div class="icon"><i class="fas fa-table"></i></div>
+          <span>Tabla</span>
+        </li>
+      </ul>
     </div>
-    
+
+    <!-- Relaciones -->
     <div class="sidebar-section">
-        <h3>Relaciones</h3>
-        <ul class="sidebar-items">
-            <li><div class="icon">1−1</div> Uno a Uno</li>
-            <li><div class="icon">1−*</div> Uno a Muchos</li>
-            <li><div class="icon">*−*</div> Muchos a Muchos</li>
-            <li><div class="icon">−→</div> No Identificativa</li>
-            <li><div class="icon">−▶</div> Identificativa</li>
-        </ul>
+      <h3>Relaciones</h3>
+      <ul class="sidebar-items">
+        <li 
+           draggable="true"
+           (dragstart)="onDragStart($event, 'relation')"
+           (dragend)="onDragEnd($event)"
+           class="draggable-item">
+          <div class="icon"><i class="fas fa-link"></i></div>
+          <span>Relación</span>
+        </li>
+      </ul>
     </div>
-    
+
+    <!-- Notas -->
     <div class="sidebar-section">
-        <h3>Anotaciones</h3>
-        <ul class="sidebar-items">
-            <li><div class="icon">◺</div> Nota</li>
-            <li><div class="icon">◺</div> Nota</li>
-            <li><div class="icon">⏹</div> Texto Libre</li>
-            <li><div class="icon">⬚</div> Imagen</li>
-        </ul>
+      <h3>Anotaciones</h3>
+      <ul class="sidebar-items">
+        <li 
+           draggable="true"
+           (dragstart)="onDragStart($event, 'note')"
+           (dragend)="onDragEnd($event)"
+           class="draggable-item">
+          <div class="icon"><i class="fas fa-sticky-note"></i></div>
+          <span>Nota</span>
+        </li>
+      </ul>
     </div>
-    
+
+    <!-- Texto libre -->
     <div class="sidebar-section">
-        <h3>Proyectos</h3>
-        <ul class="sidebar-items">
-            <li><div class="icon">⊕</div> Nuevo Proyecto</li>
-            <li><div class="icon">⊡</div> Abrir Proyecto</li>
-            <li><div class="icon">⥅</div> Importar</li>
-            <li><div class="icon">⥄</div> Exportar</li>
-        </ul>
+      <h3>Otros</h3>
+      <ul class="sidebar-items">
+        <li 
+           draggable="true"
+           (dragstart)="onDragStart($event, 'text')"
+           (dragend)="onDragEnd($event)"
+           class="draggable-item">
+          <div class="icon"><i class="fas fa-font"></i></div>
+          <span>Texto libre</span>
+        </li>
+      </ul>
     </div>
-</div>
+  </div>
+
+  <!-- Footer fijo al final -->
+  <div class="sidebar-footer">
+    <a routerLink="/principal" class="back-home-btn">
+      <i class="fas fa-home"></i>
+      <span>Volver al inicio</span>
+    </a>
+  </div>
+</aside>

@@ -1,158 +1,40 @@
-<div class="body">
-
-    <div class="container">
-
-        <app-asided></app-asided>
-        
-        <div class="canvas-container">
-            <!-- Toolbar -->
-            <app-toolbar></app-toolbar>
+<div class="body">   
+  <div class="container">     
+    <app-asided></app-asided>      
     
-            <!-- Canvas with example sequence diagram -->
-            <div class="canvas">
-              <!-- Lifelines -->
-              <div class="lifeline" style="left: 150px; top: 100px">
-                <div class="lifeline-header">
-                  Usuario
-                  <div class="lifeline-type"><i class="fas fa-user"></i></div>
+    <div class="canvas-container">       
+      <!-- Toolbar -->       
+      <app-toolbar></app-toolbar>        
+      
+      <!-- Canvas de JointJS -->       
+      <div         
+        class="canvas"         
+        #canvas
+        (drop)="onDrop($event)"         
+        (dragover)="onDragOver($event)"       
+      ></div>     
+    </div>       
+    
+    <!-- Panel de Propiedades -->         
+  <aside class="properties-panel" id="properties-panel">
+            <div class="properties-header">
+                <h3><i class="fas fa-cog"></i> Propiedades</h3>
+                <button class="close-properties" id="close-properties">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="properties-content" id="properties-content">
+                <div class="no-selection">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <p>Selecciona un elemento para ver sus propiedades</p>
                 </div>
-                <div class="lifeline-line"></div>
-              </div>
-    
-              <div class="lifeline" style="left: 350px; top: 100px">
-                <div class="lifeline-header">
-                  :Interfaz
-                  <div class="lifeline-type">
-                    <i class="fas fa-broadcast-tower"></i>
-                  </div>
-                </div>
-                <div class="lifeline-line">
-                  <div class="activation" style="top: 100px; height: 300px"></div>
-                </div>
-              </div>
-    
-              <div class="lifeline" style="left: 550px; top: 100px">
-                <div class="lifeline-header">
-                  :Controlador
-                  <div class="lifeline-type"><i class="fas fa-cog"></i></div>
-                </div>
-                <div class="lifeline-line">
-                  <div class="activation" style="top: 150px; height: 200px"></div>
-                </div>
-              </div>
-    
-              <div class="lifeline" style="left: 750px; top: 100px">
-                <div class="lifeline-header">
-                  BaseDeDatos
-                  <div class="lifeline-type"><i class="fas fa-database"></i></div>
-                </div>
-                <div class="lifeline-line">
-                  <div class="activation" style="top: 200px; height: 70px"></div>
-                  <div class="activation" style="top: 320px; height: 70px"></div>
-                </div>
-              </div>
-    
-              <!-- Messages -->
-              <div class="message" style="left: 151px; top: 200px; width: 198px">
-                <div class="message-line" style="width: 100%"></div>
-                <div class="message-arrow message-arrow-right"></div>
-                <div class="message-text">
-                  1: iniciarSesión(usuario, contraseña)
-                </div>
-              </div>
-    
-              <div class="message" style="left: 351px; top: 250px; width: 198px">
-                <div class="message-line" style="width: 100%"></div>
-                <div class="message-arrow message-arrow-right"></div>
-                <div class="message-text">
-                  2: validarCredenciales(usuario, contraseña)
-                </div>
-              </div>
-    
-              <div class="message" style="left: 551px; top: 300px; width: 198px">
-                <div class="message-line" style="width: 100%"></div>
-                <div class="message-arrow message-arrow-right"></div>
-                <div class="message-text">3: consultar(usuario)</div>
-              </div>
-    
-              <div
-                class="return-message"
-                style="left: 551px; top: 350px; width: 198px"
-              >
-                <div class="return-line" style="width: 100%"></div>
-                <div class="message-arrow message-arrow-left"></div>
-                <div class="return-text">4: datosUsuario</div>
-              </div>
-    
-              <div
-                class="self-message"
-                style="left: 551px; top: 400px; width: 60px; height: 40px"
-              >
-                <div
-                  class="self-message-line"
-                  style="width: 100%; height: 100%"
-                ></div>
-                <div
-                  class="message-arrow message-arrow-right"
-                  style="right: -12px; top: 40px"
-                ></div>
-                <div class="self-message-text">5: generarToken()</div>
-              </div>
-    
-              <div class="message" style="left: 351px; top: 470px; width: 198px">
-                <div class="message-line" style="width: 100%"></div>
-                <div class="message-arrow message-arrow-left"></div>
-                <div class="message-text">6: resultado(token)</div>
-              </div>
-    
-              <div class="message" style="left: 151px; top: 520px; width: 198px">
-                <div class="message-line" style="width: 100%"></div>
-                <div class="message-arrow message-arrow-left"></div>
-                <div class="message-text">7: mostrarPanel()</div>
-              </div>
-    
-              <!-- Fragment -->
-              <div
-                class="fragment"
-                style="left: 100px; top: 370px; width: 700px; height: 180px"
-              >
-                <div class="fragment-header">alt [credencialesVálidas]</div>
-                <div class="fragment-divider" style="top: 90px"></div>
-                <div class="fragment-label" style="top: 90px">[else]</div>
-              </div>
-    
-              <!-- Note -->
-              <div class="note" style="left: 800px; top: 330px">
-                <div class="note-fold"></div>
-                El sistema verifica las credenciales y genera un token de acceso si
-                son válidas.
-              </div>
-
-               <!-- Time constraint -->
-          <div class="time-constraint" style="left: 400px; top: 280px">
-           
-          </div>
-
-          <!-- State -->
-          <div class="state" style="left: 50px; top: 520px">Autenticado</div>
-
-          <!-- Continuation -->
-          <div
-            class="continuation"
-            style="left: 400px; top: 600px; width: 160px"
-          >
-            Acceso al Sistema
-          </div>
-        </div>
-
-        <div class="zoom-toolbar">
-            <div class="zoom-button"><i class="fas fa-search-minus"></i></div>
-            <div class="zoom-text">100%</div>
-            <div class="zoom-button"><i class="fas fa-search-plus"></i></div>
-          </div>
-
-        </div>
-
-    </div>
-    
+            </div>
+        </aside>   
+  </div> 
+  
+  <!-- Guía de conexión (oculta por defecto) -->
+  <div class="connection-guide" id="connection-guide">
+    <p>Haz clic en otro elemento para conectar</p>
+  </div>
 </div>

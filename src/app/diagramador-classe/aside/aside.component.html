@@ -7,14 +7,24 @@
     <div class="sidebar-section">
       <h3>Elementos de Clase</h3>
       <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-cube"></i></div>Clase</li>
-        <li><div class="icon"><i class="fas fa-shield-alt"></i></div>Interfaz</li>
+        <li draggable="true" (dragstart)="onDragStart($event,'Clase')"><div class="icon"><i class="fas fa-cube"></i></div>Clase</li>
+        <li draggable="true" (dragstart)="onDragStart($event,'Interfaz')"><div class="icon"><i class="fas fa-shield-alt"></i></div>Interfaz</li>
         <li><div class="icon"><i class="fas fa-cubes"></i></div>Clase Abstracta</li>
         <li><div class="icon"><i class="fas fa-list-ul"></i></div>Enumeración</li>
         <li><div class="icon"><i class="fas fa-box"></i></div>Paquete</li>
       </ul>
     </div>
  
+
+    
+    <div class="sidebar-section">
+      <h3>Elementos de Objeto</h3>
+      <ul class="sidebar-items">
+        <li ><div  class="icon"><i class="fas fa-cube"></i></div>Instancia de Objeto</li>
+        <li><div class="icon"><i class="fas fa-paperclip"></i></div>Línea de Vida</li>
+        <li><div class="icon"><i class="fas fa-book-open"></i></div>Realización de Interfaz</li>
+      </ul>
+    </div>
     
     <div class="sidebar-section">
       <h3>Relaciones</h3>

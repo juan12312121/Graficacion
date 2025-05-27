@@ -1,114 +1,269 @@
+<!-- creador-diagramador.component.html -->
 <div class="container">
-    <app-aside></app-aside>
+  <!-- Sidebar izquierdo -->
+  <app-aside></app-aside>
 
-
-    <div class="canvas-container">
-        <div class="canvas" id="canvas">
-            <!-- Ejemplo de una tabla -->
-            <div class="db-element table" style="top: 100px; left: 300px;">
-                <div class="table-name">usuarios</div>
-                <div class="table-columns">
-                    <div class="table-column">
-                        <div class="column-key primary-key">PK</div>
-                        <div class="column-details">
-                            <span class="column-name">id</span>
-                            <span class="column-type">INT</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                    <div class="table-column">
-                        <div class="column-key"></div>
-                        <div class="column-details">
-                            <span class="column-name">nombre</span>
-                            <span class="column-type">VARCHAR(50)</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                    <div class="table-column">
-                        <div class="column-key"></div>
-                        <div class="column-details">
-                            <span class="column-name">email</span>
-                            <span class="column-type">VARCHAR(100)</span>
-                            <span class="column-nullable">UNIQUE</span>
-                        </div>
-                    </div>
-                    <div class="table-column">
-                        <div class="column-key"></div>
-                        <div class="column-details">
-                            <span class="column-name">fecha_registro</span>
-                            <span class="column-type">DATETIME</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Ejemplo de otra tabla -->
-            <div class="db-element table" style="top: 100px; left: 600px;">
-                <div class="table-name">pedidos</div>
-                <div class="table-columns">
-                    <div class="table-column">
-                        <div class="column-key primary-key">PK</div>
-                        <div class="column-details">
-                            <span class="column-name">id</span>
-                            <span class="column-type">INT</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                    <div class="table-column">
-                        <div class="column-key foreign-key">FK</div>
-                        <div class="column-details">
-                            <span class="column-name">usuario_id</span>
-                            <span class="column-type">INT</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                    <div class="table-column">
-                        <div class="column-key"></div>
-                        <div class="column-details">
-                            <span class="column-name">fecha</span>
-                            <span class="column-type">DATETIME</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                    <div class="table-column">
-                        <div class="column-key"></div>
-                        <div class="column-details">
-                            <span class="column-name">total</span>
-                            <span class="column-type">DECIMAL(10,2)</span>
-                            <span class="column-nullable">NOT NULL</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Ejemplo de relación -->
-            <div class="relation" style="width: 60px; top: 150px; left: 540px;">
-                <div class="relation-end relation-start">1</div>
-                <div class="relation-end relation-finish">*</div>
-                <div class="relation-text">Usuario-Pedidos</div>
-            </div>
-            
-            <!-- Ejemplo de nota -->
-            <div class="db-element note" style="top: 300px; left: 450px;">
-                <div class="note-corner"></div>
-                <div class="note-content">
-                    La tabla de usuarios almacena información básica de los clientes registrados.
-                </div>
-            </div>
-        </div>
-        
-        <!-- Barra de herramientas -->
-        <app-toolbar></app-toolbar>
-        
-        <!-- Barra de zoom -->
-        <div class="zoom-toolbar">
-            <div class="zoom-button" title="Alejar">−</div>
-            <div class="zoom-text">100%</div>
-            <div class="zoom-button" title="Acercar">+</div>
-            <div class="zoom-button" title="Ajustar a la ventana">⤡</div>
-        </div>
+  <!-- Contenedor principal del canvas -->
+  <div class="canvas-container">
+    <!-- Canvas principal -->
+    <div class="canvas" #canvas id="canvas">
+      <!-- El diagramador se inicializa aquí -->
     </div>
+
+    <!-- Barra de herramientas -->
+  <app-toolbar 
+  [tools]="[
+    [
+      { type: 'select', icon: 'fa-mouse-pointer', title: 'Seleccionar', active: true },
+      { type: 'move', icon: 'fa-arrows-alt', title: 'Mover' },
+      { type: 'delete', icon: 'fa-trash-alt', title: 'Eliminar' }
+    ],
+    [
+      { type: 'undo', icon: 'fa-undo', title: 'Deshacer', disabled: true },
+      { type: 'redo', icon: 'fa-redo', title: 'Rehacer', disabled: true },
+      { type: 'export', icon: 'fa-file-export', title: 'Exportar' },
+      { type: 'save', icon: 'fa-save', title: 'Guardar' }
+    ]
+  ]"
+  (toolClick)="onToolAction($event)">
+</app-toolbar>
 
 
 </div>
+
+    <!-- Barra de zoom -->
+    <div class="zoom-toolbar">
+      <div class="zoom-button" title="Alejar" (click)="zoomOut()">−</div>
+      <div class="zoom-text">{{ zoomLevel }}%</div>
+      <div class="zoom-button" title="Acercar" (click)="zoomIn()">+</div>
+      <div class="zoom-button" title="Ajustar a la ventana" (click)="zoomToFit()">⤡</div>
+      <div class="zoom-button" title="Restablecer zoom" (click)="resetZoom()">↻</div>
+    </div>
+
+    <!-- Barra de estado -->
+    <div class="status-bar">
+      <span class="connection-status">{{ connectionStatus }}</span>
+    </div>
+  </div>
+
+  <!-- Sidebar de propiedades (condicional) -->
+  <div class="properties-sidebar" *ngIf="showPropertiesSidebar" id="properties-sidebar">
+    <div class="sidebar-header">
+      <h3>Propiedades de la tabla</h3>
+      <span class="close-sidebar" (click)="deselectTable()">×</span>
+    </div>
+
+    <div class="tool-section">
+      <!-- Nombre de la tabla -->
+      <div class="property-group">
+        <label>Nombre de la tabla</label>
+        <div class="table-name-container" *ngIf="!editingTableName">
+          <span class="table-name-display" (dblclick)="startEditingTableName()">
+            {{ selectedTableName }}
+          </span>
+          <button class="edit-btn" (click)="startEditingTableName()" title="Edit name">✏️</button>
+        </div>
+        <div class="table-name-edit" *ngIf="editingTableName">
+          <input 
+            type="text" 
+            [(ngModel)]="tempTableName" 
+            (keyup.enter)="saveTableName()"
+            (keyup.escape)="cancelEditingTableName()"
+            class="table-name-input"
+            #tableNameInput>
+          <div class="edit-buttons">
+            <button class="save-btn" (click)="saveTableName()">✓</button>
+            <button class="cancel-btn" (click)="cancelEditingTableName()">✗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de campos -->
+      <div class="property-group">
+        <div class="fields-header">
+          <h4>Campos ({{ selectedTableFields.length }})</h4>
+          <button class="add-field-btn" (click)="addNewField()">+ Agregar campo</button>
+        </div>
+        
+        <div class="fields-list" *ngIf="selectedTableFields.length > 0">
+          <div 
+            class="field-item" 
+            *ngFor="let field of selectedTableFields; let i = index"
+            [class.pk-field]="field.pk"
+            [class.fk-field]="field.fk">
+            
+            <div class="field-header">
+              <div class="field-name">
+                <span class="field-icon">{{ getFieldIcon(field) }}</span>
+                <span class="field-name-text">{{ field.name }}</span>
+                <span class="field-type">{{ field.type }}</span>
+              </div>
+              <div class="field-actions">
+                <button class="edit-field-btn" (click)="editField(i)" title="Edit field">✏️</button>
+                <button class="delete-field-btn" (click)="deleteField(i)" title="Delete field">🗑️</button>
+              </div>
+            </div>
+            
+            <div class="field-badges" *ngIf="getFieldBadges(field).length > 0">
+              <span 
+                class="badge" 
+                *ngFor="let badge of getFieldBadges(field)"
+                [class]="'badge-' + badge.toLowerCase()">
+                {{ badge }}
+              </span>
+            </div>
+            
+            <div class="field-details" *ngIf="field.comment || field.defaultValue || field.referencedTable">
+              <div class="field-detail" *ngIf="field.comment">
+                <span class="detail-label">Comment:</span>
+                <span class="detail-value">{{ field.comment }}</span>
+              </div>
+              <div class="field-detail" *ngIf="field.defaultValue">
+                <span class="detail-label">Default:</span>
+                <span class="detail-value">{{ field.defaultValue }}</span>
+              </div>
+              <div class="field-detail" *ngIf="field.referencedTable">
+                <span class="detail-label">References:</span>
+                <span class="detail-value">{{ field.referencedTable }}.{{ field.referencedField }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="no-fields" *ngIf="selectedTableFields.length === 0">
+          <p>No hay campos definidos</p>
+          <button class="add-field-btn" (click)="addNewField()">Agregar primer campo</button>
+        </div>
+      </div>
+
+     
+    </div>
+  </div>
+
+  <!-- Sidebar de propiedades adicionales -->
+
+
+
+<!-- Modal de edición de campos -->
+<div class="modal-overlay" *ngIf="showFieldDialog" (click)="closeFieldDialog()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ editingFieldIndex !== undefined ? 'Edit Field' : 'Add New Field' }}</h3>
+      <button class="close-modal" (click)="closeFieldDialog()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <form (ngSubmit)="saveField()" #fieldForm="ngForm">
+        <!-- Nombre del campo -->
+        <div class="form-group">
+          <label for="fieldName">Field Name *</label>
+          <input 
+            type="text" 
+            id="fieldName"
+            [(ngModel)]="fieldFormData.name"
+            name="fieldName"
+            required
+            class="form-control"
+            placeholder="Enter field name">
+        </div>
+
+        <!-- Tipo de dato -->
+        <div class="form-group">
+          <label for="fieldType">Data Type *</label>
+          <select 
+            id="fieldType"
+            [(ngModel)]="fieldFormData.type"
+            name="fieldType"
+            required
+            class="form-control">
+            <optgroup label="Numeric Types">
+              <option value="INT">INT</option>
+              <option value="BIGINT">BIGINT</option>
+              <option value="SMALLINT">SMALLINT</option>
+              <option value="TINYINT">TINYINT</option>
+              <option value="DECIMAL(10,2)">DECIMAL(10,2)</option>
+              <option value="FLOAT">FLOAT</option>
+              <option value="DOUBLE">DOUBLE</option>
+            </optgroup>
+            <optgroup label="String Types">
+              <option value="VARCHAR(255)">VARCHAR(255)</option>
+              <option value="VARCHAR(100)">VARCHAR(100)</option>
+              <option value="VARCHAR(50)">VARCHAR(50)</option>
+              <option value="CHAR(10)">CHAR(10)</option>
+              <option value="TEXT">TEXT</option>
+              <option value="LONGTEXT">LONGTEXT</option>
+            </optgroup>
+            <optgroup label="Date/Time Types">
+              <option value="DATE">DATE</option>
+              <option value="DATETIME">DATETIME</option>
+              <option value="TIMESTAMP">TIMESTAMP</option>
+              <option value="TIME">TIME</option>
+            </optgroup>
+            <optgroup label="Other Types">
+              <option value="BOOLEAN">BOOLEAN</option>
+              <option value="JSON">JSON</option>
+              <option value="BLOB">BLOB</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- Checkboxes para propiedades -->
+        <div class="form-group checkboxes">
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="isPk"
+              [(ngModel)]="fieldFormData.pk"
+              name="isPk">
+            <label for="isPk">Primary Key</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="isNotNull"
+              [(ngModel)]="fieldFormData.notNull"
+              name="isNotNull">
+            <label for="isNotNull">Not Null</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="isUnique"
+              [(ngModel)]="fieldFormData.unique"
+              name="isUnique">
+            <label for="isUnique">Unique</label>
+          </div>
+
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="isAutoIncrement"
+              [(ngModel)]="fieldFormData.autoIncrement"
+              name="isAutoIncrement">
+            <label for="isAutoIncrement">Auto Increment</label>
+          </div>
+        </div>
+
+       
+
+     
+      </form>
+    </div>
+    
+   <div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeFieldDialog()">
+    Cancel
+  </button>
+  <button 
+    type="button" 
+    class="btn btn-primary" 
+    (click)="saveField()"
+    [disabled]="!fieldFormData.name || !fieldFormData.name.trim()">
+    {{ editingFieldIndex !== undefined ? 'Editar Campo' : 'Agregar Campo' }}
+  </button>
+</div>
+  </div>
+</div>
+>>>>>>> ramainfante
