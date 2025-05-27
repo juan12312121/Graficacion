@@ -5,31 +5,28 @@
 
   <!-- Contenedor principal del canvas -->
   <div class="canvas-container">
+    <!-- Barra de herramientas -->
+    <app-toolbar 
+      [tools]="[
+        [
+          { type: 'select', icon: 'fa-mouse-pointer', title: 'Seleccionar', active: true },
+          { type: 'move', icon: 'fa-arrows-alt', title: 'Mover' },
+          { type: 'delete', icon: 'fa-trash-alt', title: 'Eliminar' }
+        ],
+        [
+          { type: 'undo', icon: 'fa-undo', title: 'Deshacer', disabled: true },
+          { type: 'redo', icon: 'fa-redo', title: 'Rehacer', disabled: true },
+          { type: 'export', icon: 'fa-file-export', title: 'Exportar' },
+          { type: 'save', icon: 'fa-save', title: 'Guardar' }
+        ]
+      ]"
+      (toolClick)="onToolAction($event)">
+    </app-toolbar>
+
     <!-- Canvas principal -->
     <div class="canvas" #canvas id="canvas">
       <!-- El diagramador se inicializa aquí -->
     </div>
-
-    <!-- Barra de herramientas -->
-  <app-toolbar 
-  [tools]="[
-    [
-      { type: 'select', icon: 'fa-mouse-pointer', title: 'Seleccionar', active: true },
-      { type: 'move', icon: 'fa-arrows-alt', title: 'Mover' },
-      { type: 'delete', icon: 'fa-trash-alt', title: 'Eliminar' }
-    ],
-    [
-      { type: 'undo', icon: 'fa-undo', title: 'Deshacer', disabled: true },
-      { type: 'redo', icon: 'fa-redo', title: 'Rehacer', disabled: true },
-      { type: 'export', icon: 'fa-file-export', title: 'Exportar' },
-      { type: 'save', icon: 'fa-save', title: 'Guardar' }
-    ]
-  ]"
-  (toolClick)="onToolAction($event)">
-</app-toolbar>
-
-
-</div>
 
     <!-- Barra de zoom -->
     <div class="zoom-toolbar">
@@ -135,14 +132,9 @@
           <button class="add-field-btn" (click)="addNewField()">Agregar primer campo</button>
         </div>
       </div>
-
-     
     </div>
   </div>
-
-  <!-- Sidebar de propiedades adicionales -->
-
-
+</div>
 
 <!-- Modal de edición de campos -->
 <div class="modal-overlay" *ngIf="showFieldDialog" (click)="closeFieldDialog()">
@@ -245,25 +237,20 @@
             <label for="isAutoIncrement">Auto Increment</label>
           </div>
         </div>
-
-       
-
-     
       </form>
     </div>
     
-   <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="closeFieldDialog()">
-    Cancel
-  </button>
-  <button 
-    type="button" 
-    class="btn btn-primary" 
-    (click)="saveField()"
-    [disabled]="!fieldFormData.name || !fieldFormData.name.trim()">
-    {{ editingFieldIndex !== undefined ? 'Editar Campo' : 'Agregar Campo' }}
-  </button>
-</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeFieldDialog()">
+        Cancel
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-primary" 
+        (click)="saveField()"
+        [disabled]="!fieldFormData.name || !fieldFormData.name.trim()">
+        {{ editingFieldIndex !== undefined ? 'Editar Campo' : 'Agregar Campo' }}
+      </button>
+    </div>
   </div>
 </div>
->>>>>>> ramainfante
