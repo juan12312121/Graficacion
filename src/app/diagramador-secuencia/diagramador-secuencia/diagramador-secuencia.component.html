@@ -3,10 +3,8 @@
     <app-asided></app-asided>      
     
     <div class="canvas-container">       
-      <!-- Toolbar -->       
       <app-toolbar></app-toolbar>        
       
-      <!-- Canvas de JointJS -->       
       <div         
         class="canvas"         
         #canvas
@@ -15,25 +13,103 @@
       ></div>     
     </div>       
     
-    <!-- Panel de Propiedades -->         
-  <aside class="properties-panel" id="properties-panel">
-            <div class="properties-header">
-                <h3><i class="fas fa-cog"></i> Propiedades</h3>
-                <button class="close-properties" id="close-properties">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
+    <aside class="properties-panel" id="properties-panel">
+      <div class="properties-header">
+        <h3><i class="fas fa-cog"></i> Propiedades</h3>
+        <button class="close-properties" id="close-properties">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
             
-            <div class="properties-content" id="properties-content">
-                <div class="no-selection">
-                    <i class="fas fa-mouse-pointer"></i>
-                    <p>Selecciona un elemento para ver sus propiedades</p>
-                </div>
+      <div class="properties-content" id="properties-content">
+        <!-- Estado inicial -->
+        <div class="no-selection">
+          <i class="fas fa-mouse-pointer"></i>
+          <p>Selecciona un elemento para ver sus propiedades</p>
+        </div>
+
+        <!-- Propiedades para enlaces -->
+        <div class="link-properties" style="display: none;">
+          <div class="property-group">
+            <h4><i class="fas fa-tag"></i> Mensaje</h4>
+            <div class="property-item">
+              <label class="property-label">Texto del Mensaje</label>
+              <input type="text" class="property-input" id="message-text">
             </div>
-        </aside>   
+            <div class="property-item">
+              <label class="property-label">Tipo de Línea</label>
+              <select class="property-select" id="line-style">
+                <option value="solid">Sólida</option>
+                <option value="dashed">Discontinua</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="property-group">
+            <h4><i class="fas fa-palette"></i> Estilo</h4>
+            <div class="property-item">
+              <label class="property-label">Color de Línea</label>
+              <input type="color" class="property-color" id="line-color" value="#1565c0">
+            </div>
+            <div class="property-item">
+              <label class="property-label">Grosor de Línea</label>
+              <input type="range" class="property-range" id="line-width" min="1" max="5" value="2">
+              <span class="range-value">2px</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Propiedades para elementos -->
+        <div class="element-properties" style="display: none;">
+          <div class="property-group">
+            <h4><i class="fas fa-tag"></i> General</h4>
+            <div class="property-item">
+              <label class="property-label">Etiqueta</label>
+              <input type="text" class="property-input" id="element-label">
+            </div>
+          </div>
+          
+          <div class="property-group">
+            <h4><i class="fas fa-arrows-alt"></i> Posición y Tamaño</h4>
+            <div class="property-item">
+              <label class="property-label">Posición X</label>
+              <input type="number" class="property-input" id="position-x">
+            </div>
+            <div class="property-item">
+              <label class="property-label">Posición Y</label>
+              <input type="number" class="property-input" id="position-y">
+            </div>
+            <div class="property-item">
+              <label class="property-label">Ancho</label>
+              <input type="number" class="property-input" id="size-width">
+            </div>
+            <div class="property-item">
+              <label class="property-label">Alto</label>
+              <input type="number" class="property-input" id="size-height">
+            </div>
+          </div>
+          
+          <div class="property-group">
+            <h4><i class="fas fa-palette"></i> Apariencia</h4>
+            <div class="property-item">
+              <label class="property-label">Color de Relleno</label>
+              <input type="color" class="property-color" id="fill-color" value="#e3f2fd">
+            </div>
+            <div class="property-item">
+              <label class="property-label">Color de Borde</label>
+              <input type="color" class="property-color" id="stroke-color" value="#2962ff">
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de eliminar (común para ambos tipos) -->
+        <button class="delete-element-btn" id="delete-element" style="display: none;">
+          <i class="fas fa-trash"></i> Eliminar Elemento
+        </button>
+      </div>
+    </aside>   
   </div> 
   
-  <!-- Guía de conexión (oculta por defecto) -->
   <div class="connection-guide" id="connection-guide">
     <p>Haz clic en otro elemento para conectar</p>
   </div>

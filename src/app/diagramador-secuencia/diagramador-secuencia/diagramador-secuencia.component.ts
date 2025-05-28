@@ -681,124 +681,80 @@ export class DiagramadorSecuenciaComponent implements AfterViewInit {
     document.body.classList.remove('magnet-mode');
   }
 
-  private showPropertiesPanel(element: DiagramElement): void {
-    const panel = document.getElementById('properties-panel');
-    const content = document.getElementById('properties-content');
-    
-    if (panel) {
-      panel.classList.add('active');
-    }
-    
-    // Generar formulario de propiedades basado en el tipo de elemento
-    const properties = this.generatePropertiesForm(element);
-    if (content) {
-      content.innerHTML = properties;
-    }
-    
-    // Configurar eventos para los inputs
-    this.setupPropertyEvents(element);
+private showPropertiesPanel(element: DiagramElement): void {
+  const panel = document.getElementById('properties-panel');
+  if (panel) {
+    panel.classList.add('active');
   }
 
-  private hidePropertiesPanel(): void {
-    const panel = document.getElementById('properties-panel');
-    if (panel) {
-      panel.classList.remove('active');
-    }
-  }
+  const noSelection = document.querySelector('.no-selection') as HTMLElement;
+  const linkProperties = document.querySelector('.link-properties') as HTMLElement;
+  const elementProperties = document.querySelector('.element-properties') as HTMLElement;
+  const deleteButton = document.getElementById('delete-element') as HTMLElement;
 
-  private generatePropertiesForm(element: DiagramElement): string {
-    let html = '';
+  if (noSelection && linkProperties && elementProperties && deleteButton) {
+    // Ocultar el mensaje de no selección
+    noSelection.style.display = 'none';
     
+    // Mostrar el botón de eliminar
+    deleteButton.style.display = 'block';
+
     if (element instanceof dia.Link) {
-      // Propiedades para enlaces
-      const labels = element.labels();
-      const labelText = (labels && labels[0]?.attrs?.['text']?.text) || 'mensaje()';
-      html = `
-        <div class="property-group">
-          <h4><i class="fas fa-tag"></i> Mensaje</h4>
-          <div class="property-item">
-            <label class="property-label">Texto del Mensaje</label>
-            <input type="text" class="property-input" id="message-text" value="${labelText}">
-          </div>
-          <div class="property-item">
-            <label class="property-label">Tipo de Línea</label>
-            <select class="property-select" id="line-style">
-              <option value="solid">Sólida</option>
-              <option value="dashed">Discontinua</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="property-group">
-          <h4><i class="fas fa-palette"></i> Estilo</h4>
-          <div class="property-item">
-            <label class="property-label">Color de Línea</label>
-            <input type="color" class="property-color" id="line-color" value="#1565c0">
-          </div>
-          <div class="property-item">
-            <label class="property-label">Grosor de Línea</label>
-            <input type="range" class="property-range" id="line-width" min="1" max="5" value="2">
-            <span class="range-value">2px</span>
-          </div>
-        </div>
-      `;
-    } else if (element instanceof dia.Element) {
-      // Propiedades para elementos
-      const labelText = element.attr('label/text') || 'Elemento';
-      const position = element.position();
-      const size = element.size();
+      // Mostrar propiedades de enlace
+      linkProperties.style.display = 'block';
+      elementProperties.style.display = 'none';
       
-      html = `
-        <div class="property-group">
-          <h4><i class="fas fa-tag"></i> General</h4>
-          <div class="property-item">
-            <label class="property-label">Etiqueta</label>
-            <input type="text" class="property-input" id="element-label" value="${labelText}">
-          </div>
-        </div>
-        
-        <div class="property-group">
-          <h4><i class="fas fa-arrows-alt"></i> Posición y Tamaño</h4>
-          <div class="property-item">
-            <label class="property-label">Posición X</label>
-            <input type="number" class="property-input" id="position-x" value="${position.x}">
-          </div>
-          <div class="property-item">
-            <label class="property-label">Posición Y</label>
-            <input type="number" class="property-input" id="position-y" value="${position.y}">
-          </div>
-          <div class="property-item">
-            <label class="property-label">Ancho</label>
-            <input type="number" class="property-input" id="size-width" value="${size.width}">
-          </div>
-          <div class="property-item">
-            <label class="property-label">Alto</label>
-            <input type="number" class="property-input" id="size-height" value="${size.height}">
-          </div>
-        </div>
-        
-        <div class="property-group">
-          <h4><i class="fas fa-palette"></i> Apariencia</h4>
-          <div class="property-item">
-            <label class="property-label">Color de Relleno</label>
-            <input type="color" class="property-color" id="fill-color" value="#e3f2fd">
-          </div>
-          <div class="property-item">
-            <label class="property-label">Color de Borde</label>
-            <input type="color" class="property-color" id="stroke-color" value="#2962ff">
-          </div>
-        </div>
-      `;
+      // Actualizar valores
+      const messageText = document.getElementById('message-text') as HTMLInputElement;
+      const labels = element.labels();
+      if (messageText) {
+        messageText.value = (labels && labels[0]?.attrs?.['text']?.text) || 'mensaje()';
+      }
+      
+    } else if (element instanceof dia.Element) {
+      // Mostrar propiedades de elemento
+      elementProperties.style.display = 'block';
+      linkProperties.style.display = 'none';
+      
+      // Actualizar valores
+      const labelText = document.getElementById('element-label') as HTMLInputElement;
+      const posX = document.getElementById('position-x') as HTMLInputElement;
+      const posY = document.getElementById('position-y') as HTMLInputElement;
+      const width = document.getElementById('size-width') as HTMLInputElement;
+      const height = document.getElementById('size-height') as HTMLInputElement;
+      
+      if (labelText) labelText.value = element.attr('label/text') || 'Elemento';
+      if (posX) posX.value = element.position().x.toString();
+      if (posY) posY.value = element.position().y.toString();
+      if (width) width.value = element.size().width.toString();
+      if (height) height.value = element.size().height.toString();
     }
-    
-    html += `
-      <button class="delete-element-btn" id="delete-element">
-        <i class="fas fa-trash"></i> Eliminar Elemento
-      </button>
-    `;
-    
-    return html;
   }
+
+  // Configurar eventos para los inputs
+  this.setupPropertyEvents(element);
+}
+
+private hidePropertiesPanel(): void {
+  const panel = document.getElementById('properties-panel');
+  if (panel) {
+    panel.classList.remove('active');
+  }
+
+  const noSelection = document.querySelector('.no-selection') as HTMLElement;
+  const linkProperties = document.querySelector('.link-properties') as HTMLElement;
+  const elementProperties = document.querySelector('.element-properties') as HTMLElement;
+  const deleteButton = document.getElementById('delete-element') as HTMLElement;
+
+  if (noSelection && linkProperties && elementProperties && deleteButton) {
+    noSelection.style.display = 'block';
+    linkProperties.style.display = 'none';
+    elementProperties.style.display = 'none';
+    deleteButton.style.display = 'none';
+  }
+}
+
+ 
 
   private setupPropertyEvents(element: DiagramElement): void {
     // Evento para cambiar etiqueta (solo para elementos)

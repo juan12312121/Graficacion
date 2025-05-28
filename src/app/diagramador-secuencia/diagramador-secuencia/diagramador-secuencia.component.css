@@ -1,9 +1,13 @@
 /* === BASE STYLES === */
 .body {
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Añadido para evitar scroll */
+  margin: 0; /* Asegura que no haya márgenes */
+  padding: 0; /* Asegura que no haya padding */
 }
+
 
 .container {
   display: flex;
@@ -11,26 +15,31 @@
   font-family: "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
+    height: 100%; /* Asegura que ocupe todo el alto disponible */
+
   max-width: 100%;
   background-color: #f5f9ff;
   color: #1a237e;
   overflow: hidden;
 }
 
-/* === CANVAS === */
 .canvas-container {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  overflow: hidden; /* Cambiado de auto a hidden */
   background-color: #f5f9ff;
-  overflow: auto;
 }
 
 .canvas {
-  width: 3000px;
-  height: 3000px;
+  flex: 1; /* Hace que el canvas ocupe todo el espacio disponible */
+  width: 100%;
+  height: 100%;
   position: relative;
-  background-image: linear-gradient(#e1f5fe, 1px, transparent 1px),
-    linear-gradient(90deg, #e1f5fe, 1px, transparent 1px);
+  overflow: auto; /* Permite scroll dentro del canvas */
+  background-image: linear-gradient(#e1f5fe 1px, transparent 1px),
+    linear-gradient(90deg, #e1f5fe 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -448,10 +457,60 @@
   position: fixed;
   right: 0;
   top: 0;
+    min-width: 300px; /* Añadido para evitar que se encoja */
+
   transform: translateX(100%);
   transition: transform 0.3s ease;
   z-index: 1000;
   box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Estilos para los elementos del diagrama */
+.element-actor {
+  .joint-port {
+    fill: #ffffff;
+    stroke: #2962ff;
+    r: 6;
+    &:hover {
+      fill: #bbdefb;
+    }
+  }
+}
+
+.element-system {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.element-database {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.element-note {
+  filter: drop-shadow(2px 2px 4px rgba(255,193,7,0.2));
+}
+
+.element-fragment {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+}
+
+/* Estilos para los mensajes */
+.message-arrow {
+  marker-end: url(#arrowhead);
+  &.sync {
+    stroke-dasharray: none;
+  }
+  &.async {
+    stroke-dasharray: 5,5;
+  }
+  &.return {
+    stroke-dasharray: 2,2;
+  }
+}
+
+/* Definición de los marcadores de flecha */
+.joint-marker-arrowhead {
+  fill: #2962ff;
+  stroke: none;
 }
 
 .properties-panel.active {
