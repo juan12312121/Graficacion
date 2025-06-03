@@ -3,7 +3,23 @@
     <app-asided></app-asided>      
     
     <div class="canvas-container">       
-      <app-toolbar></app-toolbar>        
+    <app-toolbar 
+      [tools]="[
+        [
+          { type: 'select', icon: 'fa-mouse-pointer', title: 'Seleccionar', active: true },
+          { type: 'move', icon: 'fa-arrows-alt', title: 'Mover' },
+          { type: 'delete', icon: 'fa-trash-alt', title: 'Eliminar' }
+        ],
+        [
+          { type: 'undo', icon: 'fa-undo', title: 'Deshacer', disabled: true },
+          { type: 'redo', icon: 'fa-redo', title: 'Rehacer', disabled: true },
+          { type: 'export', icon: 'fa-file-export', title: 'Exportar' },
+          { type: 'save', icon: 'fa-save', title: 'Guardar' }
+        ]
+      ]"
+      (toolClick)="onToolAction($event)">
+    </app-toolbar>
+     
       
       <div         
         class="canvas"         

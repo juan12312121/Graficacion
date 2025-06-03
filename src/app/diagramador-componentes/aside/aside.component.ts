@@ -9,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './aside.component.css'
 })
 export class AsideComponent {
-
+ onDragStart(event: DragEvent, tipo: string) {
+    event.dataTransfer?.setData('text/plain', tipo);
+  }
 }

@@ -39,6 +39,8 @@ export class DiagramadorSecuenciaComponent implements AfterViewInit {
     this.resizeCanvas();
   }
 
+  
+
   private initializeJointJS(): void {
     // Inicialización de Joint.js
     this.graph = new dia.Graph();
@@ -753,7 +755,6 @@ private hidePropertiesPanel(): void {
     deleteButton.style.display = 'none';
   }
 }
-
  
 
   private setupPropertyEvents(element: DiagramElement): void {
@@ -1026,4 +1027,46 @@ private hidePropertiesPanel(): void {
     if (this.selectedElement instanceof dia.Link) return 'link';
     return 'element';
   }
+
+  onToolAction(action: { type: string }): void {
+  switch (action.type) {
+    case 'select':
+      // Desactivar modo conexión si está activo
+      if (this.connectMode) {
+        this.exitConnectMode();
+      }
+      break;
+    
+    case 'move':
+      // Implementar lógica para modo mover
+      break;
+    
+    case 'delete':
+      if (this.selectedElement) {
+        this.selectedElement.remove();
+        this.hidePropertiesPanel();
+        this.selectedElement = null;
+      }
+      break;
+    
+    case 'undo':
+      // Implementar deshacer
+      break;
+    
+    case 'redo':
+      // Implementar rehacer
+      break;
+    
+    case 'export':
+      this.exportDiagram();
+      break;
+    
+    case 'save':
+      // Implementar guardar
+      break;
+    
+    default:
+      console.log('Acción no implementada:', action.type);
+  }
+}
 }
