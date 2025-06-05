@@ -5,19 +5,24 @@
   <!-- Main Content Area -->
   <div class="main-content">
     <!-- Toolbar -->
-    <app-toolbar></app-toolbar>
+    <app-toolbar 
+      [tools]="tools"
+      (toolClick)="onToolAction($event)">
+    </app-toolbar>
     
     <!-- Diagram Canvas Container -->
     <div class="canvas-wrapper">
       <!-- Connection Mode Indicator -->
-      <div class="connection-indicator" *ngIf="isConnectionModeActive" [attr.data-indicator]="connectionIndicator">
+      <div class="connection-indicator" 
+           *ngIf="isConnectionModeActive" 
+           [attr.data-indicator]="connectionIndicator">
         <i class="fas fa-link"></i>
         <span>{{ connectionIndicator }}</span>
       </div>
       
       <!-- Main Diagram Container (Joint.js will be mounted here) -->
-      <div #diagramContainer 
-           class="diagram-canvas" 
+      <div #diagramContainer
+           class="diagram-canvas"
            [class.connection-mode]="isConnectionModeActive">
         <!-- Joint.js Paper will be rendered here -->
       </div>
@@ -33,8 +38,6 @@
         </div>
       </div>
       
-      
-      
       <!-- Status Bar -->
       <div class="status-bar">
         <div class="status-item">
@@ -47,13 +50,17 @@
           <i class="fas fa-link text-primary"></i>
           <span>Modo Conexión Activo</span>
         </div>
+        <div class="status-item">
+          <span>Zoom: {{ currentZoomPercentage }}</span>
+        </div>
       </div>
     </div>
   </div>
   
   <!-- Floating Action Button for Quick Actions -->
   <div class="fab-container">
-    <button class="fab" (click)="onToolAction({type: 'connection', action: 'toggle'})" 
+    <button class="fab" 
+            (click)="onConnectionToggle()"
             [class.active]="isConnectionModeActive"
             title="Alternar modo de conexión">
       <i class="fas fa-link"></i>

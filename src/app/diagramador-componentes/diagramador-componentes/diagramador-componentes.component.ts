@@ -4,7 +4,7 @@ import * as joint from 'jointjs';
 import { Subscription } from 'rxjs';
 
 import { DiagramService } from '../../service/diagramador-componentes/diagramador-componentes.service';
-import { ToolbarComponent } from "../../toolbar/toolbar.component";
+import { ToolbarAction, ToolbarComponent } from "../../toolbar/toolbar.component";
 import { AsideComponent } from '../aside/aside.component';
 import {
   Connection,
@@ -13,7 +13,6 @@ import {
   DiagramState,
   DragDropData,
   Position,
-  ToolAction,
   ZoomControls
 } from '../interfaces/diagram.interfaces';
 
@@ -51,6 +50,27 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     step: 0.1
   };
 
+  // Additional properties for connection mode
+  private connectMode: boolean = false;
+  private isConnecting: boolean = false;
+  private connectingElement: joint.dia.Element | null = null;
+  private selectedElement: joint.dia.Element | null = null;
+
+  // Toolbar configuration
+  toolbarGroups: ToolbarAction[][] = [
+    [
+      { type: 'select', icon: 'fa-mouse-pointer', title: 'Seleccionar', active: true },
+      { type: 'move', icon: 'fa-arrows-alt', title: 'Mover' },
+      { type: 'delete', icon: 'fa-trash-alt', title: 'Eliminar' }
+    ],
+    [
+      { type: 'undo', icon: 'fa-undo', title: 'Deshacer', disabled: true },
+      { type: 'redo', icon: 'fa-redo', title: 'Rehacer', disabled: true },
+      { type: 'export', icon: 'fa-file-export', title: 'Exportar' },
+      { type: 'save', icon: 'fa-save', title: 'Guardar' }
+    ]
+  ];
+
   // Suscripciones
   private subscriptions: Subscription[] = [];
   
@@ -61,14 +81,14 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
   constructor(private diagramService: DiagramService) {}
 
   ngOnInit(): void {
-    this.initializeSubscriptions();
+    // No inicializar suscripciones aquí - esperamos a que Joint.js esté listo
   }
 
   ngAfterViewInit(): void {
     this.initializeJointJS();
     this.setupEventHandlers();
-      this.initializeSubscriptions(); // Mover esto aquí, después de que Joint.js esté inicializado
-
+    // Ahora sí inicializamos las suscripciones después de que Joint.js esté listo
+    this.initializeSubscriptions();
   }
 
   ngOnDestroy(): void {
@@ -142,6 +162,7 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
       const element = this.findDiagramElementById(elementView.model.id as string);
       if (element) {
         this.diagramService.selectElement(element);
+        this.selectedElement = elementView.model;
       }
     });
 
@@ -180,6 +201,13 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     // Evento de clic en área vacía
     this.paper.on('blank:pointerclick', () => {
       this.diagramService.deselectElement();
+      this.selectedElement = null;
+      this.hidePropertiesPanel();
+      
+      // Si está en modo conexión, cancelar la conexión
+      if (this.connectionMode.active && this.connectionMode.startPoint) {
+        this.diagramService.cancelConnection();
+      }
     });
 
     // Eventos de drag & drop
@@ -215,6 +243,12 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
    * Actualiza el diagrama Joint.js basado en el estado del servicio
    */
   private updateJointDiagram(): void {
+    // Verificar que el graph existe antes de usarlo
+    if (!this.graph) {
+      console.warn('Graph no está inicializado aún');
+      return;
+    }
+
     this.graph.clear();
     this.jointElements.clear();
     this.jointConnections.clear();
@@ -429,23 +463,23 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
   /**
    * Actualiza la UI del modo de conexión
    */
- private updateConnectionModeUI(): void {
-  const container = this.diagramContainer.nativeElement;
-  
-  if (this.connectionMode.active) {
-    container.classList.add('connection-mode');
-    // Verificar que paper.el existe antes de usarlo
-    if (this.paper && this.paper.el) {
-      this.paper.el.style.cursor = 'crosshair';
-    }
-  } else {
-    container.classList.remove('connection-mode');
-    // Verificar que paper.el existe antes de usarlo
-    if (this.paper && this.paper.el) {
-      this.paper.el.style.cursor = 'default';
+  private updateConnectionModeUI(): void {
+    const container = this.diagramContainer.nativeElement;
+    
+    if (this.connectionMode.active) {
+      container.classList.add('connection-mode');
+      // Verificar que paper.el existe antes de usarlo
+      if (this.paper && this.paper.el) {
+        this.paper.el.style.cursor = 'crosshair';
+      }
+    } else {
+      container.classList.remove('connection-mode');
+      // Verificar que paper.el existe antes de usarlo
+      if (this.paper && this.paper.el) {
+        this.paper.el.style.cursor = 'default';
+      }
     }
   }
-}
 
   /**
    * Valida una conexión en Joint.js
@@ -468,10 +502,136 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
   }
 
   /**
+   * Sale del modo de conexión
+   */
+  private exitConnectMode(): void {
+    this.connectMode = false;
+    this.isConnecting = false;
+    this.connectingElement = null;
+    
+    if (this.diagramContainer?.nativeElement) {
+      const connectingElements = this.diagramContainer.nativeElement.querySelectorAll('.connecting-element');
+      connectingElements.forEach((el: Element) => el.classList.remove('connecting-element'));
+    }
+    
+    const guide = document.getElementById('connection-guide');
+    if (guide) {
+      guide.classList.remove('active');
+    }
+    
+    const btn = document.getElementById('connect-mode-btn');
+    if (btn) {
+      btn.classList.remove('active');
+    }
+    
+    document.body.classList.remove('magnet-mode');
+    
+    // Update connection mode in service - FIXED: Added boolean parameter
+    this.diagramService.toggleConnectionMode();
+  }
+
+  /**
+   * Oculta el panel de propiedades
+   */
+  private hidePropertiesPanel(): void {
+    // Implementation for hiding properties panel
+    // This could involve calling a service method or updating component state
+    console.log('Hiding properties panel');
+  }
+
+  /**
+   * Exporta el diagrama
+   */
+  private exportDiagram(): void {
+    if (!this.paper) {
+      console.warn('No hay diagrama para exportar');
+      return;
+    }
+
+    try {
+      // Export as SVG
+      const svg = this.paper.svg;
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svg);
+      
+      // Create download link
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `diagram-${new Date().toISOString().slice(0, 10)}.svg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      URL.revokeObjectURL(url);
+      
+      console.log('Diagrama exportado exitosamente');
+    } catch (error) {
+      console.error('Error al exportar diagrama:', error);
+    }
+  }
+
+  /**
    * Maneja acciones de la toolbar
    */
-  onToolAction(action: ToolAction): void {
-    this.diagramService.handleToolAction(action);
+  onToolAction(action: ToolbarAction): void {
+    switch (action.type) {
+      case 'select':
+        // Desactivar modo conexión si está activo
+        if (this.connectMode) {
+          this.exitConnectMode();
+        }
+        break;
+      
+      case 'move':
+        // Implementar lógica para modo mover
+        console.log('Modo mover activado');
+        break;
+      
+      case 'delete':
+        if (this.selectedElement) {
+          this.selectedElement.remove();
+          this.hidePropertiesPanel();
+          this.selectedElement = null;
+        }
+        break;
+      
+      case 'undo':
+        // Implementar deshacer
+        console.log('Deshacer acción');
+        break;
+      
+      case 'redo':
+        // Implementar rehacer
+        console.log('Rehacer acción');
+        break;
+      
+      case 'export':
+        this.exportDiagram();
+        break;
+      
+      case 'save':
+        // Implementar guardar
+        console.log('Guardando diagrama');
+        break;
+      
+      default:
+        console.log('Acción no implementada:', action.type);
+    }
+  }
+
+  /**
+   * Maneja el toggle del modo de conexión desde el FAB
+   */
+  onConnectionToggle(): void {
+    if (this.connectionMode.active) {
+      this.exitConnectMode();
+    } else {
+      this.connectMode = true;
+      this.diagramService.toggleConnectionMode();
+    }
   }
 
   /**
@@ -528,5 +688,7 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     return '';
   }
 
-  
+  get tools(): ToolbarAction[][] {
+    return this.toolbarGroups;
+  }
 }
