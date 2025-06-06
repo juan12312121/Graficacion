@@ -1,4 +1,4 @@
-// services/diagram.service.ts - VERSIÓN CORREGIDA SIN PROPIEDAD STYLE
+// services/diagram.service.ts - VERSIÓN CORREGIDA CON updateElementPosition
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -109,6 +109,57 @@ export class DiagramService {
     };
 
     this.updateDiagramState(updatedState);
+    this.saveState();
+  }
+
+  /**
+   * Actualiza la posición de un elemento específico
+   * Método optimizado para operaciones de drag and drop
+   */
+  updateElementPosition(elementId: string, newPosition: Position): void {
+    // Validar entrada
+    if (!elementId) {
+      console.error('elementId es requerido');
+      return;
+    }
+
+    if (!newPosition || !DiagramUtils.validatePosition(newPosition)) {
+      console.error('Posición inválida proporcionada:', newPosition);
+      return;
+    }
+
+    const currentState = this.getCurrentState();
+    const elementIndex = currentState.elements.findIndex(element => element.id === elementId);
+    
+    if (elementIndex === -1) {
+      console.error('Elemento no encontrado:', elementId);
+      return;
+    }
+
+    // Crear una copia del array de elementos
+    const updatedElements = [...currentState.elements];
+    
+    // Actualizar solo la posición del elemento específico
+    updatedElements[elementIndex] = {
+      ...updatedElements[elementIndex],
+      position: { ...newPosition }
+    };
+
+    const updatedState: DiagramState = {
+      ...currentState,
+      elements: updatedElements
+    };
+
+    // Actualizar estado sin guardar en historial (para mejor performance durante drag)
+    this.updateDiagramState(updatedState);
+  }
+
+  /**
+   * Finaliza la actualización de posición y guarda en historial
+   * Llamar este método cuando termine el drag operation
+   */
+  finalizeElementPosition(elementId: string): void {
+    // Guardar estado en historial después de completar el drag
     this.saveState();
   }
 
@@ -747,4 +798,67 @@ export class DiagramService {
   private isInterfaceDragData(dragData: DragDropData): dragData is DragDropData & { interfaceType: string } {
     return 'interfaceType' in dragData && dragData.interfaceType !== undefined && dragData.interfaceType !== null;
   }
+
+  updateElementProperty(elementId: string, propertyName: string, value: any): void {
+  const currentState = this.getCurrentState();
+  const updatedElements = currentState.elements.map(element => {
+    if (element.id === elementId) {
+      return {
+        ...element,
+        attributes: {
+          ...element.attributes,
+          properties: {
+            ...element.attributes.properties,
+            [propertyName]: value
+          }
+        }
+      };
+    }
+    return element;
+  });
+
+  const updatedState: DiagramState = {
+    ...currentState,
+    elements: updatedElements
+  };
+
+  this.updateDiagramState(updatedState);
+  this.saveState();
+}
+
+addElementFromData(elementData: DiagramElement): void {
+  if (!elementData) {
+    console.error('elementData es requerido');
+    return;
+  }
+
+  try {
+    const currentState = this.getCurrentState();
+    
+    // Crear una copia del elemento con nuevo ID y posición ligeramente desplazada
+    const newElement: DiagramElement = {
+      ...elementData,
+      id: this.generateUniqueId(),
+      position: {
+        x: elementData.position.x + 20,
+        y: elementData.position.y + 20
+      }
+    };
+    
+    const updatedState: DiagramState = {
+      ...currentState,
+      elements: [...currentState.elements, newElement]
+    };
+
+    this.updateDiagramState(updatedState);
+    this.saveState();
+  } catch (error) {
+    console.error('Error agregando elemento desde datos:', error);
+  }
+}
+
+resetZoom(): void {
+  this.setZoomLevel(1);
+}
+
 }

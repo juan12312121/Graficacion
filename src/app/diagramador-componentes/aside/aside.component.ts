@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router'; // Importar Router
 import { DragDropData } from '../interfaces/diagram.interfaces';
 import { DiagramUtils } from '../interfaces/utils/diagram.utils';
 
@@ -10,11 +11,14 @@ import { DiagramUtils } from '../interfaces/utils/diagram.utils';
   styleUrl: './aside.component.css'
 })
 export class AsideComponent {
+  
+  // Inyectar Router en el constructor
+  constructor(private router: Router) {}
 
   onDragStart(event: DragEvent, tipo: string) {
     // Mapear el tipo del sidebar al formato correcto usando DiagramUtils
     const mappedType = DiagramUtils.mapSidebarTypeToElement(tipo);
-    
+        
     // Crear el objeto DragDropData correcto
     const dragData: DragDropData = {
       elementType: mappedType.elementType as 'component' | 'interface' | 'port' | 'connector' | 'relation' | 'annotation',
@@ -68,5 +72,10 @@ export class AsideComponent {
       'stereotype-annotation': 'fas fa-tag'
     };
     return iconMap[tipo] || 'fas fa-puzzle-piece';
+  }
+
+  goHome() {
+    // Navegar a la ruta principal
+    this.router.navigate(['/principal']);
   }
 }

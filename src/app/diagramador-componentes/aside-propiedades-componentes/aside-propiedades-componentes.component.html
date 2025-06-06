@@ -1,0 +1,363 @@
+ <div class="properties-panel" [class.visible]="isVisible">
+      <div class="properties-header">
+        <div class="header-content">
+          <i class="fas" [class]="getElementIcon()"></i>
+          <span class="element-type">{{ getElementTypeLabel() }}</span>
+        </div>
+        <button class="close-btn" (click)="onClose()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="properties-content" *ngIf="selectedElement">
+        
+        <!-- Properties for DiagramElement -->
+        <div *ngIf="isDiagramElement(selectedElement)" class="property-section">
+          
+          <!-- Basic Properties -->
+          <div class="property-group">
+            <h4>Propiedades Básicas</h4>
+            
+            <div class="property-item">
+              <label for="elementName">Nombre:</label>
+              <input 
+                id="elementName"
+                type="text" 
+                class="property-input"
+                [(ngModel)]="elementProperties.name"
+                (ngModelChange)="onPropertyChange('name', $event)"
+                placeholder="Nombre del elemento">
+            </div>
+
+            <div class="property-item">
+              <label for="elementDescription">Descripción:</label>
+              <textarea 
+                id="elementDescription"
+                class="property-textarea"
+                [(ngModel)]="elementProperties.description"
+                (ngModelChange)="onPropertyChange('description', $event)"
+                placeholder="Descripción del elemento"
+                rows="3">
+              </textarea>
+            </div>
+          </div>
+
+          <!-- Visual Properties -->
+          <div class="property-group">
+            <h4>Propiedades Visuales</h4>
+            
+            <div class="property-row">
+              <div class="property-item half">
+                <label for="elementWidth">Ancho:</label>
+                <input 
+                  id="elementWidth"
+                  type="number" 
+                  class="property-input"
+                  [(ngModel)]="elementProperties.width"
+                  (ngModelChange)="onSizeChange('width', $event)"
+                  min="50"
+                  max="500">
+              </div>
+              
+              <div class="property-item half">
+                <label for="elementHeight">Alto:</label>
+                <input 
+                  id="elementHeight"
+                  type="number" 
+                  class="property-input"
+                  [(ngModel)]="elementProperties.height"
+                  (ngModelChange)="onSizeChange('height', $event)"
+                  min="30"
+                  max="300">
+              </div>
+            </div>
+
+            <div class="property-item">
+              <label for="fillColor">Color de Fondo:</label>
+              <div class="color-input-wrapper">
+                <input 
+                  id="fillColor"
+                  type="color" 
+                  class="color-input"
+                  [(ngModel)]="elementProperties.fill"
+                  (ngModelChange)="onPropertyChange('fill', $event)">
+                <input 
+                  type="text" 
+                  class="color-text-input"
+                  [(ngModel)]="elementProperties.fill"
+                  (ngModelChange)="onPropertyChange('fill', $event)"
+                  placeholder="#ffffff">
+              </div>
+            </div>
+
+            <div class="property-item">
+              <label for="strokeColor">Color de Borde:</label>
+              <div class="color-input-wrapper">
+                <input 
+                  id="strokeColor"
+                  type="color" 
+                  class="color-input"
+                  [(ngModel)]="elementProperties.stroke"
+                  (ngModelChange)="onPropertyChange('stroke', $event)">
+                <input 
+                  type="text" 
+                  class="color-text-input"
+                  [(ngModel)]="elementProperties.stroke"
+                  (ngModelChange)="onPropertyChange('stroke', $event)"
+                  placeholder="#333333">
+              </div>
+            </div>
+
+            <div class="property-item">
+              <label for="strokeWidth">Grosor de Borde:</label>
+              <input 
+                id="strokeWidth"
+                type="range" 
+                class="range-input"
+                [(ngModel)]="elementProperties.strokeWidth"
+                (ngModelChange)="onPropertyChange('strokeWidth', $event)"
+                min="1"
+                max="10"
+                step="1">
+              <span class="range-value">{{ elementProperties.strokeWidth }}px</span>
+            </div>
+          </div>
+
+          <!-- Position Properties -->
+          <div class="property-group">
+            <h4>Posición</h4>
+            
+            <div class="property-row">
+              <div class="property-item half">
+                <label for="positionX">X:</label>
+                <input 
+                  id="positionX"
+                  type="number" 
+                  class="property-input"
+                  [(ngModel)]="elementProperties.x"
+                  (ngModelChange)="onPositionChange('x', $event)">
+              </div>
+              
+              <div class="property-item half">
+                <label for="positionY">Y:</label>
+                <input 
+                  id="positionY"
+                  type="number" 
+                  class="property-input"
+                  [(ngModel)]="elementProperties.y"
+                  (ngModelChange)="onPositionChange('y', $event)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Type-specific Properties -->
+          <div class="property-group" *ngIf="selectedElement.type === 'component'">
+            <h4>Propiedades del Componente</h4>
+            
+            <div class="property-item">
+              <label for="componentType">Tipo de Componente:</label>
+              <select 
+                id="componentType"
+                class="property-select"
+                [(ngModel)]="elementProperties.componentType"
+                (ngModelChange)="onPropertyChange('componentType', $event)">
+                <option value="service">Servicio</option>
+                <option value="controller">Controlador</option>
+                <option value="repository">Repositorio</option>
+                <option value="model">Modelo</option>
+                <option value="utility">Utilidad</option>
+              </select>
+            </div>
+
+            <div class="property-item">
+              <label for="headerText">Texto del Encabezado:</label>
+              <input 
+                id="headerText"
+                type="text" 
+                class="property-input"
+                [(ngModel)]="elementProperties.headerText"
+                (ngModelChange)="onPropertyChange('headerText', $event)"
+                placeholder="Texto del encabezado">
+            </div>
+          </div>
+
+          <div class="property-group" *ngIf="selectedElement.type === 'interface'">
+            <h4>Propiedades de la Interfaz</h4>
+            
+            <div class="property-item">
+              <label for="interfaceType">Tipo de Interfaz:</label>
+              <select 
+                id="interfaceType"
+                class="property-select"
+                [(ngModel)]="elementProperties.interfaceType"
+                (ngModelChange)="onPropertyChange('interfaceType', $event)">
+                <option value="api">API</option>
+                <option value="database">Base de Datos</option>
+                <option value="external">Servicio Externo</option>
+                <option value="ui">Interfaz de Usuario</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="property-group" *ngIf="selectedElement.type === 'port'">
+            <h4>Propiedades del Puerto</h4>
+            
+            <div class="property-item">
+              <label for="portType">Tipo de Puerto:</label>
+              <select 
+                id="portType"
+                class="property-select"
+                [(ngModel)]="elementProperties.portType"
+                (ngModelChange)="onPropertyChange('portType', $event)">
+                <option value="input">Entrada</option>
+                <option value="output">Salida</option>
+                <option value="bidirectional">Bidireccional</option>
+              </select>
+            </div>
+
+            <div class="property-item">
+              <label for="portNumber">Número de Puerto:</label>
+              <input 
+                id="portNumber"
+                type="number" 
+                class="property-input"
+                [(ngModel)]="elementProperties.portNumber"
+                (ngModelChange)="onPropertyChange('portNumber', $event)"
+                min="1"
+                max="65535">
+            </div>
+          </div>
+        </div>
+
+        <!-- Properties for Connection -->
+        <div *ngIf="isConnection(selectedElement)" class="property-section">
+          
+          <div class="property-group">
+            <h4>Propiedades de la Conexión</h4>
+            
+            <div class="property-item">
+              <label for="connectionName">Nombre:</label>
+              <input 
+                id="connectionName"
+                type="text" 
+                class="property-input"
+                [(ngModel)]="connectionProperties.name"
+                (ngModelChange)="onPropertyChange('name', $event)"
+                placeholder="Nombre de la conexión">
+            </div>
+
+            <div class="property-item">
+              <label for="connectionType">Tipo de Conexión:</label>
+              <select 
+                id="connectionType"
+                class="property-select"
+                [(ngModel)]="connectionProperties.connectionType"
+                (ngModelChange)="onPropertyChange('connectionType', $event)">
+                <option value="dependency">Dependencia</option>
+                <option value="association">Asociación</option>
+                <option value="composition">Composición</option>
+                <option value="aggregation">Agregación</option>
+                <option value="inheritance">Herencia</option>
+                <option value="implementation">Implementación</option>
+              </select>
+            </div>
+
+            <div class="property-item">
+              <label for="connectionStroke">Color de Línea:</label>
+              <div class="color-input-wrapper">
+                <input 
+                  id="connectionStroke"
+                  type="color" 
+                  class="color-input"
+                  [(ngModel)]="connectionProperties.stroke"
+                  (ngModelChange)="onPropertyChange('stroke', $event)">
+                <input 
+                  type="text" 
+                  class="color-text-input"
+                  [(ngModel)]="connectionProperties.stroke"
+                  (ngModelChange)="onPropertyChange('stroke', $event)"
+                  placeholder="#333333">
+              </div>
+            </div>
+
+            <div class="property-item">
+              <label for="connectionStrokeWidth">Grosor de Línea:</label>
+              <input 
+                id="connectionStrokeWidth"
+                type="range" 
+                class="range-input"
+                [(ngModel)]="connectionProperties.strokeWidth"
+                (ngModelChange)="onPropertyChange('strokeWidth', $event)"
+                min="1"
+                max="10"
+                step="1">
+              <span class="range-value">{{ connectionProperties.strokeWidth }}px</span>
+            </div>
+
+            <div class="property-item">
+              <label for="connectionStyle">Estilo de Línea:</label>
+              <select 
+                id="connectionStyle"
+                class="property-select"
+                [(ngModel)]="connectionProperties.strokeDasharray"
+                (ngModelChange)="onPropertyChange('strokeDasharray', $event)">
+                <option value="none">Sólida</option>
+                <option value="5,5">Punteada</option>
+                <option value="10,5">Guiones</option>
+                <option value="15,10,5,10">Punto-Guión</option>
+              </select>
+            </div>
+
+            <div class="property-item">
+              <label for="arrowType">Tipo de Flecha:</label>
+              <select 
+                id="arrowType"
+                class="property-select"
+                [(ngModel)]="connectionProperties.arrowType"
+                (ngModelChange)="onPropertyChange('arrowType', $event)">
+                <option value="none">Sin flecha</option>
+                <option value="arrow">Flecha simple</option>
+                <option value="diamond">Diamante</option>
+                <option value="circle">Círculo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="property-group">
+            <h4>Información de Conexión</h4>
+            
+            <div class="connection-info">
+              <div class="connection-endpoint">
+                <strong>Origen:</strong>
+                <span>{{ getSourceElementName() }}</span>
+                <small>(Puerto: {{ selectedElement.source.port }})</small>
+              </div>
+              
+              <div class="connection-endpoint">
+                <strong>Destino:</strong>
+                <span>{{ getTargetElementName() }}</span>
+                <small>(Puerto: {{ selectedElement.target.port }})</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="property-actions">
+          <button class="btn btn-danger" (click)="onDelete()">
+            <i class="fas fa-trash"></i>
+            Eliminar
+          </button>
+          
+          <button class="btn btn-secondary" (click)="onDuplicate()" *ngIf="isDiagramElement(selectedElement)">
+            <i class="fas fa-copy"></i>
+            Duplicar
+          </button>
+        </div>
+      </div>
+
+      <div class="no-selection" *ngIf="!selectedElement">
+        <i class="fas fa-mouse-pointer"></i>
+        <p>Selecciona un elemento para ver sus propiedades</p>
+      </div>
+    </div>
