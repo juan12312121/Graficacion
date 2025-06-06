@@ -29,17 +29,7 @@
                 placeholder="Nombre del elemento">
             </div>
 
-            <div class="property-item">
-              <label for="elementDescription">Descripción:</label>
-              <textarea 
-                id="elementDescription"
-                class="property-textarea"
-                [(ngModel)]="elementProperties.description"
-                (ngModelChange)="onPropertyChange('description', $event)"
-                placeholder="Descripción del elemento"
-                rows="3">
-              </textarea>
-            </div>
+           
           </div>
 
           <!-- Visual Properties -->
@@ -108,19 +98,7 @@
               </div>
             </div>
 
-            <div class="property-item">
-              <label for="strokeWidth">Grosor de Borde:</label>
-              <input 
-                id="strokeWidth"
-                type="range" 
-                class="range-input"
-                [(ngModel)]="elementProperties.strokeWidth"
-                (ngModelChange)="onPropertyChange('strokeWidth', $event)"
-                min="1"
-                max="10"
-                step="1">
-              <span class="range-value">{{ elementProperties.strokeWidth }}px</span>
-            </div>
+          
           </div>
 
           <!-- Position Properties -->
@@ -151,35 +129,7 @@
           </div>
 
           <!-- Type-specific Properties -->
-          <div class="property-group" *ngIf="selectedElement.type === 'component'">
-            <h4>Propiedades del Componente</h4>
-            
-            <div class="property-item">
-              <label for="componentType">Tipo de Componente:</label>
-              <select 
-                id="componentType"
-                class="property-select"
-                [(ngModel)]="elementProperties.componentType"
-                (ngModelChange)="onPropertyChange('componentType', $event)">
-                <option value="service">Servicio</option>
-                <option value="controller">Controlador</option>
-                <option value="repository">Repositorio</option>
-                <option value="model">Modelo</option>
-                <option value="utility">Utilidad</option>
-              </select>
-            </div>
-
-            <div class="property-item">
-              <label for="headerText">Texto del Encabezado:</label>
-              <input 
-                id="headerText"
-                type="text" 
-                class="property-input"
-                [(ngModel)]="elementProperties.headerText"
-                (ngModelChange)="onPropertyChange('headerText', $event)"
-                placeholder="Texto del encabezado">
-            </div>
-          </div>
+          
 
           <div class="property-group" *ngIf="selectedElement.type === 'interface'">
             <h4>Propiedades de la Interfaz</h4>
@@ -344,10 +294,7 @@
 
         <!-- Action Buttons -->
         <div class="property-actions">
-          <button class="btn btn-danger" (click)="onDelete()">
-            <i class="fas fa-trash"></i>
-            Eliminar
-          </button>
+        
           
           <button class="btn btn-secondary" (click)="onDuplicate()" *ngIf="isDiagramElement(selectedElement)">
             <i class="fas fa-copy"></i>

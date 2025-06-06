@@ -25,8 +25,8 @@ import {
   styleUrl: './diagramador-componentes.component.css'
 })
 export class DiagramadorComponentesComponent implements OnInit, OnDestroy, AfterViewInit {
-closePropertiesPanel() {
-throw new Error('Method not implemented.');
+closePropertiesPanel(): void {
+  this.onPropertiesPanelClose();
 }
   
   @ViewChild('diagramContainer', { static: true }) diagramContainer!: ElementRef<HTMLDivElement>;
@@ -484,29 +484,43 @@ private removeAllHighlights(): void {
   /**
    * Actualiza los atributos visuales de un elemento
    */
-  private updateElementAttributes(jointElement: joint.dia.Element, element: DiagramElement): void {
-    // Actualizar solo si hay cambios en los atributos visuales
-    
-    // Ejemplo de actualización de texto
-    if (element.attributes.name) {
-      jointElement.attr('label/text', element.attributes.name);
-    }
-    
-    // Ejemplo de actualización de colores
-    if (element.attributes.fill) {
-      jointElement.attr('body/fill', element.attributes.fill);
-    }
-    
-    if (element.attributes.stroke) {
-      jointElement.attr('body/stroke', element.attributes.stroke);
-    }
-
-    // Actualizar tamaño
-    const currentSize = jointElement.size();
-    if (currentSize.width !== element.size.width || currentSize.height !== element.size.height) {
-      jointElement.resize(element.size.width, element.size.height);
-    }
+/**
+ * Actualiza los atributos visuales de un elemento
+ */
+private updateElementAttributes(jointElement: joint.dia.Element, element: DiagramElement): void {
+  // Actualizar texto del label - CRÍTICO para mostrar el nombre
+  if (element.attributes.name) {
+    jointElement.attr('label/text', element.attributes.name);
   }
+  
+  // Actualizar texto del header si existe
+  if (element.attributes.headerText) {
+    jointElement.attr('label/text', element.attributes.headerText);
+  }
+  
+  // Actualizar colores
+  if (element.attributes.fill) {
+    jointElement.attr('body/fill', element.attributes.fill);
+  }
+  
+  if (element.attributes.stroke) {
+    jointElement.attr('body/stroke', element.attributes.stroke);
+  }
+
+  // Actualizar grosor del borde
+  if (element.attributes.strokeWidth) {
+    jointElement.attr('body/strokeWidth', element.attributes.strokeWidth);
+  }
+
+  // Actualizar tamaño
+  const currentSize = jointElement.size();
+  if (currentSize.width !== element.size.width || currentSize.height !== element.size.height) {
+    jointElement.resize(element.size.width, element.size.height);
+  }
+
+  // IMPORTANTE: Forzar re-render del elemento
+  jointElement.attr('root/title', element.attributes.name || element.type);
+}
 
   /**
    * Crea un elemento Joint.js basado en DiagramElement
@@ -517,7 +531,38 @@ private removeAllHighlights(): void {
     let jointElement: joint.dia.Element;
 
     switch (element.type) {
-      case 'component':
+// En el método createJointElement, para el caso 'component':
+case 'component':
+  jointElement = new joint.shapes.standard.Rectangle({
+    id: element.id,
+    position: { x: position.x, y: position.y },
+    size: { width: size.width, height: size.height },
+    attrs: {
+      root: {
+        title: attributes.name || 'Component'
+      },
+      body: {
+        fill: attributes.fill || '#ffffff',
+        stroke: attributes.stroke || '#333333',
+        strokeWidth: attributes.strokeWidth || 1
+      },
+      label: {
+        // CRÍTICO: Usar el nombre del elemento
+        text: attributes.name || attributes.headerText || 'Component',
+        fontSize: 14,
+        fontFamily: 'Arial',
+        fill: '#333333', // Color del texto
+        textWrap: {
+          width: size.width - 20,
+          height: size.height - 20
+        },
+        textVerticalAnchor: 'middle',  // Centrar verticalmente
+        textAnchor: 'middle'           // Centrar horizontalmente
+      }
+    },
+    // ... resto del código de ports
+  });
+  
         jointElement = new joint.shapes.standard.Rectangle({
           id: element.id,
           position: { x: position.x, y: position.y },
@@ -879,13 +924,75 @@ private removeAllHighlights(): void {
   /**
    * Maneja las actualizaciones de propiedades desde el panel de propiedades
    */
-  onPropertyUpdate(update: PropertyUpdate): void {
-    this.diagramService.updateElementProperty(
-      update.elementId, 
-      update.property, 
-      update.value
-    );
+ /**
+ * Maneja las actualizaciones de propiedades desde el panel de propiedades
+ */
+onPropertyUpdate(update: PropertyUpdate): void {
+  console.log('Actualizando propiedad:', update);
+  
+  // Actualizar en el servicio
+  this.diagramService.updateElementProperty(
+    update.elementId, 
+    update.property, 
+    update.value
+  );
+
+  // IMPORTANTE: Actualizar inmediatamente el elemento Joint.js
+  const jointElement = this.jointElements.get(update.elementId);
+  if (jointElement) {
+    this.updateJointElementProperty(jointElement, update.property, update.value);
   }
+
+  // Actualizar el elemento seleccionado si es el mismo
+  if (this.selectedElement && this.selectedElement.id === update.elementId) {
+    const updatedElement = this.findDiagramElementById(update.elementId);
+    if (updatedElement) {
+      this.selectedElement = updatedElement;
+    }
+  }
+}
+
+/**
+ * Actualiza una propiedad específica en un elemento Joint.js
+ */
+private updateJointElementProperty(
+  jointElement: joint.dia.Element, 
+  property: string, 
+  value: any
+): void {
+  switch (property) {
+    case 'name':
+    case 'headerText':
+      jointElement.attr('label/text', value);
+      jointElement.attr('root/title', value);
+      break;
+    
+    case 'fill':
+      jointElement.attr('body/fill', value);
+      break;
+    
+    case 'stroke':
+      jointElement.attr('body/stroke', value);
+      break;
+    
+    case 'strokeWidth':
+      jointElement.attr('body/strokeWidth', value);
+      break;
+    
+    case 'width':
+      const currentSize = jointElement.size();
+      jointElement.resize(value, currentSize.height);
+      break;
+    
+    case 'height':
+      const currentSizeH = jointElement.size();
+      jointElement.resize(currentSizeH.width, value);
+      break;
+    
+    default:
+      console.log('Propiedad no manejada en actualización directa:', property);
+  }
+}
 
   /**
    * Maneja la eliminación de elementos desde el panel de propiedades

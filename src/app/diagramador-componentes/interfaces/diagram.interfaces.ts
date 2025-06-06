@@ -209,3 +209,9 @@ export interface PortDefinition {
   name?: string;
   description?: string;
 }
+
+interface ElementUpdate {
+  elementId: string;
+  property: string;
+  value: any;
+}

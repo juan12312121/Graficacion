@@ -799,31 +799,40 @@ export class DiagramService {
     return 'interfaceType' in dragData && dragData.interfaceType !== undefined && dragData.interfaceType !== null;
   }
 
-  updateElementProperty(elementId: string, propertyName: string, value: any): void {
-  const currentState = this.getCurrentState();
-  const updatedElements = currentState.elements.map(element => {
-    if (element.id === elementId) {
-      return {
-        ...element,
-        attributes: {
-          ...element.attributes,
-          properties: {
-            ...element.attributes.properties,
-            [propertyName]: value
-          }
-        }
-      };
+// En tu DiagramService
+updateElementProperty(elementId: string, property: string, value: any): void {
+  const currentState = this.diagramStateSubject.value;
+  const elementIndex = currentState.elements.findIndex(el => el.id === elementId);
+  
+  if (elementIndex !== -1) {
+    const updatedElements = [...currentState.elements];
+    const element = { ...updatedElements[elementIndex] };
+    
+    // Actualizar la propiedad en el lugar correcto
+    if (property === 'name' || property === 'description') {
+      element.attributes = { ...element.attributes, [property]: value };
+    } else if (property === 'width' || property === 'height') {
+      element.size = { ...element.size, [property]: value };
+    } else if (property === 'x' || property === 'y') {
+      element.position = { ...element.position, [property]: value };
+    } else {
+      // Para propiedades visuales como fill, stroke, etc.
+      element.attributes = { ...element.attributes, [property]: value };
     }
-    return element;
-  });
-
-  const updatedState: DiagramState = {
-    ...currentState,
-    elements: updatedElements
-  };
-
-  this.updateDiagramState(updatedState);
-  this.saveState();
+    
+    updatedElements[elementIndex] = element;
+    
+    const newState: DiagramState = {
+      ...currentState,
+      elements: updatedElements,
+      selectedElement: element // Actualizar también el elemento seleccionado
+    };
+    
+    this.diagramStateSubject.next(newState);
+    console.log('Estado actualizado en servicio:', property, value);
+  } else {
+    console.error('Elemento no encontrado para actualizar:', elementId);
+  }
 }
 
 addElementFromData(elementData: DiagramElement): void {
