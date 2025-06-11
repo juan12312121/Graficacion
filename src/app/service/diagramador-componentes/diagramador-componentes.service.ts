@@ -18,6 +18,9 @@ import { DiagramUtils } from '../../diagramador-componentes/interfaces/utils/dia
   providedIn: 'root'
 })
 export class DiagramService {
+  updateElementPosition(arg0: string, arg1: { x: number; y: number; }) {
+    throw new Error('Method not implemented.');
+  }
   
   // Estado del diagrama
   private diagramStateSubject = new BehaviorSubject<DiagramState>({
@@ -115,56 +118,7 @@ export class DiagramService {
 
 
   
-  /**
-   * Actualiza la posición de un elemento específico
-   * Método optimizado para operaciones de drag and drop
-   */
-  updateElementPosition(elementId: string, newPosition: Position): void {
-    // Validar entrada
-    if (!elementId) {
-      console.error('elementId es requerido');
-      return;
-    }
-
-    if (!newPosition || !DiagramUtils.validatePosition(newPosition)) {
-      console.error('Posición inválida proporcionada:', newPosition);
-      return;
-    }
-
-    const currentState = this.getCurrentState();
-    const elementIndex = currentState.elements.findIndex(element => element.id === elementId);
-    
-    if (elementIndex === -1) {
-      console.error('Elemento no encontrado:', elementId);
-      return;
-    }
-
-    // Crear una copia del array de elementos
-    const updatedElements = [...currentState.elements];
-    
-    // Actualizar solo la posición del elemento específico
-    updatedElements[elementIndex] = {
-      ...updatedElements[elementIndex],
-      position: { ...newPosition }
-    };
-
-    const updatedState: DiagramState = {
-      ...currentState,
-      elements: updatedElements
-    };
-
-    // Actualizar estado sin guardar en historial (para mejor performance durante drag)
-    this.updateDiagramState(updatedState);
-  }
-
-  /**
-   * Finaliza la actualización de posición y guarda en historial
-   * Llamar este método cuando termine el drag operation
-   */
-  finalizeElementPosition(elementId: string): void {
-    // Guardar estado en historial después de completar el drag
-    this.saveState();
-  }
+ 
 
   /**
    * Elimina un elemento del diagrama
@@ -879,6 +833,7 @@ resetDiagramState(): void {
     zoomLevel: 1
   });
 }
+
 
 
 

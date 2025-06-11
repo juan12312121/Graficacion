@@ -1139,8 +1139,9 @@ private updateJointElementProperty(
     this.graph.clear();
   }
 }
+
   // Métodos públicos para el template
-  
+
   get isConnectionModeActive(): boolean {
     return this.connectionMode.active;
   }
