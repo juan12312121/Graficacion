@@ -1,24 +1,38 @@
 import * as joint from 'jointjs';
 
+
 export function ajustarAlturaDinamica(
   element: joint.dia.Element,
   selectorTexto: string,
   selectorContenedor: string,
-  siguienteBloque: string
-): void {
+  siguienteBloque?: string,
+  alturaMinima: number = 30 
+) {
+  
   const texto = element.attr(`${selectorTexto}/text`) || '';
   const lineas = texto.split('\n').length;
-  const altoLinea = 20;
+  const altoLinea = 16;
   const padding = 10;
-  const nuevaAltura = padding + lineas * altoLinea;
 
-  console.log(lineas, texto, padding)
+  const nuevaAltura = Math.max(alturaMinima, padding + lineas * altoLinea);
 
+  
   element.attr(`${selectorContenedor}/height`, nuevaAltura);
 
-  const yBase = selectorContenedor === 'header' ? 30 : 30 + nuevaAltura;
-  element.attr(`${siguienteBloque}/y`, yBase);
+  
+  if (siguienteBloque) {
+    const yBase = selectorContenedor === 'header'
+      ? nuevaAltura
+      : parseInt(element.attr(`${selectorContenedor}/y`)) + nuevaAltura;
 
-  console.log(nuevaAltura)
+    element.attr(`${siguienteBloque}/y`, yBase);
+  }
+ 
 
+  const headerH = parseInt(element.attr('header/height') || 50);
+  const bodyH = parseInt(element.attr('body/height') || 60);
+  const footerH = parseInt(element.attr('footer/height') || 60);
+
+  const alturaTotal = headerH + bodyH + footerH;
+  element.resize(element.size().width, Math.max(150, alturaTotal));
 }

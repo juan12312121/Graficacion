@@ -1,6 +1,6 @@
-import { ConfigUML } from "./configUML";
+import { ConfigUML } from "./IconfigUML";
 
-export function claseHeader(label: string, config: ConfigUML = {}, selector = 'header') {
+export function claseHeader(label?: string, config: ConfigUML = {}, selector = 'header') {
   return {
     markup: [
       { tagName: 'rect',selector}, 

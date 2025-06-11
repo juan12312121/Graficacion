@@ -1,37 +1,36 @@
 import * as joint from 'jointjs';
 import { claseHeader } from '../../shared-class-components/header-clase';
 import { claseBody } from '../../shared-class-components/body-clase';
-import { claseFooter } from '../../shared-class-components/footer-clase';
+
 import { obtenerPuertos } from '../../shared-class-components/portsUML';
 import { crearGruposDePuertos } from '../../shared-class-components/portsUML';
 
-const header = claseHeader('Clase',{
-    fill:'#00796b',
-    textColor: '#ffffff'
+const header = claseHeader('[package X]',{
+    fill:'#ffffff',
+    textColor: '#000',
+    stroke:'#ffffff'
 });
 
-const body = claseBody('- id '
+const body = claseBody(' ',{
+    fill:'#f8dcff'}
 
 
 );
 
 
-const footer = claseFooter('+ login(): void\n+ logout(): void', {
-    fill: '#b2dfdb',
-    textColor: '#000'
-});
 
 
-const markup = [...header.markup, ...body.markup, ...footer.markup] 
-const attrs = {...header.attrs, ...body.attrs, ...footer.attrs}
 
-export const ClaseUML = joint.dia.Element.define(
-     'custom.Clase',
+const markup = [...header.markup, ...body.markup] 
+const attrs = {...header.attrs, ...body.attrs}
+
+export const PackageUML = joint.dia.Element.define(
+     'custom.Package',
     {        
         size: {width: 200, height: 150},
         attrs,
         ports: {
-            groups:crearGruposDePuertos(),
+            groups:crearGruposDePuertos({stroke:'#df76fa'}),
             items: obtenerPuertos()
         }
     }, 
