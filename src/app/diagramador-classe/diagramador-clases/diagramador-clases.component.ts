@@ -4,13 +4,16 @@ import { ToolbarComponent } from "../../toolbar/toolbar.component";
 import { AsideComponent } from '../aside/aside.component';
 import { DiagramaService } from '../../service/diagrama/diagrama.service';
 import { ajustarAlturaDinamica } from '../../shared-class-components/resize-func';
+import { getUMLSectionConfig } from '../../shared-class-components/resize-utils';
+import { ClaseUML } from '../forms/clase-uml';
+import { LinkService } from '../../service/figurasService/link-service';
 
 @Component({
   selector: 'app-diagramador-clases',
   standalone: true,
-  imports: [CommonModule, AsideComponent, ToolbarComponent], // Agregamos el componente aside y CommonModule
+  imports: [CommonModule, AsideComponent, ToolbarComponent], 
   templateUrl: './diagramador-clases.component.html',
-  styleUrls: ['./diagramador-clases.component.css'] // Corrección en "styleUrls"
+  styleUrls: ['./diagramador-clases.component.css'] 
 })
 export class DiagramadorClasesComponent implements AfterViewInit{
 
@@ -19,8 +22,10 @@ export class DiagramadorClasesComponent implements AfterViewInit{
 
   editingModel!: joint.dia.Element;
   editingSelector!: string;
+  private origenSeleccionado: string | null = null;
+  private destinoSeleccionado: string | null = null;
 
-  constructor(private diagramaService: DiagramaService) {}
+  constructor(private linkService: LinkService, private diagramaService: DiagramaService) {}
 
   ngAfterViewInit(): void {
     const paper = this.diagramaService.initPaper(
@@ -46,6 +51,24 @@ export class DiagramadorClasesComponent implements AfterViewInit{
           }
         }
 
+
+        paper.on('element:pointerclick', (elementView: joint.dia.ElementView) => {
+          const id = elementView.model.id.toString();
+          if (!this.origenSeleccionado) {
+            this.origenSeleccionado = id;
+            console.log('Origen seleccionado:', id);
+          }else if (!this.destinoSeleccionado) {
+            this.destinoSeleccionado = id;
+            console.log('Destino seleccionado:', id);
+
+            this.diagramaService.crearRelacion(this.origenSeleccionado, this.destinoSeleccionado);
+
+
+            this.origenSeleccionado = null;
+            this.destinoSeleccionado = null;
+          }
+        });
+
         console.log('target selector:', selector);
 
         if (selector?.endsWith('Label')) {
@@ -56,8 +79,6 @@ export class DiagramadorClasesComponent implements AfterViewInit{
           
           console.log('entro al evento, ' + left + ', ' + top)
           input.value = textoActual;
-          input.style.left = `${x - left}px`;
-          input.style.top = `${y - top}px`;
           input.style.display = 'block';
           input.focus();
 
@@ -65,8 +86,28 @@ export class DiagramadorClasesComponent implements AfterViewInit{
           this.editingSelector = selector;
         }
       }
+        
     );
-  }
+
+      paper.on('link:connect', ({ model }) => {
+      const source = model.get('source');
+      const target = model.get('target');
+      
+      console.log(source.id,' 2.- ' ,source.port, ' 3.- ' ,target.id, ' 4.- ' , target.port)
+
+      if (!source?.id || !target?.id) return;
+
+        model.remove(); 
+      
+        const newLink = this.linkService.crearLink(source.id, source.port, target.id, target.port);
+       this.diagramaService.getGraph().addCell(newLink);
+        
+
+        
+            
+    });
+
+  }           // ESTE ES EL FINAL DEL AFTERVIEWINIT()
 
   onDrop(event: DragEvent): void {
     event.preventDefault();
@@ -77,6 +118,7 @@ export class DiagramadorClasesComponent implements AfterViewInit{
 
     if (tipo) {
       this.diagramaService.createElement(tipo, x, y);
+      
     }
   }
 
@@ -84,45 +126,47 @@ export class DiagramadorClasesComponent implements AfterViewInit{
     event.preventDefault();
   }
 
+  
+
   guardarTexto(): void {
-    const input = this.floatingInput.nativeElement;
-    let nuevoTexto = input.value.trim();
+  const input = this.floatingInput.nativeElement;
+  let nuevoTexto = input.value.trim();
+  const selector = this.editingSelector;
 
-    const selector = this.editingSelector;
-
-    if (!nuevoTexto) {
-      switch (selector) {
-        case 'headerLabel':
-          nuevoTexto = '[Entidad]';
+  if (!nuevoTexto) {
+    switch (selector) {
+      case 'headerLabel':
+        nuevoTexto = '[nombre de clase]';
         break;
-        case 'bodyLabel':
-          nuevoTexto = '[atributos]';
+      case 'bodyLabel':
+        nuevoTexto = '[atributos de clase]';
         break;
-        case 'footerLabel':
-          nuevoTexto = '[métodos]';
+      case 'footerLabel':
+        nuevoTexto = '[métodos de clase]';
         break;
-        default:
-          nuevoTexto = '[valor vacío]';
+      default:
+        nuevoTexto = '[vacío]';
     }
   }
 
-    if (this.editingModel && this.editingSelector) {
-      this.editingModel.attr(`${this.editingSelector}/text`, nuevoTexto);
+  if (this.editingModel && selector) {
+    this.editingModel.attr(`${selector}/text`, nuevoTexto);
 
-      if (nuevoTexto.includes('\n') || this.editingSelector === 'bodyLabel' || this.editingSelector === 'footerLabel') {
-        ajustarAlturaDinamica(
-          this.editingModel,
-          this.editingSelector,
-          this.editingSelector.replace('Label', ''),
-          'footer' 
-        );
-      }
-    }
+    const { selectorContenedor, siguienteBloque, alturaMinima } = getUMLSectionConfig(selector);
 
-    input.style.display = 'none';
-    this.editingModel = null!;
-    this.editingSelector = '';
+    ajustarAlturaDinamica(
+      this.editingModel,
+      selector,
+      selectorContenedor,
+      siguienteBloque,
+      alturaMinima
+    );
   }
+
+  input.style.display = 'none';
+  this.editingModel = null!;
+  this.editingSelector = '';
+ }
 
   onEnter(event: Event): void {
     if (event instanceof KeyboardEvent && event.key === 'Enter') {
@@ -130,4 +174,5 @@ export class DiagramadorClasesComponent implements AfterViewInit{
     }
   }
 
+  
 }

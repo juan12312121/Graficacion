@@ -1,4 +1,4 @@
-import { ConfigUML } from "./configUML";
+import { ConfigUML } from "./IconfigUML";
 export function claseBody(label: string, config:  ConfigUML= {}, selector = 'body') {
   return {
     markup: [

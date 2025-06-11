@@ -1,4 +1,4 @@
-import { ConfigUML } from "./configUML";
+import { ConfigUML } from "./IconfigUML";
 
 export function claseFooter(label: string, config: ConfigUML = {}, selector = 'footer') {
   return {
