@@ -1,80 +1,111 @@
-<div class="sidebar-left">
-    <div class="sidebar-header">
-      <div class="logo"><i class="fas fa-puzzle-piece"></i></div>
-      <h2>Creador de Diagramas de Componentes</h2>
-    </div>
-    
+<aside class="sidebar-left">
+  <div class="sidebar-header">
+    <div class="logo"><i class="fas fa-puzzle-piece"></i></div>
+    <h2>Creador de Diagramas de Componentes</h2>
+  </div>
+   
+  <div class="sidebar-content">
     <div class="sidebar-section">
       <h3>Elementos Básicos</h3>
       <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-puzzle-piece"></i></div>Componente</li>
-        <li><div class="icon"><i class="fas fa-circle"></i></div>Interfaz</li>
-        <li><div class="icon"><i class="fas fa-dot-circle"></i></div>Puerto</li>
-        <li><div class="icon"><i class="fas fa-plug"></i></div>Conector</li>
-        <li><div class="icon"><i class="fas fa-project-diagram"></i></div>Relación</li>
+        <li class="draggable-item"
+            data-type="component"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'component')">
+          <div class="icon"><i class="fas fa-puzzle-piece"></i></div>
+          <span>Componente</span>
+        </li>
+        <li class="draggable-item"
+            data-type="interface"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'interface')">
+          <div class="icon"><i class="fas fa-circle"></i></div>
+          <span>Interfaz</span>
+        </li>
+        <li class="draggable-item"
+            data-type="port"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'port')">
+          <div class="icon"><i class="fas fa-dot-circle"></i></div>
+          <span>Puerto</span>
+        </li>
+        <li class="draggable-item"
+            data-type="connector"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'connector')">
+          <div class="icon"><i class="fas fa-plug"></i></div>
+          <span>Conector</span>
+        </li>
+        <li class="draggable-item"
+            data-type="relation"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'relation')">
+          <div class="icon"><i class="fas fa-project-diagram"></i></div>
+          <span>Relación</span>
+        </li>
       </ul>
     </div>
-    
+        
     <div class="sidebar-section">
       <h3>Tipos de Componentes</h3>
       <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-server"></i></div>Servidor</li>
-        <li><div class="icon"><i class="fas fa-desktop"></i></div>Cliente</li>
-        <li><div class="icon"><i class="fas fa-database"></i></div>Base de Datos</li>
-        <li><div class="icon"><i class="fas fa-cogs"></i></div>Servicio</li>
-        <li><div class="icon"><i class="fas fa-cubes"></i></div>Subsistema</li>
+        <li class="draggable-item"
+            data-type="server-component"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'server-component')">
+          <div class="icon"><i class="fas fa-server"></i></div>
+          <span>Servidor</span>
+        </li>
+        <li class="draggable-item"
+            data-type="client-component"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'client-component')">
+          <div class="icon"><i class="fas fa-desktop"></i></div>
+          <span>Cliente</span>
+        </li>
+        <li class="draggable-item"
+            data-type="database-component"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'database-component')">
+          <div class="icon"><i class="fas fa-database"></i></div>
+          <span>Base de Datos</span>
+        </li>
+        <li class="draggable-item"
+            data-type="service-component"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'service-component')">
+          <div class="icon"><i class="fas fa-cogs"></i></div>
+          <span>Servicio</span>
+        </li>
+        <li class="draggable-item"
+            data-type="subsystem-component"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'subsystem-component')">
+          <div class="icon"><i class="fas fa-cubes"></i></div>
+          <span>Subsistema</span>
+        </li>
       </ul>
     </div>
-    
-    <div class="sidebar-section">
-      <h3>Tipos de Interfaces</h3>
-      <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-long-arrow-alt-right"></i></div>Interfaz Proveída</li>
-        <li><div class="icon"><i class="fas fa-long-arrow-alt-left"></i></div>Interfaz Requerida</li>
-        <li><div class="icon"><i class="fas fa-exchange-alt"></i></div>Interfaz Bidireccional</li>
-        <li><div class="icon"><i class="fas fa-project-diagram"></i></div>Interfaz de Servicio</li>
-        <li><div class="icon"><i class="fas fa-broadcast-tower"></i></div>Interfaz de Evento</li>
-      </ul>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>Conectores</h3>
-      <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-link"></i></div>Conector de Ensamblaje</li>
-        <li><div class="icon"><i class="fas fa-external-link-alt"></i></div>Conector de Delegación</li>
-        <li><div class="icon"><i class="fas fa-handshake"></i></div>Conector de Asociación</li>
-        <li><div class="icon"><i class="fas fa-sitemap"></i></div>Conector de Dependencia</li>
-        <li><div class="icon"><i class="fas fa-object-group"></i></div>Conector de Realización</li>
-      </ul>
-    </div>
-    
+                  
     <div class="sidebar-section">
       <h3>Anotaciones</h3>
       <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-sticky-note"></i></div>Nota</li>
-        <li><div class="icon"><i class="fas fa-comment"></i></div>Comentario</li>
-        <li><div class="icon"><i class="fas fa-info-circle"></i></div>Restricción</li>
-        <li><div class="icon"><i class="fas fa-tag"></i></div>Estereotipo</li>
-      </ul>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>Patrones</h3>
-      <ul class="sidebar-items">
-        <li><div class="icon"><i class="fas fa-layer-group"></i></div>Cliente-Servidor</li>
-        <li><div class="icon"><i class="fas fa-sitemap"></i></div>MVC</li>
-        <li><div class="icon"><i class="fas fa-th"></i></div>Microservicios</li>
-        <li><div class="icon"><i class="fas fa-network-wired"></i></div>Pipes & Filters</li>
-        <li><div class="icon"><i class="fas fa-bezier-curve"></i></div>Broker</li>
-      </ul>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>Diagramas Guardados</h3>
-      <ul class="sidebar-items">
-        <li><div class="icon"><i class="far fa-file-alt"></i></div>Arquitectura del Sistema</li>
-        <li><div class="icon"><i class="far fa-file-alt"></i></div>Componentes Frontend</li>
-        <li><div class="icon"><i class="far fa-file-alt"></i></div>Componentes Backend</li>
+        <li class="draggable-item"
+            data-type="note-annotation"
+            draggable="true"
+            (dragstart)="onDragStart($event, 'note-annotation')">
+          <div class="icon"><i class="fas fa-sticky-note"></i></div>
+          <span>Nota</span>
+        </li>
       </ul>
     </div>
   </div>
+
+  <div class="sidebar-footer">
+    <!-- Cambiar href="#" y usar (click) directamente -->
+    <button class="back-home-btn" (click)="goHome()">
+      <i class="fas fa-home"></i>
+      <span>Volver al inicio</span>
+    </button>
+  </div>
+</aside>

@@ -4,7 +4,8 @@ import * as joint from 'jointjs';
 import { Subscription } from 'rxjs';
 
 import { DiagramService } from '../../service/diagramador-componentes/diagramador-componentes.service';
-import { ToolbarComponent } from "../../toolbar/toolbar.component";
+import { ToolbarAction, ToolbarComponent } from "../../toolbar/toolbar.component";
+import { PropertiesPanelComponent, PropertyUpdate } from '../aside-propiedades-componentes/aside-propiedades-componentes.component';
 import { AsideComponent } from '../aside/aside.component';
 import {
   Connection,
@@ -13,18 +14,20 @@ import {
   DiagramState,
   DragDropData,
   Position,
-  ToolAction,
   ZoomControls
 } from '../interfaces/diagram.interfaces';
 
 @Component({
   selector: 'app-diagramador-componentes',
   standalone: true,
-  imports: [AsideComponent, ToolbarComponent, CommonModule],
+  imports: [AsideComponent, ToolbarComponent, PropertiesPanelComponent, CommonModule],
   templateUrl: './diagramador-componentes.component.html',
   styleUrl: './diagramador-componentes.component.css'
 })
 export class DiagramadorComponentesComponent implements OnInit, OnDestroy, AfterViewInit {
+closePropertiesPanel(): void {
+  this.onPropertiesPanelClose();
+}
   
   @ViewChild('diagramContainer', { static: true }) diagramContainer!: ElementRef<HTMLDivElement>;
   
@@ -51,30 +54,130 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     step: 0.1
   };
 
+  // Properties panel state
+  isPropertiesPanelVisible: boolean = false;
+  selectedElement: DiagramElement | Connection | null = null;
+
+  // Additional properties for connection mode
+  private connectMode: boolean = false;
+  private isConnecting: boolean = false;
+  private connectingElement: joint.dia.Element | null = null;
+  private selectedJointElement: joint.dia.Element | null = null;
+
+  // Flag para evitar loops de actualización
+  private isUpdatingFromJoint: boolean = false;
+
+  // Toolbar configuration
+  toolbarGroups: ToolbarAction[][] = [
+    [
+      { type: 'select', icon: 'fa-mouse-pointer', title: 'Seleccionar', active: true },
+      { type: 'move', icon: 'fa-arrows-alt', title: 'Mover' },
+      { type: 'delete', icon: 'fa-trash-alt', title: 'Eliminar' }
+    ],
+    [
+      { type: 'undo', icon: 'fa-undo', title: 'Deshacer', disabled: true },
+      { type: 'redo', icon: 'fa-redo', title: 'Rehacer', disabled: true },
+      { type: 'export', icon: 'fa-file-export', title: 'Exportar' },
+      { type: 'save', icon: 'fa-save', title: 'Guardar' }
+    ]
+  ];
+
   // Suscripciones
   private subscriptions: Subscription[] = [];
   
   // Elementos Joint.js mapeados
   private jointElements = new Map<string, joint.dia.Element>();
   private jointConnections = new Map<string, joint.dia.Link>();
+hasSelectedElement: any;
+selectedElementName: any;
 
   constructor(private diagramService: DiagramService) {}
 
   ngOnInit(): void {
-    this.initializeSubscriptions();
+    // No inicializar suscripciones aquí - esperamos a que Joint.js esté listo
+    
   }
 
   ngAfterViewInit(): void {
     this.initializeJointJS();
     this.setupEventHandlers();
-      this.initializeSubscriptions(); // Mover esto aquí, después de que Joint.js esté inicializado
-
+    // Ahora sí inicializamos las suscripciones después de que Joint.js esté listo
+    this.initializeSubscriptions();
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-    this.cleanup();
-  }
+ ngOnDestroy(): void {
+  console.log('Component destroyed: limpiando...');
+  this.subscriptions.forEach(sub => sub.unsubscribe());
+  this.cleanup();
+
+  // --- Limpia el estado del servicio (ajusta el método al tuyo) ---
+  this.diagramService.resetDiagramState(); // ← crea este método si no existe
+}
+ 
+public loadComponentDiagramById(id: string): void {
+  const token = localStorage.getItem('token');
+  if (!id || !token) return;
+
+  fetch(`http://localhost:4000/api/diagramas/${id}`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
+    .then(res => res.json())
+    .then(data => {
+      const diagram = data.elementos;
+      if (diagram && Array.isArray(diagram.elements)) {
+        // 1. Limpia todo visual y lógicamente
+        this.graph.clear();
+        this.jointElements.clear();
+        this.jointConnections.clear();
+
+        // 2. Crea visualmente los elementos
+        diagram.elements.forEach((element: DiagramElement) => {
+          try {
+            const jointElement = this.createJointElement(element);
+            this.graph.addCell(jointElement);
+            this.jointElements.set(element.id, jointElement);
+          } catch (err) {
+            console.error('❌ Error al crear elemento', element, err);
+          }
+        });
+
+        // 3. Crea conexiones visuales
+        if (Array.isArray(diagram.connections)) {
+          diagram.connections.forEach((connection: Connection) => {
+            try {
+              const jointLink = this.createJointLink(connection);
+              if (jointLink) {
+                this.graph.addCell(jointLink);
+                this.jointConnections.set(connection.id, jointLink);
+              }
+            } catch (err) {
+              console.error('❌ Error al crear conexión', connection, err);
+            }
+          });
+        }
+
+        // 4. Ajusta el zoom si está guardado
+        if (diagram.zoomLevel) {
+          this.paper.scale(diagram.zoomLevel);
+        }
+
+        // 🔥 5. ¡**Actualiza el estado del servicio y de la variable local!**
+        this.currentDiagramState = diagram;
+        // Para que los observables de Angular reaccionen
+        this.diagramService['diagramStateSubject'].next(diagram);
+
+        alert('✅ Diagrama de componentes cargado correctamente');
+      } else {
+        alert('❌ Error: El formato del diagrama no es válido.');
+        console.error('Formato recibido:', diagram);
+      }
+    })
+    .catch(err => {
+      alert('❌ Error al cargar diagrama');
+      console.error('Error en loadComponentDiagramById:', err);
+    });
+}
+
 
   /**
    * Inicializa las suscripciones a los observables del servicio
@@ -82,8 +185,12 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
   private initializeSubscriptions(): void {
     // Suscripción al estado del diagrama
     const diagramSub = this.diagramService.diagramState$.subscribe(state => {
-      this.currentDiagramState = state;
-      this.updateJointDiagram();
+      if (!this.isUpdatingFromJoint) {
+        this.currentDiagramState = state;
+        this.updateJointDiagram();
+        // Actualizar elemento seleccionado si existe
+        this.updateSelectedElement();
+      }
     });
 
     // Suscripción al modo de conexión
@@ -99,6 +206,19 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     });
 
     this.subscriptions.push(diagramSub, connectionSub, zoomSub);
+  }
+
+  /**
+   * Actualiza el elemento seleccionado basado en el estado del servicio
+   */
+  private updateSelectedElement(): void {
+    if (this.currentDiagramState.selectedElement) {
+      this.selectedElement = this.currentDiagramState.selectedElement;
+      this.showPropertiesPanel();
+    } else {
+      this.selectedElement = null;
+      this.hidePropertiesPanel();
+    }
   }
 
   /**
@@ -136,54 +256,178 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
   /**
    * Configura los event handlers de Joint.js
    */
-  private setupEventHandlers(): void {
-    // Evento de clic en elemento
-    this.paper.on('element:pointerclick', (elementView: joint.dia.ElementView) => {
-      const element = this.findDiagramElementById(elementView.model.id as string);
-      if (element) {
-        this.diagramService.selectElement(element);
-      }
-    });
+private setupEventHandlers(): void {
+  // Evento de clic en elemento
+  this.paper.on('element:pointerclick', (elementView: joint.dia.ElementView) => {
+    const element = this.findDiagramElementById(elementView.model.id as string);
+    if (element) {
+      this.diagramService.selectElement(element);
+      this.selectedJointElement = elementView.model;
+      this.selectedElement = element;
+      // Solo seleccionar, no abrir panel para evitar conflicto con doble clic
+      this.highlightSelectedElement(elementView);
+    }
+  });
 
-    // Evento de clic en conexión
-    this.paper.on('link:pointerclick', (linkView: joint.dia.LinkView) => {
-      const connection = this.findConnectionById(linkView.model.id as string);
-      if (connection) {
-        this.diagramService.selectElement(connection);
-      }
-    });
+  // NUEVO: Evento de doble clic en elemento
+  this.paper.on('element:pointerdblclick', (elementView: joint.dia.ElementView) => {
+    const element = this.findDiagramElementById(elementView.model.id as string);
+    if (element) {
+      this.diagramService.selectElement(element);
+      this.selectedJointElement = elementView.model;
+      this.selectedElement = element;
+      this.showPropertiesPanel();
+      console.log('Doble clic en elemento - Abriendo panel de propiedades:', element.id);
+    }
+  });
 
-    // Evento de arrastrar elemento
-    this.paper.on('element:pointermove', (elementView: joint.dia.ElementView) => {
-      const jointElement = elementView.model;
-      const position = jointElement.position();
+  // Evento de clic en conexión
+  this.paper.on('link:pointerclick', (linkView: joint.dia.LinkView) => {
+    const connection = this.findConnectionById(linkView.model.id as string);
+    if (connection) {
+      this.diagramService.selectElement(connection);
+      this.selectedElement = connection;
+      // Solo seleccionar, no abrir panel para evitar conflicto con doble clic
+    }
+  });
+
+  // NUEVO: Evento de doble clic en conexión
+  this.paper.on('link:pointerdblclick', (linkView: joint.dia.LinkView) => {
+    const connection = this.findConnectionById(linkView.model.id as string);
+    if (connection) {
+      this.diagramService.selectElement(connection);
+      this.selectedElement = connection;
+      this.showPropertiesPanel();
+      console.log('Doble clic en conexión - Abriendo panel de propiedades:', connection.id);
+    }
+  });
+
+  // Evento de arrastrar elemento - Solo actualizar posición sin refrescar todo
+  this.paper.on('element:pointermove', (elementView: joint.dia.ElementView) => {
+    const jointElement = elementView.model;
+    const position = jointElement.position();
+    
+    // Evitar loop de actualizaciones
+    this.isUpdatingFromJoint = true;
+    
+    // Solo actualizar la posición en el servicio, no refrescar el diagrama completo
+    this.diagramService.updateElementPosition(jointElement.id as string, {
+      x: position.x,
+      y: position.y
+    });
+    
+    // Resetear flag después de un pequeño delay
+    setTimeout(() => {
+      this.isUpdatingFromJoint = false;
+    }, 10);
+  });
+
+  // Evento cuando se termina de mover un elemento
+  this.paper.on('element:pointerup', (elementView: joint.dia.ElementView) => {
+    // Aquí podrías guardar el estado si es necesario
+    console.log('Elemento movido:', elementView.model.id);
+  });
+
+  // Evento de clic en magnet para conexiones
+  this.paper.on('element:magnet:pointerclick', (elementView: joint.dia.ElementView, evt: any, magnet: any) => {
+    if (this.connectionMode.active) {
+      const elementId = elementView.model.id as string;
+      const portName = magnet.getAttribute('port') || 'center';
       
-      this.diagramService.updateElement(jointElement.id as string, {
-        position: { x: position.x, y: position.y }
-      });
-    });
+      if (!this.connectionMode.startPoint) {
+        this.diagramService.setConnectionStart(elementId, portName);
+      } else {
+        this.diagramService.completeConnection(elementId, portName);
+      }
+    }
+  });
 
-    // Evento de clic en magnet para conexiones
-    this.paper.on('element:magnet:pointerclick', (elementView: joint.dia.ElementView, evt: any, magnet: any) => {
-      if (this.connectionMode.active) {
-        const elementId = elementView.model.id as string;
-        const portName = magnet.getAttribute('port') || 'center';
+  // Evento de clic en área vacía
+  this.paper.on('blank:pointerclick', () => {
+    this.diagramService.deselectElement();
+    this.selectedJointElement = null;
+    this.selectedElement = null;
+    this.hidePropertiesPanel();
+    this.removeAllHighlights();
+    
+    // Si está en modo conexión, cancelar la conexión
+    if (this.connectionMode.active && this.connectionMode.startPoint) {
+      this.diagramService.cancelConnection();
+    }
+  });
+
+  // Eventos para mejorar las conexiones
+  this.setupConnectionEventHandlers();
+
+  // Eventos de drag & drop
+  this.setupDragDropHandlers();
+}
+
+// NUEVO: Método para resaltar visualmente el elemento seleccionado
+private highlightSelectedElement(elementView: joint.dia.ElementView): void {
+  // Remover highlight anterior
+  this.removeAllHighlights();
+  
+  // Agregar clase CSS para highlight
+  elementView.el.classList.add('selected-element');
+}
+
+// NUEVO: Método para remover todos los highlights
+private removeAllHighlights(): void {
+  const highlightedElements = this.diagramContainer.nativeElement.querySelectorAll('.selected-element');
+  highlightedElements.forEach(el => el.classList.remove('selected-element'));
+}
+
+  /**
+   * Configura eventos específicos para las conexiones
+   */
+  private setupConnectionEventHandlers(): void {
+    // Evento cuando se crea una nueva conexión
+    this.graph.on('add', (cell: joint.dia.Cell) => {
+      if (cell.isLink()) {
+        const link = cell as joint.dia.Link;
+        const source = link.getSourceElement();
+        const target = link.getTargetElement();
         
-        if (!this.connectionMode.startPoint) {
-          this.diagramService.setConnectionStart(elementId, portName);
-        } else {
-          this.diagramService.completeConnection(elementId, portName);
+        if (source && target) {
+          // Solo crear la conexión si no existe en el estado
+          const existingConnection = this.currentDiagramState.connections.find(
+            conn => conn.source.elementId === source.id && conn.target.elementId === target.id
+          );
+          
+          if (!existingConnection) {
+            this.isUpdatingFromJoint = true;
+            this.diagramService.addConnection(
+              source.id as string,
+              'right', // Puerto por defecto
+              target.id as string,
+              'left'   // Puerto por defecto
+            );
+            setTimeout(() => {
+              this.isUpdatingFromJoint = false;
+            }, 10);
+          }
         }
       }
     });
 
-    // Evento de clic en área vacía
-    this.paper.on('blank:pointerclick', () => {
-      this.diagramService.deselectElement();
+    // Evento cuando se elimina una conexión
+    this.graph.on('remove', (cell: joint.dia.Cell) => {
+      if (cell.isLink()) {
+        const linkId = cell.id as string;
+        const existingConnection = this.currentDiagramState.connections.find(
+          conn => conn.id === linkId
+        );
+        
+        if (existingConnection) {
+          this.isUpdatingFromJoint = true;
+          this.diagramService.removeConnection(linkId);
+          setTimeout(() => {
+            this.isUpdatingFromJoint = false;
+          }, 10);
+        }
+      }
     });
-
-    // Eventos de drag & drop
-    this.setupDragDropHandlers();
   }
 
   /**
@@ -213,28 +457,140 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
 
   /**
    * Actualiza el diagrama Joint.js basado en el estado del servicio
+   * MEJORADO: Solo actualiza lo que ha cambiado
    */
   private updateJointDiagram(): void {
-    this.graph.clear();
-    this.jointElements.clear();
-    this.jointConnections.clear();
+    if (!this.graph) {
+      console.warn('Graph no está inicializado aún');
+      return;
+    }
 
-    // Agregar elementos
+    // Actualizar elementos existentes y agregar nuevos
+    this.updateElements();
+    
+    // Actualizar conexiones existentes y agregar nuevas
+    this.updateConnections();
+    
+    // Remover elementos que ya no existen
+    this.removeObsoleteElements();
+    
+    // Remover conexiones que ya no existen
+    this.removeObsoleteConnections();
+  }
+
+  /**
+   * Actualiza solo los elementos que han cambiado
+   */
+  private updateElements(): void {
     this.currentDiagramState.elements.forEach(element => {
-      const jointElement = this.createJointElement(element);
-      this.graph.addCell(jointElement);
-      this.jointElements.set(element.id, jointElement);
-    });
-
-    // Agregar conexiones
-    this.currentDiagramState.connections.forEach(connection => {
-      const jointLink = this.createJointLink(connection);
-      if (jointLink) {
-        this.graph.addCell(jointLink);
-        this.jointConnections.set(connection.id, jointLink);
+      const existingJointElement = this.jointElements.get(element.id);
+      
+      if (existingJointElement) {
+        // Actualizar elemento existente solo si es necesario
+        const currentPos = existingJointElement.position();
+        if (currentPos.x !== element.position.x || currentPos.y !== element.position.y) {
+          existingJointElement.position(element.position.x, element.position.y);
+        }
+        
+        // Actualizar otros atributos si es necesario
+        this.updateElementAttributes(existingJointElement, element);
+      } else {
+        // Crear nuevo elemento
+        const jointElement = this.createJointElement(element);
+        this.graph.addCell(jointElement);
+        this.jointElements.set(element.id, jointElement);
       }
     });
   }
+
+  /**
+   * Actualiza solo las conexiones que han cambiado
+   */
+  private updateConnections(): void {
+    this.currentDiagramState.connections.forEach(connection => {
+      const existingJointConnection = this.jointConnections.get(connection.id);
+      
+      if (!existingJointConnection) {
+        // Crear nueva conexión
+        const jointLink = this.createJointLink(connection);
+        if (jointLink) {
+          this.graph.addCell(jointLink);
+          this.jointConnections.set(connection.id, jointLink);
+        }
+      }
+      // Las conexiones existentes generalmente no necesitan actualizarse
+      // a menos que cambien sus atributos visuales
+    });
+  }
+
+  /**
+   * Remueve elementos que ya no existen en el estado
+   */
+  private removeObsoleteElements(): void {
+    const currentElementIds = new Set(this.currentDiagramState.elements.map(el => el.id));
+    
+    for (const [elementId, jointElement] of this.jointElements.entries()) {
+      if (!currentElementIds.has(elementId)) {
+        jointElement.remove();
+        this.jointElements.delete(elementId);
+      }
+    }
+  }
+
+  /**
+   * Remueve conexiones que ya no existen en el estado
+   */
+  private removeObsoleteConnections(): void {
+    const currentConnectionIds = new Set(this.currentDiagramState.connections.map(conn => conn.id));
+    
+    for (const [connectionId, jointConnection] of this.jointConnections.entries()) {
+      if (!currentConnectionIds.has(connectionId)) {
+        jointConnection.remove();
+        this.jointConnections.delete(connectionId);
+      }
+    }
+  }
+
+  /**
+   * Actualiza los atributos visuales de un elemento
+   */
+/**
+ * Actualiza los atributos visuales de un elemento
+ */
+private updateElementAttributes(jointElement: joint.dia.Element, element: DiagramElement): void {
+  // Actualizar texto del label - CRÍTICO para mostrar el nombre
+  if (element.attributes.name) {
+    jointElement.attr('label/text', element.attributes.name);
+  }
+  
+  // Actualizar texto del header si existe
+  if (element.attributes.headerText) {
+    jointElement.attr('label/text', element.attributes.headerText);
+  }
+  
+  // Actualizar colores
+  if (element.attributes.fill) {
+    jointElement.attr('body/fill', element.attributes.fill);
+  }
+  
+  if (element.attributes.stroke) {
+    jointElement.attr('body/stroke', element.attributes.stroke);
+  }
+
+  // Actualizar grosor del borde
+  if (element.attributes.strokeWidth) {
+    jointElement.attr('body/strokeWidth', element.attributes.strokeWidth);
+  }
+
+  // Actualizar tamaño
+  const currentSize = jointElement.size();
+  if (currentSize.width !== element.size.width || currentSize.height !== element.size.height) {
+    jointElement.resize(element.size.width, element.size.height);
+  }
+
+  // IMPORTANTE: Forzar re-render del elemento
+  jointElement.attr('root/title', element.attributes.name || element.type);
+}
 
   /**
    * Crea un elemento Joint.js basado en DiagramElement
@@ -245,7 +601,38 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     let jointElement: joint.dia.Element;
 
     switch (element.type) {
-      case 'component':
+// En el método createJointElement, para el caso 'component':
+case 'component':
+  jointElement = new joint.shapes.standard.Rectangle({
+    id: element.id,
+    position: { x: position.x, y: position.y },
+    size: { width: size.width, height: size.height },
+    attrs: {
+      root: {
+        title: attributes.name || 'Component'
+      },
+      body: {
+        fill: attributes.fill || '#ffffff',
+        stroke: attributes.stroke || '#333333',
+        strokeWidth: attributes.strokeWidth || 1
+      },
+      label: {
+        // CRÍTICO: Usar el nombre del elemento
+        text: attributes.name || attributes.headerText || 'Component',
+        fontSize: 14,
+        fontFamily: 'Arial',
+        fill: '#333333', // Color del texto
+        textWrap: {
+          width: size.width - 20,
+          height: size.height - 20
+        },
+        textVerticalAnchor: 'middle',  // Centrar verticalmente
+        textAnchor: 'middle'           // Centrar horizontalmente
+      }
+    },
+    // ... resto del código de ports
+  });
+  
         jointElement = new joint.shapes.standard.Rectangle({
           id: element.id,
           position: { x: position.x, y: position.y },
@@ -429,23 +816,21 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
   /**
    * Actualiza la UI del modo de conexión
    */
- private updateConnectionModeUI(): void {
-  const container = this.diagramContainer.nativeElement;
-  
-  if (this.connectionMode.active) {
-    container.classList.add('connection-mode');
-    // Verificar que paper.el existe antes de usarlo
-    if (this.paper && this.paper.el) {
-      this.paper.el.style.cursor = 'crosshair';
-    }
-  } else {
-    container.classList.remove('connection-mode');
-    // Verificar que paper.el existe antes de usarlo
-    if (this.paper && this.paper.el) {
-      this.paper.el.style.cursor = 'default';
+  private updateConnectionModeUI(): void {
+    const container = this.diagramContainer.nativeElement;
+    
+    if (this.connectionMode.active) {
+      container.classList.add('connection-mode');
+      if (this.paper && this.paper.el) {
+        this.paper.el.style.cursor = 'crosshair';
+      }
+    } else {
+      container.classList.remove('connection-mode');
+      if (this.paper && this.paper.el) {
+        this.paper.el.style.cursor = 'default';
+      }
     }
   }
-}
 
   /**
    * Valida una conexión en Joint.js
@@ -454,6 +839,11 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     sourceView: joint.dia.CellView, 
     targetView: joint.dia.CellView
   ): boolean {
+    // No permitir conexiones del mismo elemento a sí mismo
+    if (sourceView.model.id === targetView.model.id) {
+      return false;
+    }
+
     const sourceElement = this.findDiagramElementById(sourceView.model.id as string);
     const targetElement = this.findDiagramElementById(targetView.model.id as string);
     
@@ -461,17 +851,267 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
       return false;
     }
 
-    return this.diagramService.getCurrentState().elements
-      .some(el => el.id === sourceElement.id) && 
-      this.diagramService.getCurrentState().elements
-      .some(el => el.id === targetElement.id);
+    // Verificar que no existe ya una conexión entre estos elementos
+    const existingConnection = this.currentDiagramState.connections.find(
+      conn => (conn.source.elementId === sourceElement.id && conn.target.elementId === targetElement.id) ||
+               (conn.source.elementId === targetElement.id && conn.target.elementId === sourceElement.id)
+    );
+
+    return !existingConnection;
+  }
+
+  /**
+   * Sale del modo de conexión
+   */
+  private exitConnectMode(): void {
+    this.connectMode = false;
+    this.isConnecting = false;
+    this.connectingElement = null;
+    
+    if (this.diagramContainer?.nativeElement) {
+      const connectingElements = this.diagramContainer.nativeElement.querySelectorAll('.connecting-element');
+      connectingElements.forEach((el: Element) => el.classList.remove('connecting-element'));
+    }
+    
+    const guide = document.getElementById('connection-guide');
+    if (guide) {
+      guide.classList.remove('active');
+    }
+    
+    const btn = document.getElementById('connect-mode-btn');
+    if (btn) {
+      btn.classList.remove('active');
+    }
+    
+    document.body.classList.remove('magnet-mode');
+    
+    this.diagramService.toggleConnectionMode();
+  }
+
+  /**
+   * Muestra el panel de propiedades
+   */
+  private showPropertiesPanel(): void {
+    this.isPropertiesPanelVisible = true;
+  }
+
+  /**
+   * Oculta el panel de propiedades
+   */
+  private hidePropertiesPanel(): void {
+    this.isPropertiesPanelVisible = false;
+  }
+
+  /**
+   * Exporta el diagrama
+   */
+  private exportDiagram(): void {
+    if (!this.paper) {
+      console.warn('No hay diagrama para exportar');
+      return;
+    }
+
+    try {
+      const svg = this.paper.svg;
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svg);
+      
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `diagram-${new Date().toISOString().slice(0, 10)}.svg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      URL.revokeObjectURL(url);
+      
+      console.log('Diagrama exportado exitosamente');
+    } catch (error) {
+      console.error('Error al exportar diagrama:', error);
+    }
   }
 
   /**
    * Maneja acciones de la toolbar
    */
-  onToolAction(action: ToolAction): void {
-    this.diagramService.handleToolAction(action);
+  onToolAction(action: ToolbarAction): void {
+    switch (action.type) {
+      case 'select':
+        if (this.connectMode) {
+          this.exitConnectMode();
+        }
+        break;
+      
+      case 'move':
+        console.log('Modo mover activado');
+        break;
+      
+      case 'delete':
+        if (this.selectedJointElement) {
+          this.selectedJointElement.remove();
+          this.hidePropertiesPanel();
+          this.selectedJointElement = null;
+          this.selectedElement = null;
+        }
+        break;
+      
+      case 'undo':
+        console.log('Deshacer acción');
+        break;
+      
+      case 'redo':
+        console.log('Rehacer acción');
+        break;
+      
+      case 'export':
+        this.exportDiagram();
+        break;
+      
+      case 'save':
+        console.log('Guardando diagrama');
+        this.saveComponentDiagram();
+        break;
+      
+      default:
+        console.log('Acción no implementada:', action.type);
+    }
+  }
+
+  /**
+   * Maneja el toggle del modo de conexión desde el FAB
+   */
+  onConnectionToggle(): void {
+    if (this.connectionMode.active) {
+      this.exitConnectMode();
+    } else {
+      this.connectMode = true;
+      this.diagramService.toggleConnectionMode();
+    }
+  }
+
+  /**
+   * Maneja las actualizaciones de propiedades desde el panel de propiedades
+   */
+ /**
+ * Maneja las actualizaciones de propiedades desde el panel de propiedades
+ */
+onPropertyUpdate(update: PropertyUpdate): void {
+  console.log('Actualizando propiedad:', update);
+  
+  // Actualizar en el servicio
+  this.diagramService.updateElementProperty(
+    update.elementId, 
+    update.property, 
+    update.value
+  );
+
+  // IMPORTANTE: Actualizar inmediatamente el elemento Joint.js
+  const jointElement = this.jointElements.get(update.elementId);
+  if (jointElement) {
+    this.updateJointElementProperty(jointElement, update.property, update.value);
+  }
+
+  // Actualizar el elemento seleccionado si es el mismo
+  if (this.selectedElement && this.selectedElement.id === update.elementId) {
+    const updatedElement = this.findDiagramElementById(update.elementId);
+    if (updatedElement) {
+      this.selectedElement = updatedElement;
+    }
+  }
+}
+
+/**
+ * Actualiza una propiedad específica en un elemento Joint.js
+ */
+private updateJointElementProperty(
+  jointElement: joint.dia.Element, 
+  property: string, 
+  value: any
+): void {
+  switch (property) {
+    case 'name':
+    case 'headerText':
+      jointElement.attr('label/text', value);
+      jointElement.attr('root/title', value);
+      break;
+    
+    case 'fill':
+      jointElement.attr('body/fill', value);
+      break;
+    
+    case 'stroke':
+      jointElement.attr('body/stroke', value);
+      break;
+    
+    case 'strokeWidth':
+      jointElement.attr('body/strokeWidth', value);
+      break;
+    
+    case 'width':
+      const currentSize = jointElement.size();
+      jointElement.resize(value, currentSize.height);
+      break;
+    
+    case 'height':
+      const currentSizeH = jointElement.size();
+      jointElement.resize(currentSizeH.width, value);
+      break;
+    
+    default:
+      console.log('Propiedad no manejada en actualización directa:', property);
+  }
+}
+
+  /**
+   * Maneja la eliminación de elementos desde el panel de propiedades
+   */
+  onElementDelete(elementId: string): void {
+    this.diagramService.removeElement(elementId);
+    this.hidePropertiesPanel();
+    this.selectedElement = null;
+    this.selectedJointElement = null;
+  }
+
+  /**
+   * Maneja la duplicación de elementos desde el panel de propiedades
+   */
+  onElementDuplicate(element: DiagramElement): void {
+    // Crear un offset para el elemento duplicado
+    const offset = { x: 20, y: 20 };
+    const duplicatedElement: DiagramElement = {
+      ...element,
+      id: this.generateId(), // Método para generar un ID único
+      position: {
+        x: element.position.x + offset.x,
+        y: element.position.y + offset.y
+      },
+      attributes: {
+        ...element.attributes,
+        name: `${element.attributes.name || element.type} (Copia)`
+      }
+    };
+
+    this.diagramService.addElementFromData(duplicatedElement);
+  }
+
+  /**
+   * Maneja el cierre del panel de propiedades
+   */
+  onPropertiesPanelClose(): void {
+    this.hidePropertiesPanel();
+    this.diagramService.deselectElement();
+    this.selectedElement = null;
+    this.selectedJointElement = null;
+  }
+
+  /**
+   * Genera un ID único para elementos
+   */
+  private generateId(): string {
+    return 'element-' + Math.random().toString(36).substr(2, 9);
   }
 
   /**
@@ -492,17 +1132,14 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
    * Limpia recursos
    */
   private cleanup(): void {
-    if (this.paper) {
-      this.paper.remove();
-    }
-    if (this.graph) {
-      this.graph.clear();
-    }
+  if (this.paper && typeof this.paper.remove === 'function') {
+    this.paper.remove();
   }
-
-  /**
-   * Métodos públicos para el template
-   */
+  if (this.graph && typeof this.graph.clear === 'function') {
+    this.graph.clear();
+  }
+}
+  // Métodos públicos para el template
   
   get isConnectionModeActive(): boolean {
     return this.connectionMode.active;
@@ -512,21 +1149,168 @@ export class DiagramadorComponentesComponent implements OnInit, OnDestroy, After
     return this.connectionMode.indicator;
   }
 
-  get currentZoomPercentage(): string {
-    return Math.round(this.zoomControls.level * 100) + '%';
+get currentZoomPercentage(): number {
+    return Math.round(this.zoomControls.level * 100);
   }
 
-  get hasSelectedElement(): boolean {
-    return !!this.currentDiagramState.selectedElement;
+  /**
+   * Controles de zoom
+   */
+  onZoomIn(): void {
+    this.diagramService.zoomIn();
   }
 
-  get selectedElementName(): string {
-    const selected = this.currentDiagramState.selectedElement;
-    if (selected && 'type' in selected) {
-      return selected.attributes?.name || selected.type;
+  onZoomOut(): void {
+    this.diagramService.zoomOut();
+  }
+
+  onZoomReset(): void {
+    this.diagramService.resetZoom();
+  }
+
+  onZoomFit(): void {
+    if (this.paper) {
+      this.paper.scaleContentToFit({ padding: 20 });
+      const currentScale = this.paper.scale();
+      this.diagramService.setZoomLevel(currentScale.sx);
     }
-    return '';
   }
 
-  
+  /**
+   * Maneja el evento de rueda del mouse para zoom
+   */
+  onWheel(event: WheelEvent): void {
+    if (event.ctrlKey || event.metaKey) {
+      event.preventDefault();
+      
+      const delta = event.deltaY > 0 ? -0.1 : 0.1;
+      const newLevel = Math.max(
+        this.zoomControls.min, 
+        Math.min(this.zoomControls.max, this.zoomControls.level + delta)
+      );
+      
+      this.diagramService.setZoomLevel(newLevel);
+    }
+  }
+
+  /**
+   * Maneja el evento de redimensionado de la ventana
+   */
+  onWindowResize(): void {
+    if (this.paper) {
+      const container = this.diagramContainer.nativeElement;
+      this.paper.setDimensions(container.clientWidth, container.clientHeight);
+    }
+  }
+
+  /**
+   * Centra el diagrama en la vista
+   */
+centerDiagram(): void {
+  if (!this.paper || !this.graph) {
+    console.warn('Paper o Graph no están inicializados');
+    return;
+  }
+
+  const cells = this.graph.getCells();
+  if (cells.length === 0) {
+    console.warn('No hay elementos en el diagrama para centrar');
+    return;
+  }
+
+  try {
+    const bbox = this.graph.getBBox();
+    
+    // Verificar que bbox no es null antes de usarlo
+    if (!bbox || bbox.width === 0 || bbox.height === 0) {
+      console.warn('No se pudo obtener un bounding box válido del diagrama');
+      return;
+    }
+    
+    const paperSize = this.paper.getComputedSize();
+    
+    // Verificar que el paper tiene dimensiones válidas
+    if (paperSize.width === 0 || paperSize.height === 0) {
+      console.warn('El paper no tiene dimensiones válidas');
+      return;
+    }
+    
+    const centerX = (paperSize.width - bbox.width) / 2 - bbox.x;
+    const centerY = (paperSize.height - bbox.height) / 2 - bbox.y;
+    
+    // Mover todos los elementos para centrar el diagrama
+    cells.forEach(cell => {
+      if (cell.isElement()) {
+        const currentPos = cell.position();
+        cell.position(currentPos.x + centerX, currentPos.y + centerY);
+      }
+    });
+    
+    this.debugLog('Diagrama centrado exitosamente');
+  } catch (error) {
+    console.error('Error al centrar el diagrama:', error);
+  }
+}
+
+  /**
+   * Obtiene información del diagrama para debugging
+   */
+  getDiagramInfo(): any {
+    return {
+      elements: this.currentDiagramState.elements.length,
+      connections: this.currentDiagramState.connections.length,
+      zoomLevel: this.zoomControls.level,
+      selectedElement: this.selectedElement?.id || null,
+      connectionMode: this.connectionMode.active
+    };
+  }
+
+  /**
+   * Método para logging de debugging (puede ser removido en producción)
+   */
+  private debugLog(message: string, data?: any): void {
+    if (data) {
+      console.log(`[DiagramadorComponentes] ${message}`, data);
+    } else {
+      console.log(`[DiagramadorComponentes] ${message}`);
+    }
+  }
+   public saveComponentDiagram(): void {
+  const token = localStorage.getItem('token');
+  const nombre = prompt("Ingresa un nombre para el diagrama de componentes:");
+  if (!nombre || !token) {
+    alert('❌ Error: faltan datos para guardar el diagrama.');
+    return;
+  }
+  // Lo importante: Guarda el estado completo del diagrama
+  const body = {
+    nombre: nombre,
+    tipo: 'componentes', // Así identificas el tipo en la base
+    elementos: this.currentDiagramState // O usa this.graph.toJSON() si quieres solo el raw de JointJS
+  };
+  fetch('http://localhost:4000/api/diagramas', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(body)
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Error al guardar el diagrama');
+      return response.json();
+    })
+    .then(data => {
+      alert('✅ Diagrama de componentes guardado correctamente');
+    })
+    .catch(error => {
+      alert('❌ Error al guardar el diagrama de componentes');
+    });
+}
+
+
+
+
+
+
 }

@@ -5,6 +5,7 @@ import { ToolbarAction, ToolbarComponent } from "../../toolbar/toolbar.component
 import { AsideComponent } from '../aside/aside.component';
 import { AtributosComponent } from '../atributos/atributos.component';
 import { PropiedaadesAsideComponent } from "../propiedaades-aside/propiedaades-aside.component";
+import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import * as joint from 'jointjs';
 import 'jointjs/dist/joint.css';
@@ -22,16 +23,14 @@ import { DiagramService } from '../../service/diagrama-base/diagrama-base.servic
     AsideComponent,
     AtributosComponent,
     ToolbarComponent,
-    PropiedaadesAsideComponent
+    PropiedaadesAsideComponent,
+    RouterModule
   ],
   templateUrl: './creador-diagramador.component.html',
   styleUrl: './creador-diagramador.component.css'
 })
 export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef;
-
-
-  
 
   // Variables del diagramador usando el servicio
   private get graph() { return this.diagramService.graph; }
@@ -62,9 +61,20 @@ export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDes
   public tempTableName: string = '';
   public zoomLevel: number = 100;
 
-  constructor(private diagramService: DiagramService) {}
+  constructor(
+    private diagramService: DiagramService,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit() {}
+ngOnInit() {
+  // Detectar si hay un :id en la ruta
+  this.route.paramMap.subscribe(params => {
+    const id = params.get('id');
+    if (id) {
+      this.loadDiagramById(id); // Modo edición: cargar diagrama existente
+    }
+  });
+}
 
   ngAfterViewInit() {
     this.diagramService.createPaper(this.canvasRef.nativeElement);
@@ -73,9 +83,240 @@ export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnDestroy() {
+    this.graph.clear();
     this.diagramService.paper?.remove();
   }
 
+ 
+// Para cargar diagrama por ID (por si implementas edición):
+public loadDiagramById(id: string) {
+  const token = localStorage.getItem('token');
+  if (!id || !token) return;
+  
+  fetch(`http://localhost:4000/api/diagramas/${id}`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log('DATA DEL BACKEND', data);
+      
+      try {
+        this.graph.clear();
+        
+        // Verificar que existe 'elementos' y que tiene 'cells'
+        if (data.elementos && Array.isArray(data.elementos.cells)) {
+          
+          // DEBUG: Mostrar células originales
+          console.log('Células originales:', data.elementos.cells);
+          
+          // MÉTODO SEGURO: Cargar una por una para identificar cuál falla
+          this.loadCellsOneByOne(data.elementos.cells);
+          
+        } else {
+          this.updateConnectionStatus('❌ Error: El formato de elementos no es válido');
+          console.error('Formato elementos:', data.elementos);
+        }
+      } catch (error) {
+        console.error('Error al cargar el diagrama:', error);
+        this.updateConnectionStatus('❌ Error al procesar el diagrama');
+      }
+    })
+    .catch(err => {
+      this.updateConnectionStatus('❌ Error al cargar diagrama');
+      console.error('Error en loadDiagramById:', err);
+    });
+}
+
+// NUEVO MÉTODO: Procesa los elementos antes de cargarlos
+private processElementsForLoad(cells: any[]): any[] {
+  return cells.map(cell => {
+    console.log('Procesando célula:', cell);
+    
+    // Si es un enlace (link), mantenerlo como está
+    if (cell.type === 'link' || (cell.source && cell.target)) {
+      return cell;
+    }
+    
+    // Si es una tabla con tipo sql.Table, convertirla a formato compatible
+    if (cell.type === 'sql.Table' || cell.type?.includes('sql.Table')) {
+      return this.convertSqlTableToBasic(cell);
+    }
+    
+    // Si no tiene tipo o tiene un tipo desconocido, convertir a básico
+    if (!cell.type || !this.isValidJointJSType(cell.type)) {
+      console.warn(`Tipo desconocido: ${cell.type}, convirtiendo a basic.Rect`);
+      return this.convertToBasicRect(cell);
+    }
+    
+    return cell;
+  });
+}
+
+// NUEVO MÉTODO: Convierte sql.Table a formato básico compatible
+private convertSqlTableToBasic(sqlTableCell: any): any {
+  console.log('Convirtiendo sql.Table a basic.Rect:', sqlTableCell);
+  console.log('Datos originales completos:', JSON.stringify(sqlTableCell, null, 2));
+  
+  // Crear un elemento básico completamente válido
+  const basicElement = {
+    type: 'basic.Rect',
+    id: sqlTableCell.id || this.generateUniqueId(),
+    position: sqlTableCell.position || { x: 100, y: 100 },
+    size: sqlTableCell.size || { width: 240, height: 120 },
+    angle: sqlTableCell.angle || 0,
+    attrs: {
+      rect: { 
+        fill: '#ffffff', 
+        stroke: '#2b579a', 
+        'stroke-width': 2,
+        rx: 3,
+        ry: 3
+      },
+      text: { 
+        text: sqlTableCell.name || sqlTableCell.attrs?.text?.text || 'Table',
+        'font-size': 14,
+        'font-family': 'Arial, sans-serif',
+        fill: '#333333',
+        'ref-x': '50%',
+        'ref-y': '50%',
+        'text-anchor': 'middle',
+        'y-alignment': 'middle'
+      }
+    },
+    // Preservar datos personalizados de la tabla
+    name: sqlTableCell.name,
+    fields: sqlTableCell.fields || [],
+    comment: sqlTableCell.comment || '',
+    engine: sqlTableCell.engine || 'InnoDB',
+    charset: sqlTableCell.charset || 'utf8mb4'
+  };
+  
+  console.log('Elemento convertido:', basicElement);
+  return basicElement;
+}
+
+// NUEVO MÉTODO: Convierte elementos desconocidos a basic.Rect
+private convertToBasicRect(cell: any): any {
+  return {
+    type: 'basic.Rect',
+    id: cell.id || this.generateUniqueId(),
+    position: cell.position || { x: 50, y: 50 },
+    size: cell.size || { width: 100, height: 50 },
+    attrs: {
+      rect: { 
+        fill: '#ffffff', 
+        stroke: '#000000', 
+        'stroke-width': 1 
+      },
+      text: { 
+        text: cell.attrs?.text?.text || 'Element',
+        'font-size': 12
+      }
+    }
+  };
+}
+
+// NUEVO MÉTODO: Verifica si un tipo de JointJS es válido
+private isValidJointJSType(type: string): boolean {
+  try {
+    const TypeClass = joint.util.getByPath(joint.shapes, type);
+    return !!TypeClass;
+  } catch (error) {
+    return false;
+  }
+}
+
+// NUEVO MÉTODO: Genera ID único
+private generateUniqueId(): string {
+  return 'element_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+}
+
+// NUEVO MÉTODO: Carga células una por una para identificar problemas
+private loadCellsOneByOne(cells: any[]) {
+  console.log('=== CARGANDO CÉLULAS EN DOS PASOS ===');
+  let successCount = 0;
+  let errorCount = 0;
+
+  // 1. AGREGAR PRIMERO TODAS LAS TABLAS
+  const tablaCells = cells.filter(cell => cell.type === 'sql.Table');
+  tablaCells.forEach((cell, index) => {
+    try {
+      console.log(`Agregando tabla ${index}:`, cell);
+      const position = cell.position || { x: 100 + (index * 30), y: 100 + (index * 30) };
+      const newTable = this.addTable(position.x, position.y);
+
+      // Aplicar propiedades
+      if (cell.name) newTable.set('name', cell.name);
+      if (cell.fields && Array.isArray(cell.fields)) newTable.set('fields', cell.fields);
+      if (cell.comment) newTable.set('comment', cell.comment);
+      if (cell.engine) newTable.set('engine', cell.engine);
+      if (cell.charset) newTable.set('charset', cell.charset);
+      if (cell.size) newTable.resize(cell.size.width, cell.size.height);
+
+      this.updateTableView(newTable);
+      successCount++;
+    } catch (error) {
+      console.error('❌ Error al agregar tabla:', error, cell);
+      errorCount++;
+    }
+  });
+
+  // 2. LUEGO AGREGAR TODOS LOS LINKS
+  const linkCells = cells.filter(cell => cell.type === 'link');
+  linkCells.forEach((cell, index) => {
+    try {
+      console.log(`Agregando link ${index}:`, cell);
+      const link = new joint.dia.Link({
+        id: cell.id || this.generateUniqueId(),
+        source: cell.source,
+        target: cell.target,
+        router: cell.router,
+        connector: cell.connector,
+        attrs: cell.attrs
+      });
+      this.graph.addCell(link);
+      successCount++;
+    } catch (error) {
+      console.error('❌ Error al agregar link:', error, cell);
+      errorCount++;
+    }
+  });
+
+  console.log(`=== RESUMEN ===`);
+  console.log(`Exitosas: ${successCount}`);
+  console.log(`Errores: ${errorCount}`);
+  console.log(`Total: ${cells.length}`);
+
+  if (successCount > 0) {
+    this.updateConnectionStatus(`✅ Diagrama cargado: ${successCount}/${cells.length} elementos`);
+  } else {
+    this.updateConnectionStatus(`❌ Error: No se pudieron cargar elementos`);
+  }
+}
+
+// OPCIONAL: Método para debug - muestra información de las células
+public debugCells(cells: any[]) {
+  console.log('=== DEBUG CÉLULAS ===');
+  cells.forEach((cell, index) => {
+    console.log(`Célula ${index}:`, {
+      type: cell.type,
+      id: cell.id,
+      hasPosition: !!cell.position,
+      hasSize: !!cell.size,
+      hasAttrs: !!cell.attrs,
+      isLink: !!(cell.source && cell.target),
+      customFields: {
+        name: cell.name,
+        fields: cell.fields?.length || 0,
+        comment: cell.comment
+      }
+    });
+  });
+  console.log('=== FIN DEBUG ===');
+}
+
+
+//aparte
   private setupEventListeners() {
     if (this.paper) {
       // Click en tabla
@@ -110,12 +351,12 @@ export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
-  public addTable(x: number, y: number): any {
-    const table = this.diagramService.addTable(x, y);
-    this.updateTableView(table);
-    return table;
-  }
-
+ public addTable(x: number, y: number): any {
+  // ¡Usa SIEMPRE el servicio para no perder la lógica base!
+  const table = this.diagramService.addTable(x, y);
+  this.updateTableView(table);
+  return table;
+}
   private updateTableView(table: any) {
     const fields = table.get('fields') || [];
     const headerHeight = 30;
@@ -464,16 +705,37 @@ export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  public saveDiagram() {
-    const diagramData = {
-      graph: this.graph.toJSON(),
-      timestamp: new Date().toISOString(),
-      user: 'juan12312121'  // Using the provided user login
-    };
-    
-    console.log('Saving diagram:', diagramData);
-    this.updateConnectionStatus('✅ Diagram saved successfully!');
+public saveDiagram() {
+  const token = localStorage.getItem('token');
+  const nombre = prompt("Ingresa un nombre para el diagrama:");
+  if (!nombre || !token) {
+    this.updateConnectionStatus('❌ Error: faltan datos para guardar el diagrama.');
+    return;
   }
+  const body = {
+    nombre: nombre,
+    tipo: 'bd',
+    elementos: this.graph.toJSON()
+  };
+  fetch('http://localhost:4000/api/diagramas', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(body)
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Error al guardar el diagrama');
+      return response.json();
+    })
+    .then(data => {
+      this.updateConnectionStatus('✅ Diagrama guardado correctamente');
+    })
+    .catch(error => {
+      this.updateConnectionStatus('❌ Error al guardar el diagrama');
+    });
+}
 
   // Métodos de zoom
   public zoomIn() {
@@ -505,8 +767,8 @@ export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   private loadSampleData() {
-  // Se eliminaron las tablas de ejemplo
-}
+    // Se eliminaron las tablas de ejemplo
+  }
 
   onToolAction(action: ToolbarAction) {
     switch (action.type) {
@@ -536,7 +798,7 @@ export class CreadorDiagramadorComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-    private enableSelectionMode() {
+  private enableSelectionMode() {
     if (this.paper) {
       this.paper.setInteractivity({ vertexAdd: false });
     }

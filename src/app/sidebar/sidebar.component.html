@@ -1,9 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-
 <div class="sidebar">
   <div class="logo">
-    <i class="fas fa-project-diagram"></i> <!-- Ícono de FontAwesome -->
+    <i class="fas fa-project-diagram"></i>
     <span>DiagramMaker</span>
   </div>
 
@@ -13,32 +12,21 @@
     <div class="sidebar-section">
       <div class="sidebar-section-title">Navegación</div>
       <ul class="sidebar-menu">
-
         <a routerLink="/principal" class="sidebar-menu-item" routerLinkActive="active">
-          <i class="fas fa-home"></i> <!-- Ícono de FontAwesome -->
-          Inicio
+          <i class="fas fa-home"></i> Inicio
         </a>
-
         <a routerLink="/mis-diagramas" class="sidebar-menu-item" routerLinkActive="active">
-          <i class="fas fa-project-diagram"></i> <!-- Ícono de FontAwesome -->
-          Mis Diagramas
+          <i class="fas fa-project-diagram"></i> Mis Diagramas
         </a>
-
         <a routerLink="/compartidos" class="sidebar-menu-item" routerLinkActive="active">
-          <i class="fas fa-share-alt"></i> <!-- Ícono de FontAwesome -->
-          Compartidos
+          <i class="fas fa-share-alt"></i> Compartidos
         </a>
-
         <a routerLink="/favoritos" class="sidebar-menu-item" routerLinkActive="active">
-          <i class="fas fa-star"></i> <!-- Ícono de FontAwesome -->
-          Favoritos
+          <i class="fas fa-star"></i> Favoritos
         </a>
-
         <a routerLink="/papelera" class="sidebar-menu-item" routerLinkActive="active">
-          <i class="fas fa-trash"></i> <!-- Ícono de FontAwesome -->
-          Papelera
+          <i class="fas fa-trash"></i> Papelera
         </a>
-
       </ul>
     </div>
 
@@ -46,41 +34,33 @@
       <div class="sidebar-section-title">Plantillas</div>
       <div class="templates-grid">
         <div class="template-item">
-          <i class="fas fa-sitemap"></i> <!-- Ícono de FontAwesome -->
-          <span>Organigrama</span>
+          <i class="fas fa-sitemap"></i> <span>Organigrama</span>
         </div>
         <div class="template-item">
-          <i class="fas fa-random"></i> <!-- Ícono de FontAwesome -->
-          <span>Flujo</span>
+          <i class="fas fa-random"></i> <span>Flujo</span>
         </div>
         <div class="template-item">
-          <i class="fas fa-network-wired"></i> <!-- Ícono de FontAwesome -->
-          <span>Red</span>
+          <i class="fas fa-network-wired"></i> <span>Red</span>
         </div>
         <div class="template-item">
-          <i class="fas fa-brain"></i> <!-- Ícono de FontAwesome -->
-          <span>Mental</span>
+          <i class="fas fa-brain"></i> <span>Mental</span>
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-footer">
     <div class="user-profile">
       <div class="user-avatar">
-        <i class="fas fa-lock"></i> <!-- Ícono de FontAwesome -->
+        <i class="fas fa-lock"></i>
       </div>
       <div class="user-info">
-        <div class="user-name">Juan Pérez</div>
-        <div class="user-email">juanejemplocom</div>
+        <div class="user-name">{{ usuario?.nombre || 'Invitado' }}</div>
+        <div class="user-email">{{ usuario?.email || 'correo@ejemplo.com' }}</div>
       </div>
     </div>
-    <button class="logout-button">
-      <i class="fas fa-lock"></i> <!-- Ícono de FontAwesome -->
-      Cerrar Sesión
+    <button class="logout-button" (click)="cerrarSesion()">
+      <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
     </button>
   </div>
 </div>
-
-<!-- Incluye Font Awesome desde CDN -->

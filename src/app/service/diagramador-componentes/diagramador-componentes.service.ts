@@ -1,4 +1,4 @@
-// services/diagram.service.ts
+// services/diagram.service.ts - VERSIÓN CORREGIDA CON updateElementPosition
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -36,6 +36,7 @@ export class DiagramService {
   private undoStack: string[] = [];
   private redoStack: string[] = [];
   private maxHistorySize = 50;
+  
 
   // Controles de zoom
   private zoomControlsSubject = new BehaviorSubject<ZoomControls>({
@@ -66,16 +67,31 @@ export class DiagramService {
    * Agrega un elemento al diagrama
    */
   addElement(dragData: DragDropData, position: Position): void {
-    const currentState = this.getCurrentState();
-    const newElement = this.createElementFromDragData(dragData, position);
-    
-    const updatedState: DiagramState = {
-      ...currentState,
-      elements: [...currentState.elements, newElement]
-    };
+    // Validar entradas
+    if (!dragData) {
+      console.error('dragData es requerido');
+      return;
+    }
 
-    this.updateDiagramState(updatedState);
-    this.saveState();
+    if (!position || !DiagramUtils.validatePosition(position)) {
+      console.error('Posición inválida proporcionada:', position);
+      return;
+    }
+
+    try {
+      const currentState = this.getCurrentState();
+      const newElement = this.createElementFromDragData(dragData, position);
+      
+      const updatedState: DiagramState = {
+        ...currentState,
+        elements: [...currentState.elements, newElement]
+      };
+
+      this.updateDiagramState(updatedState);
+      this.saveState();
+    } catch (error) {
+      console.error('Error agregando elemento:', error);
+    }
   }
 
   /**
@@ -93,6 +109,60 @@ export class DiagramService {
     };
 
     this.updateDiagramState(updatedState);
+    this.saveState();
+  }
+
+
+
+  
+  /**
+   * Actualiza la posición de un elemento específico
+   * Método optimizado para operaciones de drag and drop
+   */
+  updateElementPosition(elementId: string, newPosition: Position): void {
+    // Validar entrada
+    if (!elementId) {
+      console.error('elementId es requerido');
+      return;
+    }
+
+    if (!newPosition || !DiagramUtils.validatePosition(newPosition)) {
+      console.error('Posición inválida proporcionada:', newPosition);
+      return;
+    }
+
+    const currentState = this.getCurrentState();
+    const elementIndex = currentState.elements.findIndex(element => element.id === elementId);
+    
+    if (elementIndex === -1) {
+      console.error('Elemento no encontrado:', elementId);
+      return;
+    }
+
+    // Crear una copia del array de elementos
+    const updatedElements = [...currentState.elements];
+    
+    // Actualizar solo la posición del elemento específico
+    updatedElements[elementIndex] = {
+      ...updatedElements[elementIndex],
+      position: { ...newPosition }
+    };
+
+    const updatedState: DiagramState = {
+      ...currentState,
+      elements: updatedElements
+    };
+
+    // Actualizar estado sin guardar en historial (para mejor performance durante drag)
+    this.updateDiagramState(updatedState);
+  }
+
+  /**
+   * Finaliza la actualización de posición y guarda en historial
+   * Llamar este método cuando termine el drag operation
+   */
+  finalizeElementPosition(elementId: string): void {
+    // Guardar estado en historial después de completar el drag
     this.saveState();
   }
 
@@ -308,6 +378,25 @@ export class DiagramService {
   }
 
   /**
+   * Cancela una conexión en progreso
+   */
+  cancelConnection(): void {
+    const currentMode = this.connectionModeSubject.value;
+    
+    if (currentMode.active) {
+      // Resetear el modo de conexión manteniendo el estado activo pero limpiando el punto de inicio
+      const resetMode: ConnectionMode = {
+        active: true, // Mantener el modo activo
+        startPoint: undefined, // Limpiar el punto de inicio
+        indicator: 'Selecciona el origen' // Resetear el indicador
+      };
+
+      this.connectionModeSubject.next(resetMode);
+      console.log('Conexión cancelada - modo conexión sigue activo');
+    }
+  }
+
+  /**
    * Controles de zoom
    */
   zoomIn(): void {
@@ -445,33 +534,352 @@ export class DiagramService {
     this.redoStack = []; // Limpiar redo stack cuando se hace una nueva acción
   }
 
+  /**
+   * Crea un elemento desde los datos de drag and drop
+   * VERSIÓN CORREGIDA SIN PROPIEDADES NO DEFINIDAS
+   */
   private createElementFromDragData(dragData: DragDropData, position: Position): DiagramElement {
-    const baseElement = DiagramUtils.createDefaultElement(dragData.elementType, position);
+    // Validar dragData
+    if (!dragData) {
+      console.error('dragData es requerido');
+      throw new Error('dragData es requerido');
+    }
+
+    // Validar que tenemos un elementType
+    if (!dragData.elementType) {
+      console.error('elementType es requerido en dragData');
+      throw new Error('elementType es requerido en dragData');
+    }
+
+    // Determinar el subType
+    let subType = dragData.subType || 'basic';
     
-    // Aplicar configuraciones específicas según el tipo
-    if (dragData.elementType === 'component' && dragData.componentType) {
-      const config = DiagramUtils.getComponentTypeConfig(dragData.componentType);
-      if (config) {
-        baseElement.attributes = {
-          ...baseElement.attributes,
-          headerText: config.headerText,
-          stereotypeText: config.stereotype,
-          fill: config.fill,
-          stroke: config.stroke
-        };
-      }
-    } else if (dragData.elementType === 'interface' && dragData.interfaceType) {
-      const config = DiagramUtils.getInterfaceTypeConfig(dragData.interfaceType);
-      if (config) {
-        baseElement.attributes = {
-          ...baseElement.attributes,
-          name: config.headerText,
-          fill: config.fill,
-          stroke: config.stroke
-        };
+    // Para compatibilidad con código legacy
+    if (!dragData.subType) {
+      if (dragData.componentType && dragData.elementType === 'component') {
+        subType = dragData.componentType;
+      } else if (dragData.interfaceType && dragData.elementType === 'interface') {
+        subType = dragData.interfaceType;
       }
     }
 
-    return baseElement;
+    // Crear el elemento básico según la interfaz DiagramElement
+    const element: DiagramElement = {
+      id: this.generateUniqueId(),
+      type: dragData.elementType,
+      subType: subType,
+      position: { ...position },
+      size: this.getDefaultSize(dragData.elementType, subType),
+      attributes: {
+        name: dragData.label || this.getDefaultName(dragData.elementType, subType),
+        icon: dragData.icon || this.getDefaultIcon(dragData.elementType, subType),
+        description: '',
+        properties: {},
+        ...this.getDefaultAttributes(dragData.elementType, subType)
+      }
+    };
+
+    return element;
   }
+
+  /**
+   * Genera un ID único para el elemento
+   */
+  private generateUniqueId(): string {
+    return 'element_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  /**
+   * Obtiene el tamaño por defecto según el tipo de elemento
+   */
+  private getDefaultSize(elementType: string, subType: string): { width: number; height: number } {
+    const sizeMap: Record<string, { width: number; height: number }> = {
+      'component': { width: 120, height: 80 },
+      'interface': { width: 100, height: 60 },
+      'database': { width: 100, height: 80 },
+      'service': { width: 110, height: 70 },
+      'container': { width: 200, height: 150 },
+      'node': { width: 80, height: 60 }
+    };
+
+    return sizeMap[elementType] || { width: 100, height: 60 };
+  }
+
+  /**
+   * Obtiene el nombre por defecto según el tipo de elemento
+   */
+  private getDefaultName(elementType: string, subType: string): string {
+    const nameMap: Record<string, string> = {
+      'component': 'Componente',
+      'interface': 'Interfaz',
+      'database': 'Base de Datos',
+      'service': 'Servicio',
+      'container': 'Contenedor',
+      'node': 'Nodo'
+    };
+
+    const baseName = nameMap[elementType] || 'Elemento';
+    return `${baseName} ${subType}`;
+  }
+
+  /**
+   * Obtiene el icono por defecto según el tipo de elemento
+   */
+  private getDefaultIcon(elementType: string, subType: string): string {
+    const iconMap: Record<string, string> = {
+      'component': 'cube',
+      'interface': 'layers',
+      'database': 'database',
+      'service': 'server',
+      'container': 'box',
+      'node': 'circle'
+    };
+
+    return iconMap[elementType] || 'square';
+  }
+
+  /**
+   * Obtiene los atributos por defecto según el tipo de elemento
+   */
+  private getDefaultAttributes(elementType: string, subType: string): Record<string, any> {
+    const defaultAttributes: Record<string, Record<string, any>> = {
+      'component': {
+        framework: 'angular',
+        version: '1.0.0',
+        dependencies: [],
+        // Información de puertos como parte de atributos
+        ports: this.getDefaultPorts(elementType, subType),
+        // Información de estilo como parte de atributos
+        style: this.getDefaultStyle(elementType, subType)
+      },
+      'interface': {
+        methods: [],
+        extends: null,
+        ports: this.getDefaultPorts(elementType, subType),
+        style: this.getDefaultStyle(elementType, subType)
+      },
+      'database': {
+        engine: 'postgresql',
+        tables: [],
+        ports: this.getDefaultPorts(elementType, subType),
+        style: this.getDefaultStyle(elementType, subType)
+      },
+      'service': {
+        protocol: 'http',
+        port: 8080,
+        endpoints: [],
+        ports: this.getDefaultPorts(elementType, subType),
+        style: this.getDefaultStyle(elementType, subType)
+      },
+      'container': {
+        image: 'ubuntu:latest',
+        ports: [],
+        volumes: [],
+        connectionPorts: this.getDefaultPorts(elementType, subType),
+        style: this.getDefaultStyle(elementType, subType)
+      },
+      'node': {
+        type: 'compute',
+        resources: {},
+        ports: this.getDefaultPorts(elementType, subType),
+        style: this.getDefaultStyle(elementType, subType)
+      }
+    };
+
+    return defaultAttributes[elementType] || {
+      ports: this.getDefaultPorts(elementType, subType),
+      style: this.getDefaultStyle(elementType, subType)
+    };
+  }
+
+  /**
+   * Obtiene los puertos por defecto según el tipo de elemento
+   * Ahora retorna la configuración como objeto simple
+   */
+  private getDefaultPorts(elementType: string, subType: string): Record<string, any> {
+    const portConfigs: Record<string, Record<string, any>> = {
+      'component': {
+        input: { type: 'input', position: 'left' },
+        output: { type: 'output', position: 'right' }
+      },
+      'interface': {
+        implements: { type: 'input', position: 'left' },
+        extends: { type: 'output', position: 'right' }
+      },
+      'database': {
+        query: { type: 'input', position: 'left' },
+        data: { type: 'output', position: 'right' }
+      },
+      'service': {
+        request: { type: 'input', position: 'left' },
+        response: { type: 'output', position: 'right' }
+      },
+      'container': {
+        network: { type: 'input', position: 'left' },
+        expose: { type: 'output', position: 'right' }
+      },
+      'node': {
+        connection: { type: 'input', position: 'left' }
+      }
+    };
+
+    return portConfigs[elementType] || {
+      input: { type: 'input', position: 'left' },
+      output: { type: 'output', position: 'right' }
+    };
+  }
+
+  /**
+   * Obtiene el estilo por defecto según el tipo de elemento
+   * Ahora retorna un objeto que se incluirá en attributes
+   */
+  private getDefaultStyle(elementType: string, subType: string): Record<string, any> {
+    const styleMap: Record<string, Record<string, any>> = {
+      'component': {
+        backgroundColor: '#e3f2fd',
+        borderColor: '#2196f3',
+        borderWidth: 2,
+        borderRadius: 8,
+        color: '#1976d2'
+      },
+      'interface': {
+        backgroundColor: '#f3e5f5',
+        borderColor: '#9c27b0',
+        borderWidth: 2,
+        borderRadius: 8,
+        color: '#7b1fa2'
+      },
+      'database': {
+        backgroundColor: '#e8f5e8',
+        borderColor: '#4caf50',
+        borderWidth: 2,
+        borderRadius: 8,
+        color: '#388e3c'
+      },
+      'service': {
+        backgroundColor: '#fff3e0',
+        borderColor: '#ff9800',
+        borderWidth: 2,
+        borderRadius: 8,
+        color: '#f57c00'
+      },
+      'container': {
+        backgroundColor: '#fce4ec',
+        borderColor: '#e91e63',
+        borderWidth: 2,
+        borderRadius: 8,
+        color: '#c2185b'
+      },
+      'node': {
+        backgroundColor: '#f5f5f5',
+        borderColor: '#9e9e9e',
+        borderWidth: 2,
+        borderRadius: 8,
+        color: '#616161'
+      }
+    };
+
+    return styleMap[elementType] || {
+      backgroundColor: '#ffffff',
+      borderColor: '#cccccc',
+      borderWidth: 1,
+      borderRadius: 4,
+      color: '#333333'
+    };
+  }
+
+  /**
+   * Type guard para verificar si dragData es de tipo componente
+   */
+  private isComponentDragData(dragData: DragDropData): dragData is DragDropData & { componentType: string } {
+    return 'componentType' in dragData && dragData.componentType !== undefined && dragData.componentType !== null;
+  }
+
+  /**
+   * Type guard para verificar si dragData es de tipo interfaz
+   */
+  private isInterfaceDragData(dragData: DragDropData): dragData is DragDropData & { interfaceType: string } {
+    return 'interfaceType' in dragData && dragData.interfaceType !== undefined && dragData.interfaceType !== null;
+  }
+
+// En tu DiagramService
+updateElementProperty(elementId: string, property: string, value: any): void {
+  const currentState = this.diagramStateSubject.value;
+  const elementIndex = currentState.elements.findIndex(el => el.id === elementId);
+  
+  if (elementIndex !== -1) {
+    const updatedElements = [...currentState.elements];
+    const element = { ...updatedElements[elementIndex] };
+    
+    // Actualizar la propiedad en el lugar correcto
+    if (property === 'name' || property === 'description') {
+      element.attributes = { ...element.attributes, [property]: value };
+    } else if (property === 'width' || property === 'height') {
+      element.size = { ...element.size, [property]: value };
+    } else if (property === 'x' || property === 'y') {
+      element.position = { ...element.position, [property]: value };
+    } else {
+      // Para propiedades visuales como fill, stroke, etc.
+      element.attributes = { ...element.attributes, [property]: value };
+    }
+    
+    updatedElements[elementIndex] = element;
+    
+    const newState: DiagramState = {
+      ...currentState,
+      elements: updatedElements,
+      selectedElement: element // Actualizar también el elemento seleccionado
+    };
+    
+    this.diagramStateSubject.next(newState);
+    console.log('Estado actualizado en servicio:', property, value);
+  } else {
+    console.error('Elemento no encontrado para actualizar:', elementId);
+  }
+}
+
+addElementFromData(elementData: DiagramElement): void {
+  if (!elementData) {
+    console.error('elementData es requerido');
+    return;
+  }
+
+  try {
+    const currentState = this.getCurrentState();
+    
+    // Crear una copia del elemento con nuevo ID y posición ligeramente desplazada
+    const newElement: DiagramElement = {
+      ...elementData,
+      id: this.generateUniqueId(),
+      position: {
+        x: elementData.position.x + 20,
+        y: elementData.position.y + 20
+      }
+    };
+    
+    const updatedState: DiagramState = {
+      ...currentState,
+      elements: [...currentState.elements, newElement]
+    };
+
+    this.updateDiagramState(updatedState);
+    this.saveState();
+  } catch (error) {
+    console.error('Error agregando elemento desde datos:', error);
+  }
+}
+
+resetZoom(): void {
+  this.setZoomLevel(1);
+}
+resetDiagramState(): void {
+  this.diagramStateSubject.next({
+    elements: [],
+    connections: [],
+    zoomLevel: 1
+  });
+}
+
+
+
 }

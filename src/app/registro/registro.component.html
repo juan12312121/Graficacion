@@ -1,65 +1,95 @@
 <div class="body">
-    <div class="signup-container">
-        <div class="logo">
-            <div class="logo-icon">
-              <!-- Usamos el ícono de proyecto como logo -->
-              <i class="fas fa-project-diagram fa-3x"></i> <!-- Ícono de diagrama -->
-            </div>
-            <div class="logo-text">DiagramMaker</div>
-          </div>
-        <form (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="firstname">Nombre</label>
-                <div class="input-icon">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="firstname" placeholder="Juan" required>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label for="lastname">Apellido</label>
-                <div class="input-icon">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="lastname" placeholder="Pérez" required>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <div class="input-icon">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" placeholder="tu@email.com" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <div class="input-icon">
-                    <i class="fas fa-lock"></i>
-                    <input [type]="isPasswordVisible ? 'text' : 'password'" 
-                           id="password" 
-                           placeholder="••••••••" 
-                           required>
-                    <i class="fas fa-eye eye-icon" (click)="togglePasswordVisibility()"></i>  <!-- Ícono para ver/ocultar -->
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="confirm-password">Confirmar Contraseña</label>
-                <div class="input-icon">
-                    <i class="fas fa-check-circle"></i>
-                    <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" 
-                           id="confirm-password" 
-                           placeholder="••••••••" 
-                           required>
-                    <i class="fas fa-eye eye-icon" (click)="toggleConfirmPasswordVisibility()"></i>  <!-- Ícono para ver/ocultar -->
-                </div>
-            </div>
-    
-            <button type="submit" class="signup-button">Crear Cuenta</button>
-    
-            <div class="login-link">
-                ¡Ya tienes cuenta? <a (click)="navigateLogin()">Inicia sesión</a>
-            </div>
-        </form>
+  <div class="signup-container">
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-project-diagram fa-3x"></i>
+      </div>
+      <div class="logo-text">DiagramMaker</div>
     </div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstname">Nombre</label>
+        <div class="input-icon">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            id="firstname"
+            name="nombre"
+            [(ngModel)]="nombre"
+            placeholder="Juan"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Este campo "Apellido" es decorativo, no se envía al backend -->
+      <div class="form-group">
+        <label for="lastname">Apellido</label>
+        <div class="input-icon">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            id="lastname"
+            name="apellido"
+            [(ngModel)]="apellido"
+            placeholder="Pérez"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            id="email"
+            name="correo"
+            [(ngModel)]="correo"
+            placeholder="tu@email.com"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>
+          <input
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            id="password"
+            name="contrasena"
+            [(ngModel)]="contrasena"
+            placeholder="••••••••"
+            required
+          />
+          <i class="fas fa-eye eye-icon" (click)="togglePasswordVisibility()"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirmar Contraseña</label>
+        <div class="input-icon">
+          <i class="fas fa-check-circle"></i>
+          <input
+            [type]="isConfirmPasswordVisible ? 'text' : 'password'"
+            id="confirm-password"
+            name="confirmContrasena"
+            [(ngModel)]="confirmContrasena"
+            placeholder="••••••••"
+            required
+          />
+          <i class="fas fa-eye eye-icon" (click)="toggleConfirmPasswordVisibility()"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="signup-button">Crear Cuenta</button>
+
+      <div class="login-link">
+        ¡Ya tienes cuenta? <a (click)="navigateLogin()">Inicia sesión</a>
+      </div>
+    </form>
+  </div>
 </div>

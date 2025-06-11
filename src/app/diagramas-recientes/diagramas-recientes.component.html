@@ -1,125 +1,51 @@
-<div class="diagrams-grid">
-    <!-- Tarjeta 1 -->
-    <div class="diagram-card">
-      <div class="diagram-preview">
-        <div class="preview-image" style="background-image: url('/img/dia.jpg');">
-        </div>
-        <div class="preview-title">Organigrama Empresarial</div>
-      </div>
-      <div class="diagram-info">
-        <div class="info-content">
-          <div class="diagram-header">
-            <div class="diagram-title">Organigrama Empresarial</div>
-            <div class="diagram-meta">
-              <div class="diagram-date">
-                <i class="fas fa-clock"></i>
-                Hace 2 días
-              </div>
-              <div class="diagram-owner">
-                <i class="fas fa-user"></i>
-                Juan Pérez
-              </div>
-            </div>
-          </div>
-          <div class="diagram-tags">
-            <span class="diagram-tag">
-              <i class="fas fa-tags"></i>
-              Organización
-            </span>
-            <span class="diagram-tag">
-              <i class="fas fa-tags"></i>
-              RR.HH
-            </span>
-          </div>
-        </div>
-        <button class="delete-button">
-          <i class="fas fa-trash"></i>
-          Eliminar
-        </button>
-      </div>
+<div class="diagrams-grid" *ngIf="recientes && recientes.length > 0; else sinDiagramas">
+  <div 
+    class="diagram-card" 
+    *ngFor="let diagrama of recientes; let i = index"
+  >
+    <div class="diagram-preview">
+      <div 
+        class="preview-image" 
+        [style.background-image]="'url(/img/dia.jpg)'"
+      ></div>
+      <div class="preview-title">{{ diagrama.nombre }}</div>
     </div>
-
-    <!-- Tarjeta 2 -->
-    <div class="diagram-card">
-      <div class="diagram-preview">
-        <div class="preview-image" style="background-image: url('/img/dia.jpg');">
-        </div>
-        <div class="preview-title">Flujo de Procesos</div>
-      </div>
-      <div class="diagram-info">
-        <div class="info-content">
-          <div class="diagram-header">
-            <div class="diagram-title">Flujo de Procesos</div>
-            <div class="diagram-meta">
-              <div class="diagram-date">
-                <i class="fas fa-clock"></i>
-                Hace 5 días
-              </div>
-              <div class="diagram-owner">
-                <i class="fas fa-user"></i>
-                María Gómez
-              </div>
+    <div class="diagram-info">
+      <div class="info-content">
+        <div class="diagram-header">
+          <div class="diagram-title">{{ diagrama.nombre }}</div>
+          <div class="diagram-meta">
+            <div class="diagram-date">
+              <i class="fas fa-clock"></i>
+              {{ obtenerTextoFecha(diagrama.updatedAt || diagrama.createdAt) }}
+            </div>
+            <div class="diagram-owner">
+              <i class="fas fa-user"></i>
+              {{ diagrama.creadoPorNombre || 'Tú' }}
             </div>
           </div>
-          <div class="diagram-tags">
-            <span class="diagram-tag">
-              <i class="fas fa-tags"></i>
-              Procesos
-            </span>
-            <span class="diagram-tag">
-              <i class="fas fa-tags"></i>
-              Producción
-            </span>
-          </div>
         </div>
-        <button class="delete-button">
-          <i class="fas fa-trash"></i>
-          Eliminar
-        </button>
-      </div>
-    </div>
-
-
-
-    <!-- Tarjeta 4 -->
-    <div class="diagram-card">
-      <div class="diagram-preview">
-        <div class="preview-image" style="background-image: url('/img/dia.jpg');">
+        <div class="diagram-tags">
+          <span class="diagram-tag" *ngIf="diagrama.tipo">
+            <i class="fas fa-tags"></i>
+            {{ diagrama.tipo | titlecase }}
+          </span>
+          <!-- Puedes agregar más tags si tienes etiquetas en el objeto -->
         </div>
-        <div class="preview-title">Flujo de Desarrollo</div>
       </div>
-      <div class="diagram-info">
-        <div class="info-content">
-          <div class="diagram-header">
-            <div class="diagram-title">Flujo de Desarrollo</div>
-            <div class="diagram-meta">
-              <div class="diagram-date">
-                <i class="fas fa-clock"></i>
-                Hace 3 días
-              </div>
-              <div class="diagram-owner">
-                <i class="fas fa-user"></i>
-                Laura Torres
-              </div>
-            </div>
-          </div>
-          <div class="diagram-tags">
-            <span class="diagram-tag">
-              <i class="fas fa-tags"></i>
-              Desarrollo
-            </span>
-            <span class="diagram-tag">
-              <i class="fas fa-tags"></i>
-              Git
-            </span>
-          </div>
-        </div>
-        <button class="delete-button">
-          <i class="fas fa-trash"></i>
-          Eliminar
-        </button>
-      </div>
+      <button class="delete-button" (click)="eliminarDiagrama(diagrama._id)">
+        <i class="fas fa-trash"></i>
+        Eliminar
+      </button>
     </div>
   </div>
+</div>
 
-<app-paginacion></app-paginacion>
+<ng-template #sinDiagramas>
+  <div class="no-diagrams">
+    <i class="fas fa-folder-open fa-3x"></i>
+    <p>No tienes diagramas recientes aún.</p>
+  </div>
+</ng-template>
+
+<app-paginacion *ngIf="recientes && recientes.length > 0"></app-paginacion>

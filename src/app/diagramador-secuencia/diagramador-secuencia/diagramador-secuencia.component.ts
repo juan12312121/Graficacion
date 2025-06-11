@@ -1062,11 +1062,50 @@ private hidePropertiesPanel(): void {
       break;
     
     case 'save':
-      // Implementar guardar
+      console.log('Guardar presionado');
+     this.saveSequenceDiagram(); 
       break;
     
     default:
       console.log('Acción no implementada:', action.type);
   }
 }
+
+public saveSequenceDiagram(): void {
+  const token = localStorage.getItem('token');
+  const nombre = prompt("Ingresa un nombre para el diagrama de secuencia:");
+
+  if (!nombre || !token) {
+    alert('❌ Error: faltan datos para guardar el diagrama.');
+    return;
+  }
+
+  const body = {
+    nombre: nombre,
+    tipo: 'secuencia', // <--- Así lo distinguirás en MongoDB
+    elementos: this.graph.toJSON()
+  };
+
+  fetch('http://localhost:4000/api/diagramas', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(body)
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Error al guardar el diagrama');
+      return response.json();
+    })
+    .then(data => {
+      alert('✅ Diagrama de secuencia guardado correctamente');
+    })
+    .catch(error => {
+      alert('❌ Error al guardar el diagrama de secuencia');
+    });
+}
+
+
+
 }

@@ -15,6 +15,8 @@ import {ExampleDClaseComponent} from './example-diagrams/example-d-clase/example
 import {ExampleDComponentesComponent} from './example-diagrams/example-d-componentes/example-d-componentes.component';
 import { ExampleDPaquetesComponent } from './example-diagrams/example-d-paquetes/example-d-paquetes.component';
 import { ExampleDSecuenciaComponent } from './example-diagrams/example-d-secuencia/example-d-secuencia.component';
+import '../shapes/sql-table';
+
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,6 +28,7 @@ export const routes: Routes = [
     {path: 'favoritos', component: FavoritosComponent},
     {path: 'papelera', component: PapeleraComponent},
     {path: 'diagramador-base', component:CreadorDiagramadorComponent},
+    { path: 'diagramador-base/:id', component: CreadorDiagramadorComponent },
     {path: 'diagramador-clases', component: DiagramadorClasesComponent},
     {path: 'diagramador-paquetes', component:DiagramadorPaquetesComponent},
     {path: 'diagramador-componentes', component:DiagramadorComponentesComponent},
